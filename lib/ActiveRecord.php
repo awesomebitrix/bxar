@@ -126,6 +126,19 @@ abstract class ActiveRecord implements \bx\ar\IActiveRecord
 
 
 	/**
+	 * @return array
+	 */
+	public function toArray()
+	{
+		$return = array();
+		foreach ($this->_attributes as $code => $attr) {
+			$return[$code] = $attr->getValue();
+		}
+		return $return;
+	}
+
+
+	/**
 	 * Возвращает атрибут
 	 * @param string $name
 	 * @throw \bx\ar\Exception

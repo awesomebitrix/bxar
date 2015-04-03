@@ -54,4 +54,9 @@ interface IActiveRecord
 	 * @return string
 	 */
 	public function getScenario();
+
+	/**
+	 * @return array
+	 */
+	public function toArray();
 }
