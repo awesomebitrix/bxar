@@ -68,16 +68,28 @@ interface IFinder
 
 
 	/**
+	 * @param int $value
+	 * @return \bx\ar\IFinder
+	 */
+	public function setAsArray($value = true);
+
+	/**
+	 * @return bool
+	 */
+	public function getAsArray();
+
+
+	/**
 	 * Находит один элемент
 	 * @return \bx\ar\IActiveRecord
 	 */
-	public function find();
+	public function one();
 
 	/**
 	 * Находит несколько элементов
 	 * @return array
 	 */
-	public function findAll();
+	public function all();
 
 	/**
 	 * Находит количество элементов по запросу

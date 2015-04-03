@@ -10,7 +10,7 @@ class Finder extends \bx\ar\Finder
 	/**
 	 * @var string класс, на основе которого будут инициированы записи
 	 */
-	protected $_arClass = '\bx\ar\iblock\Iblock';
+	protected $_arClass = null;
 	/**
 	 * @var array возвращать ли количество элементов в информационном блоке
 	 */
@@ -21,12 +21,12 @@ class Finder extends \bx\ar\Finder
 	 * Находит один элемент
 	 * @return \bx\ar\IActiveRecord
 	 */
-	public function find()
+	public function one()
 	{
 		$res = $this->getList($this->getOrder(), $this->getFilter(), $this->getIncCnt());
 		if (!empty($res)) {
 			$arInit = reset($res);
-			return $this->initItem($arInit);
+			return $this->getAsArray() ? $arInit : $this->initItem($arInit);
 		} else {
 			return null;
 		}
@@ -36,7 +36,7 @@ class Finder extends \bx\ar\Finder
 	 * Находит несколько элементов
 	 * @return array
 	 */
-	public function findAll()
+	public function all()
 	{
 		$limit = $this->getLimit();
 		$offset = $this->getOffset();
@@ -50,7 +50,7 @@ class Finder extends \bx\ar\Finder
 			foreach ($res as $key => $arInit) {
 				$i++;
 				if ($to > 0 && ($i < $from || $i > $to)) continue;
-				$return[$key] = $this->initItem($arInit);
+				$return[$key] = $this->getAsArray() ? $arInit : $this->initItem($arInit);
 			}
 		}
 		return $return;
@@ -85,11 +85,14 @@ class Finder extends \bx\ar\Finder
 	protected function getList(array $order, array $filter, $incCnt = false)
 	{
 		$return = array();
-		if (\CModule::IncludeModule('iblock')) {
+		if (($cache = $this->getFromCache()) !== false) {
+			$return = $cache;
+		} elseif (\CModule::IncludeModule('iblock')) {
 			$res = \CIBlock::GetList($order, $filter, $incCnt);
-			while ($ob = $res->GetNext()) {
+			while ($ob = $res->fetch()) {
 				$return[] = $ob;
 			}
+			$this->setToCache($return);
 		}
 		return $return;
 	}

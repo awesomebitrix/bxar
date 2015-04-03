@@ -31,6 +31,56 @@ abstract class Finder implements \bx\ar\IFinder
 	 * @var string класс, на основе которого будут инициированы записи
 	 */
 	protected $_arClass = null;
+	/**
+	 * @var bool вернуть модель ar или массив
+	 */
+	protected $_asArray = false;
+
+
+	/**
+	 * @return string
+	 */
+	protected function getCacheId()
+	{
+		return json_encode($this->getArClass() . $this->getLimit() . $this->getOffset())
+		       . json_encode($this->getFilter())
+		       . json_encode($this->getOrder());
+	}
+
+	/**
+	 * @param string $cid
+	 * @return mixed
+	 */
+	protected function getFromCache($cid = null)
+	{
+		$cid = $cid === null ? $this->getCacheId() : $cid;
+		$cTime = $this->_cache;
+		if (!$cTime) return false;
+		$obCache = new \CPHPCache();
+		if ($obCache->InitCache($cTime, $cid)) {
+			return $obCache->GetVars();
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * @param mixed $value
+	 * @param string $cid
+	 */
+	protected function setToCache($value, $cid = null)
+	{
+		$cid = $cid === null ? $this->getCacheId() : $cid;
+		$cTime = $this->_cache;
+		if (!$cTime) {
+			return null;
+		} else {
+			$obCache = new \CPHPCache();
+			$obCache->InitCache($cTime, $cid);
+			$obCache->StartDataCache();
+			$obCache->EndDataCache($value);
+		}
+	}
 
 
 	/**
@@ -125,6 +175,25 @@ abstract class Finder implements \bx\ar\IFinder
 	public function getOffset()
 	{
 		return $this->_offset;
+	}
+
+
+	/**
+	 * @param int $value
+	 * @return \bx\ar\IFinder
+	 */
+	public function setAsArray($value = true)
+	{
+		$this->_asArray = (bool) $value;
+		return $this;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function getAsArray()
+	{
+		return $this->_asArray;
 	}
 
 

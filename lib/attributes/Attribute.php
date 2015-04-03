@@ -18,11 +18,11 @@ class Attribute implements \bx\ar\IAttribute
 	/**
 	 * @var mixed параметры атрибута
 	 */
-	protected $_params = array();
+	protected $_params = null;
 	/**
 	 * @var mixed ошибки для атрибута
 	 */
-	protected $_errors = array();
+	protected $_errors = null;
 
 
 	/**
