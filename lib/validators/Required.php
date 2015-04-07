@@ -18,11 +18,11 @@ class Required extends \bx\ar\validators\Validator
 	 * @param string $name
 	 * @return bool
 	 */
-	protected function validateAttribute(\bx\ar\IAttribute $attribute)
+	protected function validateAttribute(\bx\ar\IAttribute $attribute, $setErrors = true)
 	{
 		$value = $attribute->getValue();
 		if ($value === null || $value === '') {
-			$attribute->addError($this->message);
+			if ($setErrors) $attribute->addError($this->message);
 			return false;
 		} else {
 			return true;

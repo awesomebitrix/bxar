@@ -75,7 +75,7 @@ class Finder extends \bx\ar\Finder
 	{
 		$class = $this->getArClass();
 		$item = new $class;
-		$item->init($init);
+		$item->initAttributes($init);
 		return $item;
 	}
 
@@ -90,6 +90,10 @@ class Finder extends \bx\ar\Finder
 		} elseif (\CModule::IncludeModule('iblock')) {
 			$res = \CIBlock::GetList($order, $filter, $incCnt);
 			while ($ob = $res->fetch()) {
+				$rsSites = \CIBlock::GetSite($ob['ID']);
+				while ($arSite = $rsSites->Fetch()) {
+					$ob['SITE_ID'][] = $arSite['SITE_ID'];
+				}
 				$return[] = $ob;
 			}
 			$this->setToCache($return);

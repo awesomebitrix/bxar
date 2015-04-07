@@ -12,6 +12,10 @@ class Date extends \bx\ar\validators\Validator
 	 */
 	public $toFormat = null;
 	/**
+	 * @param bool
+	 */
+	public $currentIfNull = false;
+	/**
 	 * @param string
 	 */
 	public $message = 'Wrong date format';
@@ -22,10 +26,10 @@ class Date extends \bx\ar\validators\Validator
 	 * @param string $name
 	 * @return bool
 	 */
-	protected function validateAttribute(\bx\ar\IAttribute $attribute)
+	protected function validateAttribute(\bx\ar\IAttribute $attribute, $setErrors = true)
 	{
 		$value = $attribute->getValue();
-		$timestamp = strtotime($value);
+		$timestamp = $value === null && $this->currentIfNull ? time() : strtotime($value);
 		if ($timestamp !== false) {
 			if (strtoupper($this->toFormat) == 'FULL' || strtoupper($this->toFormat) == 'SHORT') {
 				$attribute->setValue(\ConvertTimeStamp($timestamp, strtoupper($this->toFormat)));
@@ -34,7 +38,7 @@ class Date extends \bx\ar\validators\Validator
 			}
 			return true;
 		} else {
-			$attribute->addError($this->message);
+			if ($setErrors) $attribute->addError($this->message);
 			return false;
 		}
 	}

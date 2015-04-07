@@ -12,7 +12,7 @@ class BxBool extends \bx\ar\validators\Validator
 	 * @param string $name
 	 * @return bool
 	 */
-	protected function validateAttribute(\bx\ar\IAttribute $attribute)
+	protected function validateAttribute(\bx\ar\IAttribute $attribute, $setErrors = true)
 	{
 		$value = $attribute->getValue();
 		$value = $value !== 'N' ? ($value ? 'Y' : 'N') : 'N';

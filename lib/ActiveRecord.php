@@ -55,30 +55,17 @@ abstract class ActiveRecord implements \bx\ar\IActiveRecord
 	 * @param string $scenario
 	 * @param array $value
 	 */
-	public function __construct($scenario = 'default', array $value = array())
+	public function __construct($scenario = 'default')
 	{
-		$this->init($value);
 		$this->setScenario($scenario);
 	}
 
 
 	/**
-	 * Инициирует запись первоначальными значениями.
-	 * В этой функции можно перехватить создание объекта записи и поправить его структуру
-	 * @param array $value
-	 */
-	public function init(array $value)
-	{
-		$this->loadAttributes($value, true);
-		$this->setValues($value);
-		$this->validate(null, false);
-	}
-
-	/**
 	 * Создает атрибуты Active Record
 	 * @param array $init
 	 */
-	protected function loadAttributes(array $init, $force = false)
+	public function initAttributes(array $init, $force = false)
 	{
 		if ($this->_attributes == null || $force) {
 			if ($force && !empty($this->_attributes)) {
@@ -88,8 +75,14 @@ abstract class ActiveRecord implements \bx\ar\IActiveRecord
 			}
 			$atts = $this->getAttributesDescriptions();
 			$this->_attributes = is_array($atts) ? $atts : array();
+			foreach ($init as $code => $value) {
+				if (isset($this->_attributes[$code]))
+					$this->_attributes[$code]->setValue($value);
+			}
+			$this->validate(null, false);
 		}
 	}
+
 
 	/**
 	 * Проверяет поля модели
@@ -126,72 +119,97 @@ abstract class ActiveRecord implements \bx\ar\IActiveRecord
 
 
 	/**
+	 * Возвращает массив с атрибутами модели
 	 * @return array
 	 */
-	public function toArray()
+	public function getAttributes()
 	{
-		$return = array();
-		foreach ($this->_attributes as $code => $attr) {
-			$return[$code] = $attr->getValue();
-		}
-		return $return;
+		return is_array($this->_attributes) ? $this->_attributes : array();
 	}
 
-
 	/**
-	 * Возвращает атрибут
+	 * Возвращает атрибут модели по его имени
 	 * @param string $name
-	 * @throw \bx\ar\Exception
 	 * @return \bx\ar\IAttribute
 	 */
 	public function getAttribute($name)
 	{
-		$name = trim($name);
-		if (isset($this->_attributes[$name])) {
-			return $this->_attributes[$name];
-		} else {
-			throw new Exception('Request undefined attribute ' . $name);
-		}
+		$attributes = $this->getAttributes();
+		return isset($attributes[$name]) ? $attributes[$name] : null;
 	}
 
 	/**
-	 * Задает значение атрибута
+	 * Задает значение атрибута модели
 	 * @param string $name
 	 * @param mixed $value
-	 * @throw \bx\ar\Exception
 	 */
-	public function setValue($name, $value)
+	public function setAttributeValue($name, $value)
 	{
 		$attr = $this->getAttribute($name);
-		if ($attr) {
-			$attr->setValue($value);
-		}
+		if (isset($attr) && $this->isAttributeSafe($name)) $attr->setValue($value);
 	}
 
 	/**
-	 * Возвращает значение атрибута
+	 * Задает значение атрибута модели
 	 * @param string $name
-	 * @throw \bx\ar\Exception
-	 * @return mixed
 	 */
-	public function getValue($name)
+	public function getAttributeValue($name)
 	{
 		$attr = $this->getAttribute($name);
-		if ($attr) {
-			return $attr->getValue();
-		}
-		return null;
+		return isset($attr) ? $attr->getValue() : null;
 	}
 
 	/**
 	 * Задает значения атрибутов из массива
 	 * @param array $value
 	 */
-	public function setValues(array $values)
+	public function setAttributesValues(array $value)
 	{
-		foreach ($values as $name => $value) {
-			$this->setValue($name, $value);
+		foreach ($value as $name => $val) {
+			$this->setAttributeValue($name, $val);
 		}
+	}
+
+	/**
+	 * Возвращает значения всех атрибутов
+	 * @return array
+	 */
+	public function getAttributesValues()
+	{
+		$return = array();
+		$attributes = array_keys($this->getAttributes());
+		foreach ($attributes as $name) {
+			$return[$name] = $this->getAttributeValue($name);
+		}
+		return $return;
+	}
+
+	/**
+	 * Возвращает список безопаных для записи атрибутов
+	 * @return array
+	 */
+	protected function getSafeAttributes()
+	{
+		$rules = $this->rules();
+		$scenario = $this->getScenario();
+		$return = array();
+		foreach ($rules as $rule) {
+			if (empty($rule['on']) || $scenario == $rule['on'] || in_array($scenario, $rule['on'])) {
+				$return = array_merge($rule[0]);
+			}
+		}
+		return array_unique($return);
+	}
+
+	/**
+	 * Проверяет возможно ли записать атрибут
+	 * @param string $name
+	 * @return bool
+	 */
+	protected function isAttributeSafe($name)
+	{
+		$safe = $this->getSafeAttributes();
+		return in_array($name, $safe);
 	}
 
 

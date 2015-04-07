@@ -37,12 +37,58 @@ class Iblock extends \bx\ar\ActiveRecord
 	 * @param int $cache
 	 * @return int
 	 */
-	public static function findIdByCode($code, $cache = 0)
+	public static function findIdByCode($code, $cache = 3600)
 	{
 		$id = 0;
 		$iblock = self::find(array('CODE' => trim($code)))->cache($cache)->setAsArray()->one();
 		if (!empty($iblock)) $id = (int) $iblock['ID'];
 		return $id;
+	}
+
+
+	/**
+	 * Удаляет инфоблок
+	 * @return bool
+	 */
+	public function delete()
+	{
+		$id = $this->getAttribute('ID')->getValue();
+		if ($id !== null && \CModule::IncludeModule('iblock')) {
+			$res = \CIBlock::Delete($id);
+			if ($res) {
+				$this->getAttribute('ID')->setValue(null);
+			}
+			return $res;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Сохраняет запись
+	 */
+	public function save()
+	{
+		if (!\CModule::IncludeModule('iblock') || !$this->validate()) return false;
+		$id = $this->getAttribute('ID')->getValue();
+		$ib = new \CIBlock;
+		$arFields = $this->getAttributesValues();
+		if ($id) {
+			$res = $ib->Update($id, $arFields);
+			if ($res) {
+				return true;
+			} else {
+				throw new Exception($ib->LAST_ERROR);
+			}
+		} else {
+			$new = $ib->Add($arFields);
+			if ($new) {
+				$this->getAttribute('ID')->setValue($new);
+				return true;
+			} else {
+				throw new Exception($ib->LAST_ERROR);
+			}
+		}
 	}
 
 
@@ -53,7 +99,7 @@ class Iblock extends \bx\ar\ActiveRecord
 	protected function rules()
 	{
 		return array(
-			array(array('ID', 'SORT', 'RSS_TTL', 'RSS_FILE_LIMIT', 'RSS_FILE_DAYS', 'VERSION'), 'filter', 'filter' => 'intval'),
+			array(array('SORT', 'RSS_TTL', 'RSS_FILE_LIMIT', 'RSS_FILE_DAYS', 'VERSION', 'ELEMENT_CNT'), 'filter', 'filter' => 'intval'),
 			array(array('TIMESTAMP_X'), 'date', 'currentIfNull' => true, 'toFormat' => 'FULL'),
 			array(array('ACTIVE', 'RSS_ACTIVE', 'INDEX_ELEMENT', 'WORKFLOW'), 'default', 'value' => 'Y'),
 			array(array('RSS_FILE_ACTIVE', 'RSS_YANDEX_ACTIVE', 'INDEX_SECTION'), 'default', 'value' => 'N'),
@@ -61,6 +107,7 @@ class Iblock extends \bx\ar\ActiveRecord
 			array('RSS_TTL', 'default', 'value' => 24),
 			array('VERSION', 'default', 'value' => 1),
 			array('DESCRIPTION_TYPE', 'default', 'value' => 'text'),
+			array('SITE_ID', 'default', 'value' => array(SITE_ID)),
 			array(
 				array(
 					'ACTIVE',
@@ -76,7 +123,6 @@ class Iblock extends \bx\ar\ActiveRecord
 			),
 			array(
 				array(
-					'ID',
 					'IBLOCK_TYPE_ID',
 					'TIMESTAMP_X',
 					'NAME',
@@ -105,10 +151,11 @@ class Iblock extends \bx\ar\ActiveRecord
 	{
 		return Factory::createFromArray(array(
 			'ID' => array(),
-			'TIMESTAMP_X' => array(),
-			'IBLOCK_TYPE_ID' => array(),
-			'LID' => array(),
+			'SITE_ID' => array(),
 			'CODE' => array(),
+			'EXTERNAL_ID' => array(),
+			'IBLOCK_TYPE_ID' => array(),
+			'TIMESTAMP_X' => array(),
 			'NAME' => array(),
 			'ACTIVE' => array(),
 			'SORT' => array(),
@@ -118,35 +165,20 @@ class Iblock extends \bx\ar\ActiveRecord
 			'PICTURE' => array(),
 			'DESCRIPTION' => array(),
 			'DESCRIPTION_TYPE' => array(),
-			'RSS_TTL' => array(),
 			'RSS_ACTIVE' => array(),
+			'RSS_TTL' => array(),
 			'RSS_FILE_ACTIVE' => array(),
 			'RSS_FILE_LIMIT' => array(),
 			'RSS_FILE_DAYS' => array(),
 			'RSS_YANDEX_ACTIVE' => array(),
-			'XML_ID' => array(),
-			'TMP_ID' => array(),
 			'INDEX_ELEMENT' => array(),
 			'INDEX_SECTION' => array(),
 			'WORKFLOW' => array(),
-			'BIZPROC' => array(),
 			'SECTION_CHOOSER' => array(),
-			'LIST_MODE' => array(),
-			'RIGHTS_MODE' => array(),
-			'SECTION_PROPERTY' => array(),
-			'PROPERTY_INDEX' => array(),
 			'VERSION' => array(),
-			'LAST_CONV_ELEMENT' => array(),
-			'SOCNET_GROUP_ID' => array(),
 			'EDIT_FILE_BEFORE' => array(),
 			'EDIT_FILE_AFTER' => array(),
-			'SECTIONS_NAME' => array(),
-			'SECTION_NAME' => array(),
-			'ELEMENTS_NAME' => array(),
-			'ELEMENT_NAME' => array(),
-			'LANG_DIR' => array(),
-			'SERVER_NAME' => array(),
-			'EXTERNAL_ID' => array(),
+			'ELEMENT_CNT' => array(),
 		));
 	}
 }

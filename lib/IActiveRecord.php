@@ -19,14 +19,13 @@ interface IActiveRecord
 	 * @param string $scenario
 	 * @param array $value
 	 */
-	public function __construct($scenario = 'default', array $value = array());
+	public function __construct($scenario = 'default');
 
 	/**
-	 * Инициирует запись первоначальными значениями.
-	 * В этой функции можно перехватить создание объекта записи и поправить его структуру
-	 * @param array $value
+	 * Создает атрибуты Active Record
+	 * @param array $init
 	 */
-	public function init(array $value);
+	public function initAttributes(array $init, $force = false);
 
 	/**
 	 * Проверяет поля модели
@@ -37,12 +36,53 @@ interface IActiveRecord
 	public function validate(array $fields = null, $setErrors = true);
 
 	/**
-	 * Возвращает атрибут
+	 * Возвращает массив с атрибутами модели
+	 * @return array
+	 */
+	public function getAttributes();
+
+	/**
+	 * Возвращает атрибут модели по его имени
 	 * @param string $name
-	 * @throw \bx\ar\Exception
 	 * @return \bx\ar\IAttribute
 	 */
 	public function getAttribute($name);
+
+	/**
+	 * Задает значение атрибута модели
+	 * @param string $name
+	 * @param mixed $value
+	 */
+	public function setAttributeValue($name, $value);
+
+	/**
+	 * Задает значение атрибута модели
+	 * @param string $name
+	 */
+	public function getAttributeValue($name);
+
+	/**
+	 * Задает значения атрибутов из массива
+	 * @param array $value
+	 */
+	public function setAttributesValues(array $value);
+
+	/**
+	 * Возвращает значения всех атрибутов
+	 * @return array
+	 */
+	public function getAttributesValues();
+
+	/**
+	 * Удаляет запись
+	 * @return bool
+	 */
+	public function delete();
+
+	/**
+	 * Сохраняет запись
+	 */
+	public function save();
 
 	/**
 	 * @param string $value
@@ -54,9 +94,4 @@ interface IActiveRecord
 	 * @return string
 	 */
 	public function getScenario();
-
-	/**
-	 * @return array
-	 */
-	public function toArray();
 }

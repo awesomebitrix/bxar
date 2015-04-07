@@ -18,7 +18,7 @@ class Filter extends \bx\ar\validators\Validator
 	 * @param string $name
 	 * @return bool
 	 */
-	protected function validateAttribute(\bx\ar\IAttribute $attribute)
+	protected function validateAttribute(\bx\ar\IAttribute $attribute, $setErrors = true)
 	{
 		if (($filter = trim($this->filter)) !== '') {
 			$value = call_user_func($filter, $attribute->getValue());

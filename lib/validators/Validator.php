@@ -24,9 +24,10 @@ abstract class Validator implements \bx\ar\IValidator
 	/**
 	 * Валидирует конкретное значение поля
 	 * @param string $name
+	 * @param bool $setErrors
 	 * @return bool
 	 */
-	abstract protected function validateAttribute(\bx\ar\IAttribute $attribute);
+	abstract protected function validateAttribute(\bx\ar\IAttribute $attribute, $setErrors = true);
 
 
 	/**
@@ -43,7 +44,7 @@ abstract class Validator implements \bx\ar\IValidator
 			foreach ($this->getAttributes() as $attr) {
 				if ($fields !== null && !in_array($attr, $fields)) continue;
 				$attribute = $this->getModel()->getAttribute($attr);
-				$validate = $this->validateAttribute($attribute);
+				$validate = $this->validateAttribute($attribute, $setErrors);
 				$return = $return === false ? false : $validate;
 			}
 		}
