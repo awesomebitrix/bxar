@@ -16,6 +16,7 @@ class Factory
 		'date' => '\bx\ar\validators\Date',
 		'bxBool' => '\bx\ar\validators\BxBool',
 		'required' => '\bx\ar\validators\Required',
+		'in' => '\bx\ar\validators\In',
 	);
 
 

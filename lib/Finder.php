@@ -35,6 +35,10 @@ abstract class Finder implements \bx\ar\IFinder
 	 * @var bool вернуть модель ar или массив
 	 */
 	protected $_asArray = false;
+	/**
+	 * @var string поле, которое будет использовано в качестве индекса в результирующем массиве
+	 */
+	protected $_index = null;
 
 
 	/**
@@ -198,11 +202,44 @@ abstract class Finder implements \bx\ar\IFinder
 
 
 	/**
+	 * @param string $value
+	 * @return \bx\ar\IFinder
+	 */
+	public function setIndex($value)
+	{
+		$this->_index = trim($value);
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getIndex()
+	{
+		return $this->_index;
+	}
+
+
+	/**
 	 * @param int $time
 	 */
 	public function cache($time)
 	{
 		$this->_cache = (int) $time;
 		return $this;
+	}
+	
+
+	/**
+	 * Инициирует модель ar
+	 * @param array $init
+	 * @return \bx\ar\IActiveRecord
+	 */
+	protected function initItem(array $init)
+	{
+		$class = $this->getArClass();
+		$item = new $class;
+		$item->initAttributes($init);
+		return $item;
 	}
 }

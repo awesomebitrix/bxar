@@ -80,6 +80,18 @@ interface IFinder
 
 
 	/**
+	 * @param string $value
+	 * @return \bx\ar\IFinder
+	 */
+	public function setIndex($value);
+
+	/**
+	 * @return string
+	 */
+	public function getIndex();
+
+
+	/**
 	 * Находит один элемент
 	 * @return \bx\ar\IActiveRecord
 	 */

@@ -145,9 +145,10 @@ class Iblock extends \bx\ar\ActiveRecord
 
 	/**
 	 * Возвращает массив с описание атрибутов для данного типа записей
+	 * @param mixed $init
 	 * @return array
 	 */
-	protected function getAttributesDescriptions()
+	protected function getAttributesDescriptions($init = null)
 	{
 		return Factory::createFromArray(array(
 			'ID' => array(),

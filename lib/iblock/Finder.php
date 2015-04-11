@@ -8,10 +8,6 @@ namespace bx\ar\iblock;
 class Finder extends \bx\ar\Finder
 {
 	/**
-	 * @var string класс, на основе которого будут инициированы записи
-	 */
-	protected $_arClass = null;
-	/**
 	 * @var array возвращать ли количество элементов в информационном блоке
 	 */
 	protected $_incCnt = false;
@@ -64,19 +60,6 @@ class Finder extends \bx\ar\Finder
 	{
 		$res = $this->getList($this->getOrder(), $this->getFilter(), false);
 		return count($res);
-	}
-
-	/**
-	 * Инициирует модель ar
-	 * @param array $init
-	 * @return \bx\ar\IActiveRecord
-	 */
-	protected function initItem(array $init)
-	{
-		$class = $this->getArClass();
-		$item = new $class;
-		$item->initAttributes($init);
-		return $item;
 	}
 
 	/**

@@ -12,6 +12,8 @@ class Factory
 	 */
 	protected static $_classMap = array(
 		'default' => '\bx\ar\attributes\Attribute',
+		'property_s' => '\bx\ar\attributes\IblockPropertyString',
+		'property_l' => '\bx\ar\attributes\IblockPropertyList',
 	);
 
 

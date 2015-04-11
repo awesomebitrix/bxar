@@ -25,9 +25,10 @@ abstract class ActiveRecord implements \bx\ar\IActiveRecord
 
 	/**
 	 * Возвращает массив с описание атрибутов для данного типа записей
+	 * @param mixed $init
 	 * @return array
 	 */
-	abstract protected function getAttributesDescriptions();
+	abstract protected function getAttributesDescriptions($init = null);
 
 	/**
 	 * Возвращает массив для валидации полей модели
@@ -73,7 +74,7 @@ abstract class ActiveRecord implements \bx\ar\IActiveRecord
 					unset($attr);
 				}
 			}
-			$atts = $this->getAttributesDescriptions();
+			$atts = $this->getAttributesDescriptions($init);
 			$this->_attributes = is_array($atts) ? $atts : array();
 			foreach ($init as $code => $value) {
 				if (isset($this->_attributes[$code]))
@@ -134,6 +135,7 @@ abstract class ActiveRecord implements \bx\ar\IActiveRecord
 	 */
 	public function getAttribute($name)
 	{
+		$name = strtoupper($name);
 		$attributes = $this->getAttributes();
 		return isset($attributes[$name]) ? $attributes[$name] : null;
 	}
@@ -195,7 +197,8 @@ abstract class ActiveRecord implements \bx\ar\IActiveRecord
 		$return = array();
 		foreach ($rules as $rule) {
 			if (empty($rule['on']) || $scenario == $rule['on'] || in_array($scenario, $rule['on'])) {
-				$return = array_merge($rule[0]);
+				$items = !is_array($rule[0]) ? array($rule[0]) : $rule[0]; 
+				$return = array_merge($return, $items);
 			}
 		}
 		return array_unique($return);
@@ -208,7 +211,8 @@ abstract class ActiveRecord implements \bx\ar\IActiveRecord
 	 */
 	protected function isAttributeSafe($name)
 	{
-		$safe = $this->getSafeAttributes();
+		$name = strtoupper($name);
+		$safe = $this->getSafeAttributes();		
 		return in_array($name, $safe);
 	}
 
