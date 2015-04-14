@@ -75,12 +75,16 @@ class Finder extends \bx\ar\Finder
 
 		$order = $this->getOrder();
 		$filter = $this->getFilter();
-		$nav = array();
-		if ($this->getOffset()) {
-			$nav['iNumPage'] = $this->getOffset();
-		}
+		$nav = array();		
 		if ($this->getLimit()) {
-			$nav['nPageSize'] = $this->getLimit();
+			if ($this->getOffset() !== null) {
+				$nav['nPageSize'] = $this->getLimit();
+				$nav['iNumPage'] = ceil($this->getOffset() / $this->getLimit()) + 1;
+				$nav['bDescPageNumbering'] = false;
+				$nav['bShowAll'] = false;
+			} else {
+				$nav['nTopCount'] = $this->getLimit();				
+			}
 		}
 
 		$rsElement = \CIBlockElement::GetList(
