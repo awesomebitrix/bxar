@@ -147,8 +147,10 @@ abstract class ActiveRecord implements \bx\ar\IActiveRecord
 	 */
 	public function setAttributeValue($name, $value)
 	{
-		$attr = $this->getAttribute($name);
-		if (isset($attr) && $this->isAttributeSafe($name)) $attr->setValue($value);
+		$attr = $this->getAttribute($name);		
+		if (isset($attr) && $this->isAttributeSafe($name)) {
+			$attr->setValue($value);
+		}
 	}
 
 	/**

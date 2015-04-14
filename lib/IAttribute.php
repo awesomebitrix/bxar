@@ -19,6 +19,12 @@ interface IAttribute
 	 */
 	public function getValue();
 
+	/**
+	 * Возвращает значение для записи в базу данных
+	 * @return mixed
+	 */
+	public function getValueToDb();
+
 
 	/**
 	 * Задает код атрибута

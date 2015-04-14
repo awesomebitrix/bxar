@@ -43,6 +43,23 @@ class Attribute implements \bx\ar\IAttribute
 		return $this->_value;
 	}
 
+	/**
+	 * Возвращает значение для записи в базу данных
+	 * @return mixed
+	 */
+	public function getValueToDb()
+	{
+		$params = $this->getParams();
+		if (array_key_exists('DESCRIPTION', $params)) {
+			return array(
+				'VALUE' => $this->getValue(),
+				'DESCRIPTION' => $params['DESCRIPTION'],
+			);
+		} else {
+			return $this->getValue();
+		}		
+	}
+
 
 	/**
 	 * Задает код атрибута

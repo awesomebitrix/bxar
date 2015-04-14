@@ -79,9 +79,9 @@ class Element extends \bx\ar\ActiveRecord
 		foreach ($this->getAttributes() as $attr) {
 			$params = $attr->getParams();
 			if (!empty($params['ID'])) {
-				$arFields['PROPERTY_VALUES'][$params['ID']] = $attr->getValue();
+				$arFields['PROPERTY_VALUES'][$params['ID']] = $attr->getValueToDb();
 			} else {
-				$arFields[$attr->getCode()] = $attr->getValue();
+				$arFields[$attr->getCode()] = $attr->getValueToDb();
 			}
 		}
 		if ($id) {
@@ -133,7 +133,8 @@ class Element extends \bx\ar\ActiveRecord
 			$this->_propertiesValidation = array();
 			$required = null;
 			$trim = null;
-			$range = null;
+			$float = null;
+			$safe = null;
 			foreach ($this->getAttributes() as $attribute) {
 				$params = $attribute->getParams();
 				if (!empty($params['IS_REQUIRED']) && $params['IS_REQUIRED'] == 'Y') {
@@ -141,13 +142,18 @@ class Element extends \bx\ar\ActiveRecord
 				}
 				if (!empty($params['PROPERTY_TYPE']) && $params['PROPERTY_TYPE'] == 'S') {
 					$trim[] = $attribute->getCode();
-				}
-				if (!empty($params['PROPERTY_TYPE']) && $params['PROPERTY_TYPE'] == 'L') {
+				} elseif (!empty($params['PROPERTY_TYPE']) && $params['PROPERTY_TYPE'] == 'N') {
+					$float[] = $attribute->getCode();
+				} elseif (!empty($params['PROPERTY_TYPE']) && $params['PROPERTY_TYPE'] == 'L') {
 					$this->_propertiesValidation[] = array($attribute->getCode(), 'in', 'range' => $attribute->getList('id'));
+				} else {
+					$safe[] = $attribute->getCode();
 				}
 			}
 			if ($required) $this->_propertiesValidation[] = array($required, 'required');
 			if ($trim) $this->_propertiesValidation[] = array($trim, 'filter', 'trim');
+			if ($float) $this->_propertiesValidation[] = array($float, 'filter', 'floatval');
+			if ($safe) $this->_propertiesValidation[] = array($safe, 'safe');
 		}
 		return $this->_propertiesValidation;
 	}
@@ -163,7 +169,7 @@ class Element extends \bx\ar\ActiveRecord
 			throw new \bx\ar\Exception('IBLOCK_ID must be specified in init array.');
 		}
 		if (!isset($init['PROPERTIES'])) {
-			if (!isset(self::$_propertiesDescriptions[$init['IBLOCK_ID']])) {
+			if (!isset(self::$_propertiesDescriptions[$init['IBLOCK_ID']]) && \CModule::IncludeModule('iblock')) {
 				self::$_propertiesDescriptions[$init['IBLOCK_ID']] = array();
 				$res = \CIBlockProperty::GetList(array(), array('IBLOCK_ID' => $init['IBLOCK_ID']));
 				while ($ob = $res->Fetch()) {

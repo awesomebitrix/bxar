@@ -17,6 +17,7 @@ class Factory
 		'bxBool' => '\bx\ar\validators\BxBool',
 		'required' => '\bx\ar\validators\Required',
 		'in' => '\bx\ar\validators\In',
+		'safe' => '\bx\ar\validators\Safe',
 	);
 
 

@@ -14,6 +14,9 @@ class Factory
 		'default' => '\bx\ar\attributes\Attribute',
 		'property_s' => '\bx\ar\attributes\IblockPropertyString',
 		'property_l' => '\bx\ar\attributes\IblockPropertyList',
+		'property_n' => '\bx\ar\attributes\IblockPropertyNumber',
+		'property_e' => '\bx\ar\attributes\IblockPropertyRelative',
+		'property_multiple' => '\bx\ar\attributes\IblockPropertyMultiple',
 	);
 
 
