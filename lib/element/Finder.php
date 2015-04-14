@@ -55,7 +55,7 @@ class Finder extends \bx\ar\Finder
 	{
 		if (!\CModule::IncludeModule('iblock')) return 0;
 
-		return (int) CIBlockElement::GetList(
+		return (int) \CIBlockElement::GetList(
 		    array(),
 		    $this->getFilter(),
 		    array(),
