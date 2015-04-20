@@ -16,7 +16,9 @@ class Factory
 		'property_l' => '\bx\ar\attributes\IblockPropertyList',
 		'property_n' => '\bx\ar\attributes\IblockPropertyNumber',
 		'property_e' => '\bx\ar\attributes\IblockPropertyRelative',
+		'property_f' => '\bx\ar\attributes\IblockPropertyFile',
 		'property_multiple' => '\bx\ar\attributes\IblockPropertyMultiple',
+		'image' => '\bx\ar\attributes\IblockPropertyFile',
 	);
 
 

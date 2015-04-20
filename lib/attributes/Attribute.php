@@ -23,6 +23,10 @@ class Attribute implements \bx\ar\IAttribute
 	 * @var mixed ошибки для атрибута
 	 */
 	protected $_errors = null;
+	/**
+	 * @var \bx\ar\IActiveRecord родительская модель
+	 */
+	protected $_model = null;
 
 
 	/**

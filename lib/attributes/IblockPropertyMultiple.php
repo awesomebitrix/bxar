@@ -42,9 +42,12 @@ class IblockPropertyMultiple extends IblockProperty
 		$return = array();
 		$value = $this->getValue();
 		if (is_array($value)) {
-			$i = 0;
 			foreach ($value as $key => $element) {
-				$return['n' . $i++] = $element->getValueToDb();
+				$params = $element->getParams();
+				$return[$key] = array(
+					'VALUE' => $element->getValueToDb(),
+					'DESCRIPTION' => is_array($params['DESCRIPTION']) && isset($params['DESCRIPTION'][$key]) ? $params['DESCRIPTION'][$key] : $params['DESCRIPTION'],
+				);
 			}
 		}
 		return $return;

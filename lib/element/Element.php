@@ -78,6 +78,8 @@ class Element extends \bx\ar\ActiveRecord
 		$arFields = array();
 		foreach ($this->getAttributes() as $attr) {
 			$params = $attr->getParams();
+			$value = $attr->getValueToDb();
+			if ($value == null) continue;
 			if (!empty($params['ID'])) {
 				$arFields['PROPERTY_VALUES'][$params['ID']] = $attr->getValueToDb();
 			} else {
@@ -208,7 +210,7 @@ class Element extends \bx\ar\ActiveRecord
 			'MODIFIED_BY' => array(),
 			'TAGS' => array(),
 			'DETAIL_PICTURE' => array(),
-			'PREVIEW_PICTURE' => array(),
+			'PREVIEW_PICTURE' => array('type' => 'image'),
 		));
 
 		if (!empty($init['PROPERTIES']) && is_array($init['PROPERTIES'])) {
@@ -218,7 +220,7 @@ class Element extends \bx\ar\ActiveRecord
 				$value = $val['~VALUE'];
 				unset($val['~VALUE'], $val['VALUE']);
 				$type = $val['MULTIPLE'] == 'Y' ? 'property_multiple' : 'property_' . strtolower($val['PROPERTY_TYPE']);
-				$return[$code] = Factory::create($code, $type, $val);
+				$return[$code] = Factory::create($code, $type, $val, $this);
 				$return[$code]->setValue($value);
 			}
 		}
