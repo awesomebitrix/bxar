@@ -10,7 +10,7 @@ class IblockPropertyFile extends IblockProperty
 	/**
 	 * @var string путь к файлу из библиотеки битрикса
 	 */
-	protected $_path = null;
+	protected $_fileArray = null;
 
 
 	/**
@@ -24,16 +24,26 @@ class IblockPropertyFile extends IblockProperty
 	}
 
 	/**
+	 * Возвращает массив с описанием файла
+	 * @return string
+	 */
+	public function getFileArray()
+	{
+		$val = $this->getValue();
+		if ($val && $this->_fileArray === null && is_numeric($val)) {
+			$this->_fileArray = \CFile::GetFileArray($val);
+		}
+		return $this->_fileArray;
+	}
+
+	/**
 	 * Возвращает путь к файлу, если он записан в библиотеку битрикса
 	 * @return string
 	 */
 	public function getPath()
 	{
-		$val = $this->getValue();
-		if ($val && $this->_path === null && is_numeric($val)) {
-			$this->_path = \CFile::GetPath($val);
-		}
-		return $this->_path;
+		$fileArray = $this->getFileArray();
+		return !empty($fileArray['SRC']) ? $fileArray['SRC'] : null;
 	}
 
 	/**
@@ -44,10 +54,10 @@ class IblockPropertyFile extends IblockProperty
 	{
 		$return = null;
 		$type = $type === null ? BX_RESIZE_IMAGE_PROPORTIONAL : $type;
-		$path = $this->getPath();
-		if ($path !== null) {
+		$fileArray = $this->getFileArray();
+		if ($fileArray) {
 			$return = \CFile::ResizeImageGet(
-				$path, 
+				$fileArray, 
 				array('width' => $width, 'height' => $height),
 				$type,
 				$bInitSizes, 
