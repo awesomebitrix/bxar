@@ -121,7 +121,13 @@ class Finder extends \bx\ar\Finder
 		);
 		while ($obElement = $rsElement->GetNextElement()) {
 			$arItem = $obElement->GetFields();
-			$arItem["PROPERTIES"] = $obElement->GetProperties();
+			$arItem['PROPERTIES'] = $obElement->GetProperties();
+			foreach ($arItem['PROPERTIES'] as $key => &$value) {
+				if ($value['MULTIPLE'] == 'Y' && $value['VALUE'] === false) {
+					$value['VALUE'] = array();
+					$value['~VALUE'] = array();
+				}
+			}
 			$return[] = $arItem;
 		}
 

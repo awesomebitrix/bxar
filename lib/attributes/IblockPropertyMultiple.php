@@ -8,13 +8,27 @@ namespace bx\ar\attributes;
 class IblockPropertyMultiple extends IblockProperty
 {	
 	/**
+	 * Возвращает значение для поля
+	 * @return array
+	 */
+	public function getValue()
+	{
+		$return = array();
+		$values = parent::getValue();
+		foreach ($values as $key => $element) {
+			$return[$key] = $element->getValue();
+		}
+		return $return;
+	}
+
+	/**
 	 * Задает значение атрибута
 	 * @param mixed $value
 	 */
 	public function setValue($value)
 	{
-		if ($value === null || $value === array()) return null;
-		$values = $this->getValue();
+		if ($value === null || $value === array()) return parent::setValue(array());
+		$values = parent::getValue();
 		$values = is_array($values) ? $values : array();
 		$value = is_array($value) ? $value : array($value);
 		foreach ($values as $key => $element) {
@@ -40,7 +54,7 @@ class IblockPropertyMultiple extends IblockProperty
 	public function getValueToDb()
 	{
 		$return = array();
-		$value = $this->getValue();
+		$value = parent::getValue();
 		if (is_array($value)) {
 			foreach ($value as $key => $element) {
 				$params = $element->getParams();

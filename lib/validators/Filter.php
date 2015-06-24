@@ -21,7 +21,12 @@ class Filter extends \bx\ar\validators\Validator
 	protected function validateAttribute(\bx\ar\IAttribute $attribute, $setErrors = true)
 	{
 		if (($filter = trim($this->filter)) !== '') {
-			$value = call_user_func($filter, $attribute->getValue());
+			$attrValue = $attribute->getValue();
+			if (is_array($attrValue)) {
+				$value = array_map($filter, $attrValue);
+			} else {
+				$value = call_user_func($filter, $attrValue);
+			}
 			$attribute->setValue($value);
 		}
 		return true;

@@ -153,8 +153,8 @@ class Element extends \bx\ar\ActiveRecord
 				}
 			}
 			if ($required) $this->_propertiesValidation[] = array($required, 'required');
-			if ($trim) $this->_propertiesValidation[] = array($trim, 'filter', 'trim');
-			if ($float) $this->_propertiesValidation[] = array($float, 'filter', 'floatval');
+			if ($trim) $this->_propertiesValidation[] = array($trim, 'filter', 'filter' => 'trim');
+			if ($float) $this->_propertiesValidation[] = array($float, 'filter', 'filter' => 'floatval');
 			if ($safe) $this->_propertiesValidation[] = array($safe, 'safe');
 		}
 		return $this->_propertiesValidation;

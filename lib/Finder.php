@@ -136,6 +136,16 @@ abstract class Finder implements \bx\ar\IFinder
 	}
 
 	/**
+	 * @param array $value
+	 * @return \bx\ar\IFinder
+	 */
+	public function mergeFilterWith(array $value)
+	{
+		$this->_filter = array_merge($this->_filter, $value);
+		return $this;
+	}
+
+	/**
 	 * @return array
 	 */
 	public function getFilter()
