@@ -1,0 +1,22 @@
+{
+	"name": "marvin255/bxar",
+	"description": "Обертка active record для инфоблоков битрикса",
+	"version": "0.0.1",
+	"type": "library",
+	"keywords": ["php", "bitrix", "active record"],
+	"license": "MIT",
+	"require": {
+		"php": ">=5.3.2"
+	},
+	"autoload": {
+		"psr-4": { "bx\\ar\\": "lib/" }
+	},
+	"require": {
+	},
+	"repositories": [
+		{
+			"type": "git",
+			"url": "https://github.com/marvin255/bxar"
+		}
+	]
+}
