@@ -38,7 +38,6 @@ class Section extends \bx\ar\ActiveRecord
 			'XML_ID',
 			'IBLOCK_ID',
 			'IBLOCK_SECTION_ID',
-			'TIMESTAMP_X',
 			'SORT',
 			'NAME',
 			'ACTIVE',
