@@ -25,7 +25,7 @@ if (CModule::IncludeModule('iblock')) {
 **на простой и понятный:**
 
 ```php
-$model = \bx\ar\element\Finder::find(['IBLOCK_ID' => 1, 'ACTIVE' => 'Y'])->all();
+$model = \bxar\element\Finder::find(['IBLOCK_ID' => 1, 'ACTIVE' => 'Y'])->all();
 ```
 
 **Заменить запутанное:**
@@ -54,7 +54,7 @@ $res = $el->Update($PRODUCT_ID, $arLoadProductArray);
 **на очевидное:**
 
 ```php
-$el = \bx\ar\element\Finder::find(['ID' => 2])->one();
+$el = \bxar\element\Finder::find(['ID' => 2])->one();
 $el->setValues([
 	'modified_by'    => $USER->GetID(), // не нужно писать все заглавными буквами
 	'IBLOCK_SECTION' => false,
@@ -143,14 +143,14 @@ require_once __DIR__ . '/bxar/lib/Autoloader.php';
 **Получить один элемент:**
 
 ```php
-$model = \bx\ar\element\Finder::find(['ID' => 2])->one();
+$model = \bxar\element\Finder::find(['ID' => 2])->one();
 ```
 
 
 **Получить список из нескольких элементов:**
 
 ```php
-$models = \bx\ar\element\Finder::find([
+$models = \bxar\element\Finder::find([
 	'IBLOCK_ID' => 1,
 	'ACTIVE' => 'Y'
 ])->setOrder(['SORT' => 'ASC'])->all();
@@ -160,7 +160,7 @@ $models = \bx\ar\element\Finder::find([
 **Добавить несколько условий:**
 
 ```php
-$finder = \bx\ar\element\Finder::find([
+$finder = \bxar\element\Finder::find([
 	'IBLOCK_ID' => 1,
 	'ACTIVE' => 'Y'
 ]);
@@ -174,21 +174,21 @@ $models = $finder->setOrder(['SORT' => 'ASC'])->all();
 **Ограничить выборку по количеству элементов:**
 
 ```php
-$models = \bx\ar\element\Finder::find(['IBLOCK_ID' => 1])->setLimit(10)->all();
+$models = \bxar\element\Finder::find(['IBLOCK_ID' => 1])->setLimit(10)->all();
 ```
 
 
 **Узнать количество элементов, которые подходят под условия:**
 
 ```php
-$count = \bx\ar\element\Finder::find(['IBLOCK_ID' => 1])->count();
+$count = \bxar\element\Finder::find(['IBLOCK_ID' => 1])->count();
 ```
 
 
 **Получить массив, в котором ключами будут символьные коды элементов:**
 
 ```php
-$models = \bx\ar\element\Finder::find(['IBLOCK_ID' => 1])->setIndex('CODE')->all();
+$models = \bxar\element\Finder::find(['IBLOCK_ID' => 1])->setIndex('CODE')->all();
 if (isset($models['my_code'])) {
 	// получить модель для элемента с кодом "my_code"
 }
@@ -198,7 +198,7 @@ if (isset($models['my_code'])) {
 **Если вам не нравятся модели, то всегда можно получить массив, аналогичный news.list:**
 
 ```php
-$arrays = \bx\ar\element\Finder::find(['IBLOCK_ID' => 1])->setAsArray()->all();
+$arrays = \bxar\element\Finder::find(['IBLOCK_ID' => 1])->setAsArray()->all();
 ```
 
 
@@ -207,7 +207,7 @@ $arrays = \bx\ar\element\Finder::find(['IBLOCK_ID' => 1])->setAsArray()->all();
 Подный список атрибутов можно найти в [таблице полей элементов информационных блоков](https://dev.1c-bitrix.ru/api_help/iblock/fields.php#felement).
 
 ```php
-$model = \bx\ar\element\Finder::find(['ID' => 2])->one();
+$model = \bxar\element\Finder::find(['ID' => 2])->one();
 $id = $model->id->value; // ID элемента инфоблока
 $iblock_id = $model->iblock_id->value // ID инфоблока
 $name = $model->name->value // Название элемента инфоблока
@@ -217,7 +217,7 @@ $name = $model->name->value // Название элемента инфобло�
 **Получить любое пользовательское свойство модели:**
 
 ```php
-$model = \bx\ar\element\Finder::find(['ID' => 2])->one();
+$model = \bxar\element\Finder::find(['ID' => 2])->one();
 $city = $model->property_city->value; // Значение свойства с кодом city
 $year = $model->property_year->value; // Значение свойства с кодом year
 ```
@@ -226,7 +226,7 @@ $year = $model->property_year->value; // Значение свойства с к
 **Обновить элемент:**
 
 ```php
-$model = \bx\ar\element\Finder::find(['ID' => 2])->one();
+$model = \bxar\element\Finder::find(['ID' => 2])->one();
 $model->name->value = 'test value';
 $model->property_city->value = 15;
 $model->save();
@@ -235,7 +235,7 @@ $model->save();
 или массовое задание значений
 
 ```php
-$model = \bx\ar\element\Finder::find(['ID' => 2])->one();
+$model = \bxar\element\Finder::find(['ID' => 2])->one();
 $model->setValues([
 	'NAME'           => 'test value',
 	'ACTIVE'         => false,
@@ -252,7 +252,7 @@ $model->save();
 
 ```php
 //информационный блок должен быть указан обязательно!
-$model = new \bx\ar\element\Element(['IBLOCK_ID' => 1]);
+$model = new \bxar\element\Element(['IBLOCK_ID' => 1]);
 $model->setValues([
 	'NAME'           => 'test value',
 	'ACTIVE'         => false,
@@ -268,7 +268,7 @@ $model->save();
 **Сахар:**
 
 ```php
-$model = \bx\ar\element\Finder::find(['ID' => 2])->one();
+$model = \bxar\element\Finder::find(['ID' => 2])->one();
 
 // ссылка на картинку
 $url = $model->preview_picture->path;
