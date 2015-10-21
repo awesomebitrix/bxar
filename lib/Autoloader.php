@@ -38,4 +38,4 @@ class Autoloader
 	}
 }
 
-\bx\ar\Autoloader::register(dirname(__FILE__));
+\bxar\Autoloader::register(dirname(__FILE__));

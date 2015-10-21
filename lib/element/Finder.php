@@ -17,7 +17,7 @@ class Finder extends \bxar\Finder
 		$finder = new self;
 		if ($filter !== null) $finder->setFilter($filter);
 		if ($arClass === null) {
-			$finder->setArClass('\\bx\\ar\\element\\Element');
+			$finder->setArClass('\\bxar\\element\\Element');
 		} else {
 			$finder->setArClass($arClass);
 		}
