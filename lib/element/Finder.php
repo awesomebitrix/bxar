@@ -113,31 +113,7 @@ class Finder extends \bx\ar\Finder
 		}
 
 		//поля для выборки
-		$select = array(
-			"ID",
-			"IBLOCK_ID",
-			"CODE",
-			"XML_ID",
-			"NAME",
-			"ACTIVE",
-			"DATE_ACTIVE_FROM",
-			"DATE_ACTIVE_TO",
-			"SORT",
-			"PREVIEW_TEXT",
-			"PREVIEW_TEXT_TYPE",
-			"DETAIL_TEXT",
-			"DETAIL_TEXT_TYPE",
-			"DATE_CREATE",
-			"CREATED_BY",
-			"TIMESTAMP_X",
-			"MODIFIED_BY",
-			"TAGS",
-			"IBLOCK_SECTION_ID",
-			"DETAIL_PAGE_URL",
-			"LIST_PAGE_URL",
-			"DETAIL_PICTURE",
-			"PREVIEW_PICTURE",
-		);
+		$select = Element::getBuiltFields();
 
 		//собираем идентификаторы элементов и инфоблоков, чтобы запросить сразу все свойства
 		$arIblocksAndElements = array();
