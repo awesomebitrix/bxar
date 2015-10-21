@@ -1,15 +1,15 @@
 <?php
 
-namespace bx\ar\element;
+namespace bxar\element;
 
 
-use \bx\ar\attributes\Factory;
+use \bxar\attributes\Factory;
 
 
 /**
  * Active record для элементов инфоблоков
  */
-class Element extends \bx\ar\ActiveRecord
+class Element extends \bxar\ActiveRecord
 {
 	/**
 	 * @var array
@@ -196,7 +196,7 @@ class Element extends \bx\ar\ActiveRecord
 	/**
 	 * Возвращает атрибут модели по указанному имени
 	 * @param string $name
-	 * @return null|\bx\ar\IAttribute
+	 * @return null|\bxar\IAttribute
 	 */
 	public function getAttribute($name)
 	{
@@ -244,7 +244,7 @@ class Element extends \bx\ar\ActiveRecord
 	/**
 	 * Создает атрибут из массива с настройками
 	 * @param array $settings
-	 * @return \bx\ar\IAttribute
+	 * @return \bxar\IAttribute
 	 */
 	public function createAttributeFromSettings(array $settings)
 	{
@@ -287,7 +287,7 @@ class Element extends \bx\ar\ActiveRecord
 	 */
 	protected function getIblockDescription($iblockId)
 	{
-		return \bx\ar\helpers\Iblock::getById($iblockId);
+		return \bxar\helpers\Iblock::getById($iblockId);
 	}
 
 	/**
@@ -298,7 +298,7 @@ class Element extends \bx\ar\ActiveRecord
 	protected function getIblockFields($iblockId)
 	{
 		$return = array();
-		$res = \bx\ar\helpers\Iblock::getFields($iblockId);
+		$res = \bxar\helpers\Iblock::getFields($iblockId);
 		foreach ($res as $key => $value) {
 			$return[$this->prepareAttributeName($key)] = $value;
 		}

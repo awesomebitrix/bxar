@@ -1,6 +1,6 @@
 <?php
 
-namespace bx\ar\attributes;
+namespace bxar\attributes;
 
 /**
  * Класс для свойства типа bool из битрикса

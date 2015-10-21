@@ -1,15 +1,15 @@
 <?php
 
-namespace bx\ar\section;
+namespace bxar\section;
 
 
-use \bx\ar\attributes\Factory;
+use \bxar\attributes\Factory;
 
 
 /**
  * Active record для разделов инфоблоков
  */
-class Section extends \bx\ar\ActiveRecord
+class Section extends \bxar\ActiveRecord
 {
 	/**
 	 * @var array
@@ -178,7 +178,7 @@ class Section extends \bx\ar\ActiveRecord
 	/**
 	 * Возвращает атрибут модели по указанному имени
 	 * @param string $name
-	 * @return null|\bx\ar\IAttribute
+	 * @return null|\bxar\IAttribute
 	 */
 	public function getAttribute($name)
 	{
@@ -213,7 +213,7 @@ class Section extends \bx\ar\ActiveRecord
 	/**
 	 * Создает атрибут из массива с настройками
 	 * @param array $settings
-	 * @return \bx\ar\IAttribute
+	 * @return \bxar\IAttribute
 	 */
 	public function createAttributeFromSettings(array $settings)
 	{
@@ -253,6 +253,6 @@ class Section extends \bx\ar\ActiveRecord
 	 */
 	protected function getIblockDescription($iblockId)
 	{
-		return \bx\ar\helpers\Iblock::getById($iblockId);
+		return \bxar\helpers\Iblock::getById($iblockId);
 	}
 }

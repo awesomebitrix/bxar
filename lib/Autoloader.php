@@ -1,6 +1,6 @@
 <?php
 
-namespace bx\ar;
+namespace bxar;
 
 /**
  * Автозагрузчик для классов

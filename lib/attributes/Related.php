@@ -1,6 +1,6 @@
 <?php
 
-namespace bx\ar\attributes;
+namespace bxar\attributes;
 
 /**
  * Класс для свойства привязки к элементу
@@ -8,7 +8,7 @@ namespace bx\ar\attributes;
 class Related extends Attribute
 {
 	/**
-	 * @var \bx\ar\ActiveRecord связанный элемент
+	 * @var \bxar\ActiveRecord связанный элемент
 	 */
 	protected $_related = null;
 
@@ -34,23 +34,23 @@ class Related extends Attribute
 
 	/**
 	 * Возвращает модель связанного элемента
-	 * @return \bx\ar\ActiveRecord
+	 * @return \bxar\ActiveRecord
 	 */
 	public function getRelated()
 	{
 		$id = $this->getValue();
 		if ($id !== null && $this->_related === null) {
 			$params = $this->getParams();
-			$this->_related = \bx\ar\element\Finder::find(array('IBLOCK_ID' => $params['LINK_IBLOCK_ID'], 'ID' => $id))->one();
+			$this->_related = \bxar\element\Finder::find(array('IBLOCK_ID' => $params['LINK_IBLOCK_ID'], 'ID' => $id))->one();
 		}
 		return $this->_related;
 	}
 
 	/**
 	 * Задает модель связанного элемента
-	 * @param \bx\ar\ActiveRecord $model
+	 * @param \bxar\ActiveRecord $model
 	 */
-	public function setRelated(\bx\ar\ActiveRecord $model)
+	public function setRelated(\bxar\ActiveRecord $model)
 	{
 		$id = $model->getAttributeValue('ID');
 		if ($id) {

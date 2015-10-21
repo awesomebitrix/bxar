@@ -1,8 +1,8 @@
 <?php
 
-namespace bx\ar\section;
+namespace bxar\section;
 
-class Exception extends \bx\ar\Exception
+class Exception extends \bxar\Exception
 {
 
 }

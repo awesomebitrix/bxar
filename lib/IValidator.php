@@ -1,6 +1,6 @@
 <?php
 
-namespace bx\ar;
+namespace bxar;
 
 /**
  * Интерфейс для валидатора модели
@@ -35,12 +35,12 @@ interface IValidator
 	public function getAttributes();
 
 	/**
-	 * @param \bx\ar\IActiveRecord $model
+	 * @param \bxar\IActiveRecord $model
 	 */
-	public function setModel(\bx\ar\IActiveRecord $value);
+	public function setModel(\bxar\IActiveRecord $value);
 
 	/**
-	 * @return \bx\ar\IActiveRecord|null
+	 * @return \bxar\IActiveRecord|null
 	 */
 	public function getModel();
 }

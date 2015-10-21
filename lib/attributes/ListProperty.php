@@ -1,6 +1,6 @@
 <?php
 
-namespace bx\ar\attributes;
+namespace bxar\attributes;
 
 /**
  * Класс для свойства со списком
@@ -85,7 +85,7 @@ class ListProperty extends Attribute
 		$return = array();
 		$id = (int) $this->getParam('id');
 		if ($id > 0) {
-			$return = \bx\ar\helpers\Enum::getById($id);
+			$return = \bxar\helpers\Enum::getById($id);
 		}
 		return $return;
 	}

@@ -1,6 +1,6 @@
 <?php
 
-namespace bx\ar\attributes;
+namespace bxar\attributes;
 
 /**
  * Класс для множественного свойства
@@ -70,7 +70,7 @@ class Multiple extends Attribute
 	/**
 	 * Инициирует новый элемент для значения множественного поля
 	 * @param string $code
-	 * @return \bx\ar\attributes\IblockProperty
+	 * @return \bxar\attributes\IblockProperty
 	 */
 	protected function initValueItem($code)
 	{

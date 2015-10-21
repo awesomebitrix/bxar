@@ -1,6 +1,6 @@
 <?php
 
-namespace bx\ar\attributes;
+namespace bxar\attributes;
 
 /**
  * Класс для связки элемента с разделами
@@ -58,7 +58,7 @@ class BitrixSection extends Attribute
 			sort($current);
 			$inDb = $this->getSectionsId();
 			if ($inDb !== $current) {
-				if (!\CModule::IncludeModule('iblock')) throw new \bx\ar\Exception('Iblock module is not installed');
+				if (!\CModule::IncludeModule('iblock')) throw new \bxar\Exception('Iblock module is not installed');
 				\CIBlockElement::SetElementSection(
 					$this->getModel()->getAttribute('id')->getValue(),
 					!empty($current) ? $current : null
@@ -82,7 +82,7 @@ class BitrixSection extends Attribute
 	{
 		if (self::$_sections === null) {
 			self::$_sections = array();
-			if (!\CModule::IncludeModule('iblock')) throw new \bx\ar\Exception('Iblock module is not installed');
+			if (!\CModule::IncludeModule('iblock')) throw new \bxar\Exception('Iblock module is not installed');
 			$res = \CIBlockElement::GetElementGroups($this->getModel()->getAttribute('id')->getValue());
 			while ($ob = $res->GetNext()) {
 				self::$_sections[] = (int) $ob['ID'];

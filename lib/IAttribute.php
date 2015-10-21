@@ -1,6 +1,6 @@
 <?php
 
-namespace bx\ar;
+namespace bxar;
 
 /**
  * Интерфейс для атрибута модели
@@ -67,13 +67,13 @@ interface IAttribute
 
 	/**
 	 * Задает значение атрибута
-	 * @param \bx\ar\IActiveRecord $model
+	 * @param \bxar\IActiveRecord $model
 	 */
-	public function setModel(\bx\ar\IActiveRecord $model);
+	public function setModel(\bxar\IActiveRecord $model);
 
 	/**
 	 * Возвращает значение атрибута
-	 * @return \bx\ar\IActiveRecord
+	 * @return \bxar\IActiveRecord
 	 */
 	public function getModel();
 

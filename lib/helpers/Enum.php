@@ -1,6 +1,6 @@
 <?php
 
-namespace bx\ar\helpers;
+namespace bxar\helpers;
 
 /**
  * Вспомогательные функции для работы со списками инфоблоков
@@ -20,7 +20,7 @@ class Enum
 	public static function getById($id)
 	{
 		if (!isset(self::$_items[$id])) {
-			if (!\CModule::IncludeModule('iblock')) throw new \bx\ar\Exception('Iblock module is not installed');
+			if (!\CModule::IncludeModule('iblock')) throw new \bxar\Exception('Iblock module is not installed');
 			self::$_items[$id] = array();
 			$res = \CIBlockPropertyEnum::GetList(
 				array('SORT' => 'ASC', 'VALUE' => 'ASC'),

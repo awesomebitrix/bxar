@@ -1,11 +1,11 @@
 <?php
 
-namespace bx\ar\validators;
+namespace bxar\validators;
 
 /**
  * Обязательный атрибут
  */
-class Required extends \bx\ar\validators\Validator
+class Required extends \bxar\validators\Validator
 {
 	/**
 	 * @param string
@@ -18,7 +18,7 @@ class Required extends \bx\ar\validators\Validator
 	 * @param string $name
 	 * @return bool
 	 */
-	protected function validateAttribute(\bx\ar\IAttribute $attribute, $setErrors = true)
+	protected function validateAttribute(\bxar\IAttribute $attribute, $setErrors = true)
 	{
 		$value = $attribute->getValue();
 		if ($value === null || $value === '') {

@@ -1,8 +1,8 @@
 <?php
 
-namespace bx\ar\validators;
+namespace bxar\validators;
 
-class Exception extends \bx\ar\Exception
+class Exception extends \bxar\Exception
 {
 
 }

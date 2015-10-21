@@ -1,16 +1,16 @@
 <?php
 
-namespace bx\ar\element;
+namespace bxar\element;
 
 /**
  * Класс для поиска элементов инфоблоков по запросу
  */
-class Finder extends \bx\ar\Finder
+class Finder extends \bxar\Finder
 {
 	/**
 	 * @param array $filter
 	 * @param string $arClass
-	 * @return \bx\ar\IFinder
+	 * @return \bxar\IFinder
 	 */
 	public static function find(array $filter = null, $arClass = null)
 	{
@@ -27,7 +27,7 @@ class Finder extends \bx\ar\Finder
 
 	/**
 	 * Находит один элемент
-	 * @return \bx\ar\IActiveRecord
+	 * @return \bxar\IActiveRecord
 	 */
 	public function one()
 	{
@@ -137,7 +137,7 @@ class Finder extends \bx\ar\Finder
 
 		//запрашиваем значения свойств инфоблоков
 		foreach ($arIblocksAndElements as $iblockId => $ids) {
-			$iblockDescription = \bx\ar\helpers\Iblock::getById($iblockId);
+			$iblockDescription = \bxar\helpers\Iblock::getById($iblockId);
 			//только если для инфоблока определены дополнительные свойства
 			if (!empty($iblockDescription['PROPERTIES'])) {
 				$filter = array('IBLOCK_ID' => $iblockId, 'ID' => array_unique($ids));

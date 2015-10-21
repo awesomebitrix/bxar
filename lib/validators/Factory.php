@@ -1,6 +1,6 @@
 <?php
 
-namespace bx\ar\validators;
+namespace bxar\validators;
 
 /**
  * Фабрика для создания валидаторов
@@ -11,10 +11,10 @@ class Factory
 	 * @var array соответствия между заданным классом атрибута и создаваемым объектом
 	 */
 	protected static $_classMap = array(
-		'filter' => '\bx\ar\validators\Filter',
-		'default' => '\bx\ar\validators\DefaultValue',
-		'required' => '\bx\ar\validators\Required',
-		'safe' => '\bx\ar\validators\Safe',
+		'filter' => '\bxar\validators\Filter',
+		'default' => '\bxar\validators\DefaultValue',
+		'required' => '\bxar\validators\Required',
+		'safe' => '\bxar\validators\Safe',
 	);
 
 
@@ -23,8 +23,8 @@ class Factory
 	 * @param string $code
 	 * @param string $type
 	 * @param array $options
-	 * @throw \bx\ar\attributes\Exception
-	 * @return \bx\ar\IAttribute
+	 * @throw \bxar\attributes\Exception
+	 * @return \bxar\IAttribute
 	 */
 	public static function create(array $rule)
 	{
@@ -33,8 +33,8 @@ class Factory
 		$options['attributes'] = $rule[0];
 		$type = $rule[1];
 		$class = !empty(self::$_classMap[$type]) ? self::$_classMap[$type] : $type;
-		if (!is_subclass_of($class, '\bx\ar\IValidator')) {
-			throw new Exception('Type class ' . $class . ' must implements \bx\ar\IValidator');
+		if (!is_subclass_of($class, '\bxar\IValidator')) {
+			throw new Exception('Type class ' . $class . ' must implements \bxar\IValidator');
 		} else {
 			$validator = new $class;
 			foreach ($options as $name => $value) {

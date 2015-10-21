@@ -1,11 +1,11 @@
 <?php
 
-namespace bx\ar;
+namespace bxar;
 
 /**
  * Базовый класс для active record
  */
-abstract class ActiveRecord implements \bx\ar\IActiveRecord
+abstract class ActiveRecord implements \bxar\IActiveRecord
 {
 	/**
 	 * @var array валидаторы
@@ -57,7 +57,7 @@ abstract class ActiveRecord implements \bx\ar\IActiveRecord
 	/**
 	 * Магия для быстрого доступа к атрибутам
 	 * @param string $name
-	 * @return null|\bx\ar\IAttribute
+	 * @return null|\bxar\IAttribute
 	 */
 	public function __get($name)
 	{
@@ -124,11 +124,11 @@ abstract class ActiveRecord implements \bx\ar\IActiveRecord
 	/**
 	 * Создает валидатор из массива настроек
 	 * @param array $settings
-	 * @return \bx\ar\IValidator
+	 * @return \bxar\IValidator
 	 */
 	protected function createValidatorFromSettings(array $settings)
 	{
-		return \bx\ar\validators\Factory::create($settings);
+		return \bxar\validators\Factory::create($settings);
 	}
 
 
@@ -149,7 +149,7 @@ abstract class ActiveRecord implements \bx\ar\IActiveRecord
 	/**
 	 * Возвращает атрибут модели по указанному имени
 	 * @param string $name
-	 * @return null|\bx\ar\IAttribute
+	 * @return null|\bxar\IAttribute
 	 */
 	public function getAttribute($name)
 	{
@@ -170,9 +170,9 @@ abstract class ActiveRecord implements \bx\ar\IActiveRecord
 	/**
 	 * Добавляет новый атрибут модели
 	 * @param string $name
-	 * @param \bx\ar\IAttribute $attr
+	 * @param \bxar\IAttribute $attr
 	 */
-	protected function setAttribute($name, \bx\ar\IAttribute $attr)
+	protected function setAttribute($name, \bxar\IAttribute $attr)
 	{
 		$name = $this->prepareAttributeName($name);
 		$this->_attributes[$name] = $attr;
@@ -302,7 +302,7 @@ abstract class ActiveRecord implements \bx\ar\IActiveRecord
 
 	/**
 	 * @param string $value
-	 * @return \bx\ar\IActiveRecord
+	 * @return \bxar\IActiveRecord
 	 */
 	public function setScenario($value)
 	{

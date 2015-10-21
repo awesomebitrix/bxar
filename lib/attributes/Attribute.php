@@ -1,11 +1,11 @@
 <?php
 
-namespace bx\ar\attributes;
+namespace bxar\attributes;
 
 /**
  * Базовый класс для атрибутов
  */
-class Attribute implements \bx\ar\IAttribute
+class Attribute implements \bxar\IAttribute
 {
 	/**
 	 * @var mixed значение атрибута
@@ -24,7 +24,7 @@ class Attribute implements \bx\ar\IAttribute
 	 */
 	protected $_errors = null;
 	/**
-	 * @var \bx\ar\IActiveRecord родительская модель
+	 * @var \bxar\IActiveRecord родительская модель
 	 */
 	protected $_model = null;
 
@@ -160,16 +160,16 @@ class Attribute implements \bx\ar\IAttribute
 
 	/**
 	 * Задает значение атрибута
-	 * @param \bx\ar\IActiveRecord $model
+	 * @param \bxar\IActiveRecord $model
 	 */
-	public function setModel(\bx\ar\IActiveRecord $model)
+	public function setModel(\bxar\IActiveRecord $model)
 	{
 		$this->_model = $model;
 	}
 
 	/**
 	 * Возвращает значение атрибута
-	 * @return \bx\ar\IActiveRecord
+	 * @return \bxar\IActiveRecord
 	 */
 	public function getModel()
 	{

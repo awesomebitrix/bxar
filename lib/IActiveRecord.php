@@ -1,6 +1,6 @@
 <?php
 
-namespace bx\ar;
+namespace bxar;
 
 /**
  * Интерфейс для active record
@@ -60,7 +60,7 @@ interface IActiveRecord
 	/**
 	 * Возвращает атрибут модели по указанному имени
 	 * @param string $name
-	 * @return null|\bx\ar\IAttribute
+	 * @return null|\bxar\IAttribute
 	 */
 	public function getAttribute($name);
 
@@ -108,7 +108,7 @@ interface IActiveRecord
 
 	/**
 	 * @param string $value
-	 * @return \bx\ar\IActiveRecord
+	 * @return \bxar\IActiveRecord
 	 */
 	public function setScenario($value);
 

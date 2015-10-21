@@ -1,6 +1,6 @@
 <?php
 
-namespace bx\ar\helpers;
+namespace bxar\helpers;
 
 /**
  * Вспомогательные функции для работы с инфоблоками

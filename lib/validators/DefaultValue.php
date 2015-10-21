@@ -1,11 +1,11 @@
 <?php
 
-namespace bx\ar\validators;
+namespace bxar\validators;
 
 /**
  * Валидатор, который устанавливает значения по умолчанию
  */
-class DefaultValue extends \bx\ar\validators\Validator
+class DefaultValue extends \bxar\validators\Validator
 {
 	/**
 	 * @param string
@@ -22,7 +22,7 @@ class DefaultValue extends \bx\ar\validators\Validator
 	 * @param string $name
 	 * @return bool
 	 */
-	protected function validateAttribute(\bx\ar\IAttribute $attribute, $setErrors = true)
+	protected function validateAttribute(\bxar\IAttribute $attribute, $setErrors = true)
 	{
 		$new = $this->getModel()->isNew();
 		if ($new) {

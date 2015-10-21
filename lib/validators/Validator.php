@@ -1,14 +1,14 @@
 <?php
 
-namespace bx\ar\validators;
+namespace bxar\validators;
 
 /**
  * Базовый класс для валидаторов
  */
-abstract class Validator implements \bx\ar\IValidator
+abstract class Validator implements \bxar\IValidator
 {
 	/**
-	 * @var \bx\ar\IActiveRecord
+	 * @var \bxar\IActiveRecord
 	 */
 	protected $_model = null;
 	/**
@@ -27,7 +27,7 @@ abstract class Validator implements \bx\ar\IValidator
 	 * @param bool $setErrors
 	 * @return bool
 	 */
-	abstract protected function validateAttribute(\bx\ar\IAttribute $attribute, $setErrors = true);
+	abstract protected function validateAttribute(\bxar\IAttribute $attribute, $setErrors = true);
 
 
 	/**
@@ -87,15 +87,15 @@ abstract class Validator implements \bx\ar\IValidator
 
 
 	/**
-	 * @param \bx\ar\IActiveRecord $value
+	 * @param \bxar\IActiveRecord $value
 	 */
-	public function setModel(\bx\ar\IActiveRecord $value)
+	public function setModel(\bxar\IActiveRecord $value)
 	{
 		$this->_model = $value;
 	}
 
 	/**
-	 * @return \bx\ar\IActiveRecord|null
+	 * @return \bxar\IActiveRecord|null
 	 */
 	public function getModel()
 	{

@@ -1,16 +1,16 @@
 <?php
 
-namespace bx\ar\section;
+namespace bxar\section;
 
 /**
  * Класс для поиска разделов инфоблоков по запросу
  */
-class Finder extends \bx\ar\Finder
+class Finder extends \bxar\Finder
 {
 	/**
 	 * @param array $filter
 	 * @param string $arClass
-	 * @return \bx\ar\IFinder
+	 * @return \bxar\IFinder
 	 */
 	public static function find(array $filter = null, $arClass = null)
 	{
@@ -27,7 +27,7 @@ class Finder extends \bx\ar\Finder
 
 	/**
 	 * Находит один элемент
-	 * @return \bx\ar\IActiveRecord
+	 * @return \bxar\IActiveRecord
 	 */
 	public function one()
 	{
@@ -96,7 +96,7 @@ class Finder extends \bx\ar\Finder
 	/**
 	 * Задает флаг, считать количество вложенных элементов или нет
 	 * @param bool $value
-	 * @return \bx\ar\section\Finder
+	 * @return \bxar\section\Finder
 	 */
 	public function setBIncCnt($value = true)
 	{

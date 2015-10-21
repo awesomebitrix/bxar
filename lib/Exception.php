@@ -1,6 +1,6 @@
 <?php
 
-namespace bx\ar;
+namespace bxar;
 
 class Exception extends \Exception
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace bx\ar\validators;
+namespace bxar\validators;
 
 /**
  * Валидатор с фильтром
  */
-class Filter extends \bx\ar\validators\Validator
+class Filter extends \bxar\validators\Validator
 {
 	/**
 	 * @param string
@@ -18,7 +18,7 @@ class Filter extends \bx\ar\validators\Validator
 	 * @param string $name
 	 * @return bool
 	 */
-	protected function validateAttribute(\bx\ar\IAttribute $attribute, $setErrors = true)
+	protected function validateAttribute(\bxar\IAttribute $attribute, $setErrors = true)
 	{
 		if (($filter = trim($this->filter)) !== '') {
 			$attrValue = $attribute->getValue();

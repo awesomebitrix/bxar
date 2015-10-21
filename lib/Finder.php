@@ -1,11 +1,11 @@
 <?php
 
-namespace bx\ar;
+namespace bxar;
 
 /**
  * Базовый класс для поиска моделей по запросу
  */
-abstract class Finder implements \bx\ar\IFinder
+abstract class Finder implements \bxar\IFinder
 {
 	/**
 	 * @var array сортиовка
@@ -43,7 +43,7 @@ abstract class Finder implements \bx\ar\IFinder
 
 	/**
 	 * @param string $value
-	 * @return \bx\ar\IFinder
+	 * @return \bxar\IFinder
 	 */
 	public function setArClass($value)
 	{
@@ -62,7 +62,7 @@ abstract class Finder implements \bx\ar\IFinder
 
 	/**
 	 * @param array $value
-	 * @return \bx\ar\IFinder
+	 * @return \bxar\IFinder
 	 */
 	public function setOrder(array $value)
 	{
@@ -81,7 +81,7 @@ abstract class Finder implements \bx\ar\IFinder
 
 	/**
 	 * @param array $value
-	 * @return \bx\ar\IFinder
+	 * @return \bxar\IFinder
 	 */
 	public function setFilter(array $value)
 	{
@@ -91,7 +91,7 @@ abstract class Finder implements \bx\ar\IFinder
 
 	/**
 	 * @param array $value
-	 * @return \bx\ar\IFinder
+	 * @return \bxar\IFinder
 	 */
 	public function mergeFilterWith(array $value)
 	{
@@ -110,7 +110,7 @@ abstract class Finder implements \bx\ar\IFinder
 
 	/**
 	 * @param int $value
-	 * @return \bx\ar\IFinder
+	 * @return \bxar\IFinder
 	 */
 	public function setLimit($value)
 	{
@@ -129,7 +129,7 @@ abstract class Finder implements \bx\ar\IFinder
 
 	/**
 	 * @param int $value
-	 * @return \bx\ar\IFinder
+	 * @return \bxar\IFinder
 	 */
 	public function setOffset($value)
 	{
@@ -148,7 +148,7 @@ abstract class Finder implements \bx\ar\IFinder
 
 	/**
 	 * @param int $value
-	 * @return \bx\ar\IFinder
+	 * @return \bxar\IFinder
 	 */
 	public function setAsArray($value = true)
 	{
@@ -167,7 +167,7 @@ abstract class Finder implements \bx\ar\IFinder
 
 	/**
 	 * @param string $value
-	 * @return \bx\ar\IFinder
+	 * @return \bxar\IFinder
 	 */
 	public function setIndex($value)
 	{
@@ -197,7 +197,7 @@ abstract class Finder implements \bx\ar\IFinder
 	/**
 	 * Инициирует модель ar
 	 * @param array $init
-	 * @return \bx\ar\IActiveRecord
+	 * @return \bxar\IActiveRecord
 	 */
 	protected function initItem(array $init)
 	{

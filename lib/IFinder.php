@@ -1,6 +1,6 @@
 <?php
 
-namespace bx\ar;
+namespace bxar;
 
 /**
  * Интерфейс для атрибута модели
@@ -10,14 +10,14 @@ interface IFinder
 	/**
 	 * @param array $filter
 	 * @param string $arClass
-	 * @return \bx\ar\IFinder
+	 * @return \bxar\IFinder
 	 */
 	public static function find(array $filter = null, $arClass = null);
 
 
 	/**
 	 * @param string $value
-	 * @return \bx\ar\IFinder
+	 * @return \bxar\IFinder
 	 */
 	public function setArClass($value);
 
@@ -29,7 +29,7 @@ interface IFinder
 
 	/**
 	 * @param array $value
-	 * @return \bx\ar\IFinder
+	 * @return \bxar\IFinder
 	 */
 	public function setOrder(array $value);
 
@@ -41,13 +41,13 @@ interface IFinder
 
 	/**
 	 * @param array $value
-	 * @return \bx\ar\IFinder
+	 * @return \bxar\IFinder
 	 */
 	public function setFilter(array $value);
 
 	/**
 	 * @param array $value
-	 * @return \bx\ar\IFinder
+	 * @return \bxar\IFinder
 	 */
 	public function mergeFilterWith(array $value);
 
@@ -59,7 +59,7 @@ interface IFinder
 
 	/**
 	 * @param int $value
-	 * @return \bx\ar\IFinder
+	 * @return \bxar\IFinder
 	 */
 	public function setLimit($value);
 
@@ -71,7 +71,7 @@ interface IFinder
 
 	/**
 	 * @param int $value
-	 * @return \bx\ar\IFinder
+	 * @return \bxar\IFinder
 	 */
 	public function setOffset($value);
 
@@ -83,7 +83,7 @@ interface IFinder
 
 	/**
 	 * @param int $value
-	 * @return \bx\ar\IFinder
+	 * @return \bxar\IFinder
 	 */
 	public function setAsArray($value = true);
 
@@ -95,7 +95,7 @@ interface IFinder
 
 	/**
 	 * @param string $value
-	 * @return \bx\ar\IFinder
+	 * @return \bxar\IFinder
 	 */
 	public function setIndex($value);
 
@@ -107,7 +107,7 @@ interface IFinder
 
 	/**
 	 * Находит один элемент
-	 * @return \bx\ar\IActiveRecord
+	 * @return \bxar\IActiveRecord
 	 */
 	public function one();
 
