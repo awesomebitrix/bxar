@@ -22,17 +22,12 @@ class Section extends \bx\ar\ActiveRecord
 
 
 	/**
-	 * Создает атрибуты Active Record
-	 * @param array $init
+	 * Возвращает массив с полями элемента инфоблока
+	 * @return array
 	 */
-	public function initAttributes(array $init)
+	public static function getBuiltFields()
 	{
-		//без указания инфоблока мы не сможем составить модель
-		if (empty($init['IBLOCK_ID']) || ($iblock = $this->getIblockDescription($init['IBLOCK_ID'])) === null) {
-			throw new Exception('iblock id must be valid');
-		}
-		//поля элемента инфоблока
-		$initProperties = array(
+		return array(
 			'ID',
 			'CODE',
 			'XML_ID',
@@ -54,6 +49,21 @@ class Section extends \bx\ar\ActiveRecord
 			'CREATED_BY',
 			'DETAIL_PICTURE',
 		);
+	}
+
+
+	/**
+	 * Создает атрибуты Active Record
+	 * @param array $init
+	 */
+	public function initAttributes(array $init)
+	{
+		//без указания инфоблока мы не сможем составить модель
+		if (empty($init['IBLOCK_ID']) || ($iblock = $this->getIblockDescription($init['IBLOCK_ID'])) === null) {
+			throw new Exception('iblock id must be valid');
+		}
+		//поля элемента инфоблока
+		$initProperties = self::getBuiltFields();
 		foreach ($initProperties as $key) {
 			$this->_initOnDemand[$this->prepareAttributeName($key)] = isset($init[$key]) ? $init[$key] : null;
 		}

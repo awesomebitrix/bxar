@@ -142,28 +142,7 @@ class Finder extends \bx\ar\Finder
 		}
 
 		//поля для выборки
-		$select = array(
-			'ID',
-			'CODE',
-			'XML_ID',
-			'IBLOCK_ID',
-			'IBLOCK_SECTION_ID',
-			'SORT',
-			'NAME',
-			'ACTIVE',
-			'GLOBAL_ACTIVE',
-			'PICTURE',
-			'DESCRIPTION',
-			'DESCRIPTION_TYPE',
-			'LEFT_MARGIN',
-			'RIGHT_MARGIN',
-			'DEPTH_LEVEL',
-			'SECTION_PAGE_URL',
-			'MODIFIED_BY',
-			'DATE_CREATE',
-			'CREATED_BY',
-			'DETAIL_PICTURE',
-		);
+		$select = Section::getBuiltFields();
 
 		//запрос
 		$rsElement = \CIBlockSection::GetList(
