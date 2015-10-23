@@ -233,6 +233,7 @@ abstract class ActiveRecord implements \bxar\IActiveRecord
 			$attr = $this->getAttribute($key);
 			if ($attr) $attr->setValue($value);
 		}
+		return $this;
 	}
 
 
