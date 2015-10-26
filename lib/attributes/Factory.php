@@ -15,6 +15,7 @@ class Factory
 		'numeric' => '\bxar\attributes\Numeric',
 		'date' => '\bxar\attributes\Date',
 		'bitrixBool' => '\bxar\attributes\BitrixBool',
+		'bitrixUrl' => '\bxar\attributes\BitrixUrl',
 		'list' => '\bxar\attributes\ListProperty',
 		'file' => '\bxar\attributes\File',
 		'related' => '\bxar\attributes\Related',

@@ -47,6 +47,17 @@ class File extends Attribute
 	}
 
 	/**
+	 * Возвращает путь до картинки вместе с доменом
+	 * @return string
+	 */
+	public function getAbsoluteUrl()
+	{
+		$path = $this->getPath();
+		$domen = !empty(SITE_SERVER_NAME) ? SITE_SERVER_NAME : $_SERVER['HTTP_HOST'];
+		return $path ? "http://{$domen}{$path}" : null;
+	}
+
+	/**
 	 * Возвращает массив с данными о картинке, пережатой до нужных размеров
 	 * @return array
 	 */

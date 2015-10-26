@@ -276,6 +276,8 @@ class Element extends \bxar\ActiveRecord
 			$settings['type'] = 'file';
 		} elseif ($settings['code'] == 'iblock_section_id') {
 			$settings['type'] = 'bitrixSection';
+		} elseif ($settings['code'] == 'detail_page_url' || $settings['code'] == 'list_page_url') {
+			$settings['type'] = 'bitrixUrl';
 		}
 		return Factory::create($settings);
 	}
