@@ -295,7 +295,7 @@ class Element extends \bxar\ActiveRecord
 	{
 		$locator = $this->getIblockLocator();
 		if ($locator) {
-			return $locator->findBy('ID', $id);
+			return $locator->findBy('ID', $iblockId);
 		} else {
 			return \bxar\helpers\Iblock::getById($iblockId);
 		}
