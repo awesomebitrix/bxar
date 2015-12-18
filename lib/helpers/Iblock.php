@@ -87,7 +87,7 @@ class Iblock
 		if (!\CModule::IncludeModule('iblock')) return null;
 		$res = \CIBlock::GetList(
 			array(),
-			$filter,
+			array_merge($filter, ['CHECK_PERMISSIONS' => 'N']),
 			false
 		);
 		if ($ob = $res->GetNext()) {

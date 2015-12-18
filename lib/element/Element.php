@@ -97,7 +97,21 @@ class Element extends \bxar\ActiveRecord
 		}
 		$iblockFields = $this->getIblockFields($this->getAttribute('iblock_id')->getValue());
 		$required = array('iblock_id');
-		$default = array(array('sort'), 'default', 'defaultArray' => array('sort' => 500));
+		$default = array(
+			array(
+				'sort',
+				'active',
+				'preview_text_type',
+				'detail_text_type',
+			),
+			'default',
+			'defaultArray' => array(
+				'sort' => 500,
+				'active' => 'Y',
+				'preview_text_type' => 'text',
+				'detail_text_type' => 'text',
+			)
+		);
 		//собираем настройки валидации из настроек инфоблока
 		foreach ($this->getAttributes() as $key => $attr) {
 			if ($attr->getParam('is_required') === 'Y' || (isset($iblockFields[$key]) && $iblockFields[$key]['IS_REQUIRED'] === 'Y')) {
