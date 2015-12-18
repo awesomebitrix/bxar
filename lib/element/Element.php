@@ -22,7 +22,7 @@ class Element extends \bxar\ActiveRecord
 	/**
 	 * @var \marvin255\bxlib\IblockLocator
 	 */
-	protected $_iblockLocator = null
+	protected $_iblockLocator = null;
 
 
 	/**
