@@ -43,7 +43,7 @@ abstract class Finder implements \bxar\IFinder
 	 */
 	public function setArClass($value)
 	{
-		$this->_arClass = trim($value);
+		$this->_arClass = $value;
 		return $this;
 	}
 
