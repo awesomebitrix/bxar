@@ -191,7 +191,7 @@ class Element extends \bxar\ActiveRecord
 			//при вставке нового элемента записываем сразу все пользовательские свойства
 			if (!empty($arProperties)) $arFields['PROPERTY_VALUES'] = $arProperties;
 			$new = $ib->Add($arFields);
-			if (!$new) {
+			if ($new) {
 				$this->getAttribute('id')->setValue($new);
 				$this->riseEvent('afterSave');
 			} else {
