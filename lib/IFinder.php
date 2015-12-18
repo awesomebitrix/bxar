@@ -122,11 +122,4 @@ interface IFinder
 	 * @return int
 	 */
 	public function count();
-
-
-	/**
-	 * Кэширует запрос на указанное количество секунд
-	 * @param int $time
-	 */
-	public function cache($time);
 }

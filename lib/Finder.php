@@ -24,10 +24,6 @@ abstract class Finder implements \bxar\IFinder
 	 */
 	protected $_offset = null;
 	/**
-	 * @var int время, на которое кэшировать запрос
-	 */
-	protected $_cache = null;
-	/**
 	 * @var string класс, на основе которого будут инициированы записи
 	 */
 	protected $_arClass = null;
@@ -182,16 +178,6 @@ abstract class Finder implements \bxar\IFinder
 	{
 		return $this->_index;
 	}
-
-
-	/**
-	 * @param int $time
-	 */
-	public function cache($time)
-	{
-		$this->_cache = (int) $time;
-		return $this;
-	}
 	
 
 	/**
@@ -205,54 +191,5 @@ abstract class Finder implements \bxar\IFinder
 		$item = new $class;
 		$item->initAttributes($init);
 		return $item;
-	}
-
-
-	/**
-	 * Возвращает идентификатор кэша для текущего запроса
-	 * @return string
-	 */
-	protected function getCacheId()
-	{
-		return json_encode($this->getArClass() . $this->getLimit() . $this->getOffset())
-		       . json_encode($this->getFilter())
-		       . json_encode($this->getOrder());
-	}
-
-	/**
-	 * Пробует найти данные в кэше
-	 * @param string $cid
-	 * @return mixed
-	 */
-	protected function getFromCache($cid = null)
-	{
-		$cid = $cid === null ? $this->getCacheId() : $cid;
-		$cTime = $this->_cache;
-		if (!$cTime) return false;
-		$obCache = new \CPHPCache();
-		if ($obCache->InitCache($cTime, $cid, '/')) {
-			return $obCache->GetVars();
-		} else {
-			return false;
-		}
-	}
-
-	/**
-	 * Записывает данные в кэш
-	 * @param mixed $value
-	 * @param string $cid
-	 */
-	protected function setToCache($value, $cid = null)
-	{
-		$cid = $cid === null ? $this->getCacheId() : $cid;
-		$cTime = $this->_cache;
-		if (!$cTime) {
-			return null;
-		} else {
-			$obCache = new \CPHPCache();
-			$obCache->InitCache($cTime, $cid);
-			$obCache->StartDataCache();
-			$obCache->EndDataCache($value);
-		}
 	}
 }

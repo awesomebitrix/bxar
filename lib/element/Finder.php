@@ -8,6 +8,12 @@ namespace bxar\element;
 class Finder extends \bxar\Finder
 {
 	/**
+	 * @var \marvin255\bxlib\IblockLocator
+	 */
+	protected $_iblockLocator = null;
+
+
+	/**
 	 * @param array $filter
 	 * @param string $arClass
 	 * @return \bxar\IFinder
@@ -137,7 +143,7 @@ class Finder extends \bxar\Finder
 
 		//запрашиваем значения свойств инфоблоков
 		foreach ($arIblocksAndElements as $iblockId => $ids) {
-			$iblockDescription = \bxar\helpers\Iblock::getById($iblockId);
+			$iblockDescription = $this->getIblockDescription($iblockId);
 			//только если для инфоблока определены дополнительные свойства
 			if (!empty($iblockDescription['PROPERTIES'])) {
 				$filter = array('IBLOCK_ID' => $iblockId, 'ID' => array_unique($ids));
@@ -178,5 +184,37 @@ class Finder extends \bxar\Finder
 		}
 
 		return $return;
+	}
+
+
+	/**
+	 * @param string $id
+	 * @return array
+	 */
+	protected function getIblockDescription($id)
+	{
+		$locator = $this->getIblockLocator();
+		if ($locator) {
+			return $locator->findBy('ID', $id);
+		} else {
+			return \bxar\helpers\Iblock::getById($id);
+		}
+	}
+
+	/**
+	 * @return \marvin255\bxlib\IblockLocator
+	 */
+	public function getIblockLocator()
+	{
+		return $this->_iblockLocator;
+	}
+
+	/**
+	 * @param \marvin255\bxlib\IblockLocator $locator
+	 */
+	public function setIblockLocator(\marvin255\bxlib\IblockLocator $locator)
+	{
+		$this->_iblockLocator = $locator;
+		return $this;
 	}
 }
