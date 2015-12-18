@@ -218,6 +218,7 @@ class Element extends \bxar\ActiveRecord
 	 */
 	public function getAttribute($name)
 	{
+		$name = $this->prepareAttributeName($name);
 		//грузим каждый атрибут только при первом обращении к нему
 		if (array_key_exists($name, $this->_initOnDemand)) {
 			$init = array(
