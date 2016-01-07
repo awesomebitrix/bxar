@@ -11,6 +11,10 @@ class Finder extends \bxar\Finder
 	 * @var \marvin255\bxlib\IblockLocator
 	 */
 	protected $_iblockLocator = null;
+	/**
+	 * @var \CDBResult
+	 */
+	protected $_lastCDbResult = null;
 
 
 	/**
@@ -131,6 +135,7 @@ class Finder extends \bxar\Finder
 			!empty($nav) ? $nav : false,
 			$select
 		);
+		$this->setLastCDBResult($rsElement);
 		while ($obElement = $rsElement->GetNext()) {
 			$arItem = array();
 			foreach ($obElement as $key => $value) {
@@ -216,5 +221,21 @@ class Finder extends \bxar\Finder
 	{
 		$this->_iblockLocator = $locator;
 		return $this;
+	}
+
+	/**
+	 * @return \CDBResult
+	 */
+	public function getLastCDBResult()
+	{
+		return $this->_lastCDbResult;
+	}
+
+	/**
+	 * @param \CDBResult $res
+	 */
+	protected function setLastCDBResult($res)
+	{
+		$this->_lastCDbResult = $res;
 	}
 }
