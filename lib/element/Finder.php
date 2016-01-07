@@ -63,7 +63,7 @@ class Finder extends \bxar\Finder
 					$return[$key] = $arInit;
 				} else {
 					$arItem = $this->initItem($arInit);
-					$key = $index !== null ? $arItem->getAttributeValue($index) : $baseKey;
+					$key = $index !== null ? $arItem->getAttribute($index)->getValue() : $baseKey;
 					$return[$key] = $arItem;
 				}
 			}
