@@ -24,9 +24,18 @@ class ListProperty extends Attribute
 				}
 			}
 			//перебираем все xml_id
-			if ($toSet !== null) {
+			if ($toSet === null) {
 				foreach ($list as $item) {
 					if ($item['XML_ID'] == $value) {
+						$toSet = $item['ID'];
+						break;
+					}
+				}
+			}
+			//перебираем все значения
+			if ($toSet === null) {
+				foreach ($list as $item) {
+					if ($item['VALUE'] == $value) {
 						$toSet = $item['ID'];
 						break;
 					}
