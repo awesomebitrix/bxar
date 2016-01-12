@@ -19,6 +19,10 @@ class Section extends \bxar\ActiveRecord
 	 * @var array
 	 */
 	protected $_rules = null;
+	/**
+	 * @var \marvin255\bxlib\IblockLocator
+	 */
+	protected $_iblockLocator = null;
 
 
 	/**
@@ -182,6 +186,7 @@ class Section extends \bxar\ActiveRecord
 	 */
 	public function getAttribute($name)
 	{
+		$name = $this->prepareAttributeName($name);
 		//грузим каждый атрибут только при первом обращении к нему
 		if (array_key_exists($name, $this->_initOnDemand)) {
 			$init = array(
@@ -253,6 +258,29 @@ class Section extends \bxar\ActiveRecord
 	 */
 	protected function getIblockDescription($iblockId)
 	{
-		return \bxar\helpers\Iblock::getById($iblockId);
+		$locator = $this->getIblockLocator();
+		if ($locator) {
+			return $locator->findBy('ID', $iblockId);
+		} else {
+			return \bxar\helpers\Iblock::getById($iblockId);
+		}
+	}
+
+
+	/**
+	 * @return \marvin255\bxlib\IblockLocator
+	 */
+	public function getIblockLocator()
+	{
+		return $this->_iblockLocator;
+	}
+
+	/**
+	 * @param \marvin255\bxlib\IblockLocator $locator
+	 */
+	public function setIblockLocator(\marvin255\bxlib\IblockLocator $locator)
+	{
+		$this->_iblockLocator = $locator;
+		return $this;
 	}
 }
