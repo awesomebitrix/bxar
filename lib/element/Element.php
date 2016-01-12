@@ -270,32 +270,32 @@ class Element extends \bxar\ActiveRecord
 		if (isset($settings['params']['MULTIPLE']) && $settings['params']['MULTIPLE'] == 'Y') {
 			$settings['type'] = 'multiple';
 		} elseif (
-			$settings['code'] == 'id'
-			|| $settings['code'] == 'iblock_id'
-			|| $settings['code'] == 'sort'
+			$settings['code'] === 'id'
+			|| $settings['code'] === 'iblock_id'
+			|| $settings['code'] === 'sort'
 			|| (isset($settings['params']['PROPERTY_TYPE']) && $settings['params']['PROPERTY_TYPE'] == 'N')
 		){
 			$settings['type'] = 'numeric';
 		} elseif (
-			$settings['code'] == 'date_active_from'
-			|| $settings['code'] == 'date_active_to'
-			|| $settings['code'] == 'date_create'
+			$settings['code'] === 'date_active_from'
+			|| $settings['code'] === 'date_active_to'
+			|| $settings['code'] === 'date_create'
 			|| (isset($settings['params']['USER_TYPE']) && $settings['params']['USER_TYPE'] == 'DateTime')
 		){
 			$settings['type'] = 'date';
-		} elseif ($settings['code'] == 'active') {
+		} elseif ($settings['code'] === 'active') {
 			$settings['type'] = 'bitrixBool';
 		} elseif (isset($settings['params']['PROPERTY_TYPE']) && $settings['params']['PROPERTY_TYPE'] == 'L') {
 			$settings['type'] = 'list';
 		} elseif (
-			$settings['code'] == 'preview_picture'
-			|| $settings['code'] == 'detail_picture'
+			$settings['code'] === 'preview_picture'
+			|| $settings['code'] === 'detail_picture'
 			|| (isset($settings['params']['PROPERTY_TYPE']) && $settings['params']['PROPERTY_TYPE'] == 'F')
 		){
 			$settings['type'] = 'file';
-		} elseif ($settings['code'] == 'iblock_section_id') {
+		} elseif ($settings['code'] === 'iblock_section_id') {
 			$settings['type'] = 'bitrixSection';
-		} elseif ($settings['code'] == 'detail_page_url' || $settings['code'] == 'list_page_url') {
+		} elseif ($settings['code'] === 'detail_page_url' || $settings['code'] === 'list_page_url') {
 			$settings['type'] = 'bitrixUrl';
 		}
 		return Factory::create($settings);

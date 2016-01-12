@@ -30,7 +30,7 @@ class Multiple extends Attribute
 		if ($value === null || $value === array()) return parent::setValue(array());
 		$values = parent::getValue();
 		$values = is_array($values) ? $values : array();
-		$value = is_array($value) ? $value : array($value);
+		$value = is_array($value) ? array_values($value) : array($value);
 		foreach ($values as $key => $element) {
 			if (array_key_exists($key, $value)) {
 				$element->setValue($value[$key]);
@@ -57,11 +57,7 @@ class Multiple extends Attribute
 		$value = parent::getValue();
 		if (is_array($value)) {
 			foreach ($value as $key => $element) {
-				$params = $element->getParams();
-				$return[$key] = array(
-					'VALUE' => $element->getValueToDb(),
-					'DESCRIPTION' => is_array($params['DESCRIPTION']) && isset($params['DESCRIPTION'][$key]) ? $params['DESCRIPTION'][$key] : $params['DESCRIPTION'],
-				);
+				$return['n' . $key] = $element->getValueToDb();
 			}
 		}
 		return $return;
@@ -74,11 +70,13 @@ class Multiple extends Attribute
 	 */
 	protected function initValueItem($code)
 	{
-		$model = $this->getModel();	
+		$model = $this->getModel();
+		$params = $this->getParams();
+		$params['MULTIPLE'] = 'N';
 		$init = array(
 			'model' => $model,
 			'code' => $code,
-			'params' => $this->getParams(),
+			'params' => $params,
 		);
 		return $model->createAttributeFromSettings($init);
 	}

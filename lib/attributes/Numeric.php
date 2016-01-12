@@ -13,7 +13,9 @@ class Numeric extends Attribute
 	 */
 	public function setValue($value)
 	{
-		$value = (float) str_replace(array(' ', ','), array('', '.'), $value);
 		parent::setValue($value);
+		$val = $this->getValue();
+		$val = (float) str_replace(array(' ', ','), array('', '.'), $val);
+		parent::setValue($val);
 	}
 }

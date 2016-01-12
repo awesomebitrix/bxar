@@ -82,7 +82,12 @@ class Attribute implements \bxar\IAttribute
 	 */
 	public function setValue($value)
 	{
-		$this->_value = $value;
+		if (isset($value['VALUE'], $value['DESCRIPTION'])) {
+			$this->_value = $value['VALUE'];
+			$this->setParam('DESCRIPTION', $value['DESCRIPTION']);
+		} else {
+			$this->_value = $value;
+		}
 	}
 
 	/**
@@ -100,7 +105,12 @@ class Attribute implements \bxar\IAttribute
 	 */
 	public function getValueToDb()
 	{
-		return $this->getValue();
+		$descr = trim($this->getParam('DESCRIPTION'));
+		if ($descr !== '') {
+			return ['VALUE' => $this->getValue(), 'DESCRIPTION' => $descr];
+		} else {
+			return $this->getValue();			
+		}
 	}
 
 
@@ -132,7 +142,9 @@ class Attribute implements \bxar\IAttribute
 	 */
 	public function setParams(array $value = null)
 	{
-		$this->_params = $value;
+		foreach ($value as $name => $val) {
+			$this->setParam($name, $val);
+		}
 	}
 
 	/**
@@ -142,6 +154,15 @@ class Attribute implements \bxar\IAttribute
 	public function getParams()
 	{
 		return $this->_params;
+	}
+
+	/**
+	 * Задает параметр атрибута
+	 * @param array $value
+	 */
+	public function setParam($name, $value)
+	{
+		$this->_params[$name] = $value;
 	}
 
 	/**
