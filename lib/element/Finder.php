@@ -170,6 +170,24 @@ class Finder extends \bxar\Finder
 						if (!preg_match('/^PROPERTY_(\d+)_VALUE$/i', $key, $matches) || !isset($arProperties[$matches[1]])) continue;
 						$property = $arProperties[$matches[1]];
 						$code = !empty($property['CODE']) ? $property['CODE'] : $property['ID'];
+						if ($property['MULTIPLE'] === 'Y') {
+							$descrKey = "PROPERTY_{$property['ID']}_DESCRIPTION";
+							$arVal = array();
+							if (!is_array($value)) {
+								$arVal[] = array(
+									'VALUE' => $value,
+									'DESCRIPTION' => isset($obElement[$descrKey]) ? $obElement[$descrKey] : '',
+								);
+							} else {
+								foreach ($value as $vKey => $val) {
+									$arVal[] = array(
+										'VALUE' => $val,
+										'DESCRIPTION' => isset($obElement[$descrKey][$vKey]) ? $obElement[$descrKey][$vKey] : '',
+									);
+								}
+							}
+							$value = $arVal;
+						}
 						$value = $property['MULTIPLE'] === 'Y' && !is_array($value) ? array($value) : $value;
 						if (!isset($itemProperties[$code])) {
 							$itemProperties[$code] = $property;
