@@ -57,7 +57,7 @@ class Multiple extends Attribute
 		$value = parent::getValue();
 		if (is_array($value)) {
 			foreach ($value as $key => $element) {
-				$return['n' . $key] = $element->getValueToDb();
+				$return[$key] = $element->getValueToDb();
 			}
 		}
 		return $return;
