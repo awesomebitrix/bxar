@@ -90,6 +90,17 @@ class File extends Attribute
 		$val = $this->getValue();
 		if (is_numeric($val)) {
 			$return = null;
+		} elseif (is_array($val) && isset($val['tmp_name'])) {
+			$ext = pathinfo($val['tmp_name'], PATHINFO_EXTENSION);
+			if ($ext === '' && !empty($val['name'])) {
+				$oldName = $_SERVER['DOCUMENT_ROOT'] . $val['tmp_name'];
+				$newName = dirname($oldName) . '/' . $val['name'];
+				rename($oldName, $newName);
+				$val['tmp_name'] = $newName;
+				unlink($oldName);
+			}
+			$val['del'] = 'Y';
+			$return = $val;
 		} elseif (file_exists($val)) {
 			$return = \CFile::MakeFileArray($val);
 			$return['del'] = 'Y';
@@ -101,6 +112,10 @@ class File extends Attribute
 			$return = \CFile::MakeFileArray($temp);
 			$return['del'] = 'Y';
 			$return['module'] = 'iblock';
+		} else {
+			$return = array(
+				'del' => 'Y',
+			);
 		}
 		return $return;
 	}
