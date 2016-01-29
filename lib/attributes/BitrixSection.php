@@ -37,7 +37,8 @@ class BitrixSection extends Attribute
 	 */
 	public function getValueToDb()
 	{
-		return null;
+		$value = $this->getValue();
+		return is_array($value) ? reset($value) : null;
 	}
 
 
