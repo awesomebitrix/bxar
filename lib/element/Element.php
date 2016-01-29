@@ -198,6 +198,12 @@ class Element extends \bxar\ActiveRecord
 				throw new Exception($ib->LAST_ERROR);
 			}
 		}
+		if (isset($arFields['IBLOCK_SECTION_ID']) && is_array($arFields['IBLOCK_SECTION_ID'])) {
+			\CIBlockElement::SetElementSection(
+				$this->getAttribute('id')->getValue(),
+				$arFields['IBLOCK_SECTION_ID']
+			);
+		}
 		return true;
 	}
 
