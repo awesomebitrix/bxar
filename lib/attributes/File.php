@@ -93,13 +93,17 @@ class File extends Attribute
 		} elseif (is_array($val) && isset($val['tmp_name'])) {
 			$ext = pathinfo($val['tmp_name'], PATHINFO_EXTENSION);
 			if ($ext === '' && !empty($val['name'])) {
-				$oldName = $_SERVER['DOCUMENT_ROOT'] . $val['tmp_name'];
+				$oldName = file_exists($val['tmp_name']) ? $val['tmp_name'] : $_SERVER['DOCUMENT_ROOT'] . $val['tmp_name'];
 				$newName = dirname($oldName) . '/' . $val['name'];
 				rename($oldName, $newName);
 				$val['tmp_name'] = $newName;
 				unlink($oldName);
 			}
-			$val['del'] = 'Y';
+			if ($this->getParam('ID') !== null) {
+				$val = ['VALUE' => $val];
+			} else {
+				$val['del'] = 'Y';				
+			}
 			$return = $val;
 		} elseif (file_exists($val)) {
 			$return = \CFile::MakeFileArray($val);
