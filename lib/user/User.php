@@ -154,7 +154,7 @@ class User extends \bxar\ActiveRecord
 		foreach ($values as $key => $value) {
 			$arFields[strtoupper($key)] = $value;
 		}
-		$user = new CUser;
+		$user = new \CUser;
 		//записываем поля пользователя
 		if (!$this->isNew()) {
 			$id = $this->getAttribute('id')->getValue();
