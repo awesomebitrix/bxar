@@ -149,6 +149,7 @@ class User extends \bxar\ActiveRecord
 	 */
 	public function save()
 	{
+		if (!$this->validate() || !$this->riseEvent('beforeSave')) return false;
 		$values = $this->getValues();
 		$arFields = array();
 		foreach ($values as $key => $value) {
@@ -176,6 +177,7 @@ class User extends \bxar\ActiveRecord
 				throw new Exception($user->LAST_ERROR);
 			}
 		}
+		return true;
 	}
 
 	/**
