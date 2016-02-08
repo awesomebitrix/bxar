@@ -154,6 +154,9 @@ class User extends \bxar\ActiveRecord
 		foreach ($values as $key => $value) {
 			$arFields[strtoupper($key)] = $value;
 		}
+		if (!is_array($arFields['PERSONAL_PHOTO'])) {
+			unset($arFields['PERSONAL_PHOTO']);
+		}
 		$user = new \CUser;
 		//записываем поля пользователя
 		if (!$this->isNew()) {
