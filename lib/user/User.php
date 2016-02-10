@@ -22,6 +22,17 @@ class User extends \bxar\ActiveRecord
 
 
 	/**
+	 * @param array $value
+	 * @param string $scenario
+	 */
+	public function __construct(array $value = null, $scenario = 'default')
+	{
+		$this->setScenario($scenario);
+		$this->initAttributes(is_array($value) ? $value : array());
+	}
+
+
+	/**
 	 * Возвращает массив с полями элемента инфоблока
 	 * @return array
 	 */
@@ -76,6 +87,8 @@ class User extends \bxar\ActiveRecord
 			'TIME_ZONE',
 			'TIME_ZONE_OFFSET',
 			'LANGUAGE_ID',
+			'PASSWORD',
+			'CONFIRM_PASSWORD',
 		);
 	}
 
@@ -160,6 +173,9 @@ class User extends \bxar\ActiveRecord
 		$user = new \CUser;
 		//записываем поля пользователя
 		if (!$this->isNew()) {
+			if (empty($arFields['PASSWORD']) || empty($arFields['CONFIRM_PASSWORD'])) {
+				unset($arFields['PASSWORD'], $arFields['CONFIRM_PASSWORD']);
+			}
 			$id = $this->getAttribute('id')->getValue();
 			//при обновлении элемента сначала записываем базовые поля
 			$res = $user->Update($id, $arFields);
