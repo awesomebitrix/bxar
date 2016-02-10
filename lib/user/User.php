@@ -150,10 +150,9 @@ class User extends \bxar\ActiveRecord
 	public function save()
 	{
 		if (!$this->validate() || !$this->riseEvent('beforeSave')) return false;
-		$values = $this->getValues();
-		$arFields = array();
-		foreach ($values as $key => $value) {
-			$arFields[strtoupper($key)] = $value;
+		$arFields = [];
+		foreach ($this->getAttributes() as $key => $attr) {
+			$arFields[strtoupper($key)] = $attr->getValueToDb();
 		}
 		if (!is_array($arFields['PERSONAL_PHOTO'])) {
 			unset($arFields['PERSONAL_PHOTO']);
@@ -254,6 +253,8 @@ class User extends \bxar\ActiveRecord
 			$settings['type'] = 'date';
 		} elseif ($settings['code'] == 'active') {
 			$settings['type'] = 'bitrixBool';
+		} elseif ($settings['code'] == 'personal_photo') {
+			$settings['type'] = 'file';
 		}
 		return Factory::create($settings);
 	}

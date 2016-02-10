@@ -94,7 +94,7 @@ class File extends Attribute
 			$ext = pathinfo($val['tmp_name'], PATHINFO_EXTENSION);
 			if ($ext === '' && !empty($val['name'])) {
 				$oldName = file_exists($val['tmp_name']) ? $val['tmp_name'] : $_SERVER['DOCUMENT_ROOT'] . $val['tmp_name'];
-				$newName = dirname($oldName) . '/' . $val['name'];
+				$newName = dirname($oldName) . '/f_' . time() . mt_rand() . $val['name'];
 				rename($oldName, $newName);
 				$val['tmp_name'] = $newName;
 				unlink($oldName);
