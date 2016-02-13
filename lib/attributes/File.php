@@ -86,8 +86,9 @@ class File extends Attribute
 	 */
 	public function getValueToDb()
 	{
-		$return = null;
 		$val = $this->getValue();
+		if (!empty($val['error'])) return null;
+		$return = null;
 		if (is_numeric($val)) {
 			$return = null;
 		} elseif (is_array($val) && isset($val['tmp_name'])) {
