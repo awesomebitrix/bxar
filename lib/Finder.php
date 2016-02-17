@@ -191,7 +191,7 @@ abstract class Finder implements \bxar\IFinder
 		if (is_callable($class)) {
 			$item = $class();
 		} else {
-			$item = new $class;			
+			$item = new $class;
 		}
 		$item->initAttributes($init);
 		return $item;
