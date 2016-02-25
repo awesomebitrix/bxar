@@ -133,7 +133,10 @@ class User extends \bxar\ActiveRecord
 			}
 		}
 
-		$this->_rules = array();
+		$this->_rules = array(
+			array(array('email'), 'email'),
+		);
+		
 		if (!empty($default[0]) && $this->isNew()) $this->_rules[] = $default;
 		if (!empty($required)) $this->_rules[] = array($required, 'required');
 		return $this->_rules;

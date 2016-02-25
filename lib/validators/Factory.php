@@ -15,6 +15,7 @@ class Factory
 		'default' => '\bxar\validators\DefaultValue',
 		'required' => '\bxar\validators\Required',
 		'safe' => '\bxar\validators\Safe',
+		'email' => '\bxar\validators\Email',
 	);
 
 
