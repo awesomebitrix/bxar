@@ -173,6 +173,9 @@ class User extends \bxar\ActiveRecord
 		if (!is_array($arFields['PERSONAL_PHOTO'])) {
 			unset($arFields['PERSONAL_PHOTO']);
 		}
+		if (!is_array($arFields['WORK_LOGO'])) {
+			unset($arFields['WORK_LOGO']);
+		}
 		$user = new \CUser;
 		//записываем поля пользователя
 		if (!$this->isNew()) {
