@@ -78,7 +78,7 @@ class Element extends \bxar\ActiveRecord
 		if ($id > 0) {
 			$class = \bxar\helpers\HlEntity::compile($this->getEntity());
 			$res = $class::delete($id);
-			return $result->isSuccess();
+			return $res->isSuccess();
 		} else {
 			return false;
 		}
@@ -102,14 +102,14 @@ class Element extends \bxar\ActiveRecord
 			$id = $this->getAttribute('id')->getValue();
 			$res = $class::update($id, $arLoad);
 			if (!$res->isSuccess()) {
-				$errors = implode(', ', $result->getErrorMessages());
+				$errors = implode(', ', $res->getErrorMessages());
 				throw new Exception($errors);
 			}
 			$this->riseEvent('afterSave');
 		} else {
 			$res = $class::add($arLoad);
 			if (!$res->isSuccess()) {
-				$errors = implode(', ', $result->getErrorMessages());
+				$errors = implode(', ', $res->getErrorMessages());
 				throw new Exception($errors);
 			}
 			$this->getAttribute('id')->setValue($res->getId());
