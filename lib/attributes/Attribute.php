@@ -82,7 +82,7 @@ class Attribute implements \bxar\IAttribute
 	 */
 	public function setValue($value)
 	{
-		if (isset($value['VALUE'], $value['DESCRIPTION'])) {
+		if (is_array($value) && isset($value['VALUE'], $value['DESCRIPTION'])) {
 			$this->_value = $value['VALUE'];
 			$this->setParam('DESCRIPTION', $value['DESCRIPTION']);
 		} else {
