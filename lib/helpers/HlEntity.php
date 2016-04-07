@@ -39,7 +39,7 @@ class HlEntity
 					$entityObj = \Bitrix\Highloadblock\HighloadBlockTable::compileEntity($hlblock);
 					self::$_compiled[$entity] = $entityObj->getDataClass();
 				} else {
-					self::$_compiled[$entity] = null;					
+					self::$_compiled[$entity] = null;
 				}
 			}
 		}
@@ -69,15 +69,22 @@ class HlEntity
 	public static function getEntityByName($name)
 	{
 		if (!array_key_exists($name, self::$_entities[$name])) {
-			$filter = [
-				'select' => ['ID', 'NAME', 'TABLE_NAME'],
-				'filter' => ['NAME' => $name],
-			];
-			$hlblock = \Bitrix\Highloadblock\HighloadBlockTable::getList($filter)->fetch();
-			if (!empty($hlblock['ID'])) {
-				self::$_entities[$name] = $hlblock;
-			} else {
-				self::$_entities[$name] = null;
+			$cid = get_class(self) . '_' . $name;
+			$obCache = new \CPHPCache();
+			if ($obCache->InitCache(7200, $cid, '/')) {
+				self::$_entities[$name] = $obCache->GetVars();
+			} elseif ($obCache->StartDataCache()) {
+				$filter = [
+					'select' => ['ID', 'NAME', 'TABLE_NAME'],
+					'filter' => ['NAME' => $name],
+				];
+				$hlblock = \Bitrix\Highloadblock\HighloadBlockTable::getList($filter)->fetch();
+				if (!empty($hlblock['ID'])) {
+					self::$_entities[$name] = $hlblock;
+				} else {
+					self::$_entities[$name] = null;
+				}
+				$obCache->EndDataCache(self::$_entities[$name]);
 			}
 		}
 		return self::$_entities[$name];
