@@ -82,7 +82,10 @@ class Attribute implements \bxar\IAttribute
 	 */
 	public function setValue($value)
 	{
-		if (is_array($value) && isset($value['VALUE'], $value['DESCRIPTION'])) {
+		$params = $this->getParams();
+		if (isset($params['MULTIPLE']) && $params['MULTIPLE'] === 'N' && is_array($value)) {
+			$this->_value = reset($value);
+		} elseif (is_array($value) && isset($value['VALUE'], $value['DESCRIPTION'])) {
 			$this->_value = $value['VALUE'];
 			$this->setParam('DESCRIPTION', $value['DESCRIPTION']);
 		} else {
@@ -109,7 +112,7 @@ class Attribute implements \bxar\IAttribute
 		if ($descr !== '') {
 			return ['VALUE' => $this->getValue(), 'DESCRIPTION' => $descr];
 		} else {
-			return $this->getValue();			
+			return $this->getValue();
 		}
 	}
 
