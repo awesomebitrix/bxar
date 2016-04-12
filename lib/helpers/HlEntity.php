@@ -29,7 +29,7 @@ class HlEntity
 	{
 		$entity = trim($entity);
 		if ($entity === '') return null;
-		if (!empty(self::$_compiled[$entity]) && !array_key_exists($entity, self::$_compiled[$entity])) {
+		if (empty(self::$_compiled[$entity]) || !array_key_exists($entity, self::$_compiled[$entity])) {
 			if (class_exists($entity)) {
 				self::$_compiled[$entity] = $entity;
 			} else {
@@ -68,7 +68,7 @@ class HlEntity
 	 */
 	public static function getEntityByName($name)
 	{
-		if (!empty(self::$_entities[$name]) && !array_key_exists($name, self::$_entities[$name])) {
+		if (empty(self::$_entities[$name]) || !array_key_exists($name, self::$_entities[$name])) {
 			$cid = 'bxar\helpers\HlEntity_' . $name;
 			$obCache = new \CPHPCache();
 			if ($obCache->InitCache(7200, $cid, '/')) {
