@@ -83,7 +83,7 @@ class Attribute implements \bxar\IAttribute
 	public function setValue($value)
 	{
 		$params = $this->getParams();
-		if (isset($params['MULTIPLE']) && $params['MULTIPLE'] === 'N' && is_array($value)) {
+		if (isset($params['MULTIPLE']) && $params['MULTIPLE'] === 'N' && $params['PROPERTY_TYPE'] != 'F' && is_array($value)) {
 			$this->_value = reset($value);
 		} elseif (is_array($value) && isset($value['VALUE'], $value['DESCRIPTION'])) {
 			$this->_value = $value['VALUE'];
