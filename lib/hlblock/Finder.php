@@ -11,6 +11,10 @@ class Finder extends \bxar\Finder
 	 * @var string
 	 */
 	protected $_entity = null;
+	/**
+	 * @var array
+	 */
+	protected $_runtime = [];
 
 
 	/**
@@ -91,6 +95,14 @@ class Finder extends \bxar\Finder
 		$filter = $this->getFilter();
 		if ($filter) $arQuery['filter'] = $filter;
 
+		//runtime
+		$runtime = $this->getRuntime();
+		if ($runtime) {
+			foreach ($runtime as $rt) {
+				$arQuery['runtime'][] = new \Bitrix\Main\Entity\ExpressionField($rt[0], $rt[1]);
+			}
+		}
+
 		$res = $class::getList($arQuery)->fetch();
 		return isset($res['CNT']) ? (int) $res['CNT'] : 0;
 	}
@@ -124,7 +136,45 @@ class Finder extends \bxar\Finder
 		$offset = (int) $this->getOffset();
 		if ($offset) $arQuery['offset'] = $offset;
 
+		//runtime
+		$runtime = $this->getRuntime();
+		if ($runtime) {
+			foreach ($runtime as $rt) {
+				$arQuery['runtime'][] = new \Bitrix\Main\Entity\ExpressionField($rt[0], $rt[1]);
+			}
+		}
+
 		return $class::getList($arQuery)->fetchAll();
+	}
+
+
+	/**
+	 * @param array runtime
+	 * @return \bxar\hlblock\Finder
+	 */
+	public function setRuntime(array $rt)
+	{
+		$this->_runtime = $rt;
+		return $this;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getRuntime()
+	{
+		return $this->_runtime;
+	}
+
+	/**
+	 * @param array runtime
+	 * @return \bxar\hlblock\Finder
+	 */
+	public function mergeRuntimeWith(array $rt)
+	{
+		$rtOld = $this->getRuntime();
+		$this->setRuntime($rtOld ? array_merge($rtOld, $rt) : $rt);
+		return $this;
 	}
 
 
