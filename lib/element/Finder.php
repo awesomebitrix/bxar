@@ -76,6 +76,23 @@ class Finder extends \bxar\Finder
 	}
 
 	/**
+	 * Шорткат, возвращает нужны массив из индекса и значения
+	 * @param string $key
+	 * @param string $value
+	 * @return array
+	 */
+	public function toArray($key, $value)
+	{
+		$this->setAsArray();
+		$list = $this->all();
+		$return = [];
+		foreach ($list as $li) {
+			$return[$li[$key]] = $li[$value];
+		}
+		return $return;
+	}
+
+	/**
 	 * Находит количество элементов по запросу
 	 * @return int
 	 */
@@ -129,8 +146,8 @@ class Finder extends \bxar\Finder
 		$arIblocksAndElements = array();
 
 		//запрос
-		$rsElement = \CIBlockElement::GetList($order, 
-			$filter, 
+		$rsElement = \CIBlockElement::GetList($order,
+			$filter,
 			false,
 			!empty($nav) ? $nav : false,
 			$select
@@ -158,8 +175,8 @@ class Finder extends \bxar\Finder
 					$arProperties[$property['ID']] = $property;
 					$select[] = 'PROPERTY_' . $property['ID'];
 				}
-				$rsElement = \CIBlockElement::GetList($order, 
-					$filter, 
+				$rsElement = \CIBlockElement::GetList($order,
+					$filter,
 					false,
 					false,
 					$select
