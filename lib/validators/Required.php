@@ -10,7 +10,7 @@ class Required extends \bxar\validators\Validator
 	/**
 	 * @param string
 	 */
-	public $message = 'This attribute can\'t be empty';
+	public $message = 'Поле #label# должно быть заполнено';
 
 
 	/**
@@ -22,7 +22,16 @@ class Required extends \bxar\validators\Validator
 	{
 		$value = $attribute->getValue();
 		if ($value === null || $value === '') {
-			if ($setErrors) $attribute->addError($this->message);
+			$params = $attribute->getParams();
+			if ($setErrors) $attribute->addError(str_replace(
+				[
+					'#label#'
+				],
+				[
+					!empty($params['NAME']) ? $params['NAME'] : '',
+				],
+				$this->message
+			));
 			return false;
 		} else {
 			return true;
