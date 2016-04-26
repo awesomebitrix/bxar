@@ -289,6 +289,8 @@ class Element extends \bxar\ActiveRecord
 			|| (isset($settings['params']['USER_TYPE']) && $settings['params']['USER_TYPE'] == 'DateTime')
 		){
 			$settings['type'] = 'date';
+		} elseif (isset($settings['params']['USER_TYPE']) && $settings['params']['USER_TYPE'] == 'HTML') {
+   			$settings['type'] = 'html';
 		} elseif ($settings['code'] === 'active') {
 			$settings['type'] = 'bitrixBool';
 		} elseif (isset($settings['params']['PROPERTY_TYPE']) && $settings['params']['PROPERTY_TYPE'] == 'L') {

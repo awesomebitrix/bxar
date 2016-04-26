@@ -21,6 +21,7 @@ class Factory
 		'related' => '\bxar\attributes\Related',
 		'multiple' => '\bxar\attributes\Multiple',
 		'bitrixSection' => '\bxar\attributes\BitrixSection',
+		'html' => '\bxar\attributes\Html',
 	);
 
 
