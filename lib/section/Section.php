@@ -246,7 +246,7 @@ class Section extends \bxar\ActiveRecord
 		){
 			$settings['type'] = 'file';
 		} elseif ($settings['code'] == 'iblock_section_id') {
-			$settings['type'] = 'bitrixSection';
+			$settings['type'] = 'numeric';
 		}
 		return Factory::create($settings);
 	}
