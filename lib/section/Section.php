@@ -66,10 +66,16 @@ class Section extends \bxar\ActiveRecord
 		if (empty($init['IBLOCK_ID']) || ($iblock = $this->getIblockDescription($init['IBLOCK_ID'])) === null) {
 			throw new Exception('iblock id must be valid');
 		}
-		//поля элемента инфоблока
+		//поля раздела инфоблока
 		$initProperties = self::getBuiltFields();
 		foreach ($initProperties as $key) {
 			$this->_initOnDemand[$this->prepareAttributeName($key)] = isset($init[$key]) ? $init[$key] : null;
+		}
+		//пользовательские поля раздела инфоблока
+		$userFields = $this->getUserFieldsDescription();
+		foreach ($userFields as $field) {
+			$name = $this->prepareAttributeName($field['FIELD_NAME']);
+			$this->_initOnDemand[$name] = isset($init[$field['FIELD_NAME']]) ? $init[$field['FIELD_NAME']] : null;
 		}
 	}
 
@@ -282,5 +288,14 @@ class Section extends \bxar\ActiveRecord
 	{
 		$this->_iblockLocator = $locator;
 		return $this;
+	}
+
+	/**
+	 * Возвращает описание пользовательских полей
+	 * @return array
+	 */
+	protected function getUserFieldsDescription()
+	{
+		return \bxar\helpers\Uf::getListFor('IBLOCK_' . $this->iblock_id->value . '_SECTION');
 	}
 }
