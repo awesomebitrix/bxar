@@ -146,8 +146,8 @@ class Finder extends \bxar\Finder
 
 		//запрос
 		$rsElement = \CIBlockSection::GetList(
-			$order, 
-			$filter, 
+			$order,
+			$filter,
 			$this->getBIncCnt(),
 			$select,
 			!empty($nav) ? $nav : false

@@ -159,7 +159,7 @@ class Section extends \bxar\ActiveRecord
 		} else {
 			//при вставке нового элемента записываем сразу все пользовательские свойства
 			$new = $ib->Add($arFields);
-			if (!$new) {
+			if ($new) {
 				$this->getAttribute('id')->setValue($new);
 				$this->riseEvent('afterSave');
 			} else {
