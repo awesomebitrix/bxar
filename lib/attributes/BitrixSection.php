@@ -32,6 +32,16 @@ class BitrixSection extends Attribute
 	}
 
 	/**
+	 * Возвращает базовый раздел для элемента
+	 * @return int
+	 */
+	public function getBase()
+	{
+		$val = $this->getValue();
+		return is_array($val) ? reset($val) : null;
+	}
+
+	/**
 	 * Возвращает значение для записи в базу данных
 	 * @return mixed
 	 */
