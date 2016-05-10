@@ -70,7 +70,6 @@ class Element extends \bxar\ActiveRecord
 		}
 		//поля элемента инфоблока
 		$initProperties = self::getBuiltFields();
-		$init['IBLOCK_SECTION_ID'] = null;
 		foreach ($initProperties as $key) {
 			$this->_initOnDemand[$this->prepareAttributeName($key)] = isset($init[$key]) ? $init[$key] : null;
 		}
