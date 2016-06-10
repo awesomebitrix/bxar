@@ -57,7 +57,7 @@ class Finder extends \bxar\Finder
 					$return[$key] = $arInit;
 				} else {
 					$arItem = $this->initItem($arInit);
-					$key = $index !== null ? $arItem->getAttributeValue($index) : $baseKey;
+					$key = $index !== null ? $arItem->getAttribute($index)->getValue() : $baseKey;
 					$return[$key] = $arItem;
 				}
 			}
@@ -95,7 +95,7 @@ class Finder extends \bxar\Finder
 		$order = $this->getOrder();
 
 		//условия для поиска
-		$filter = $this->getFilter();		
+		$filter = $this->getFilter();
 
 		//параметры для юзеров
 		$params = array('SELECT' => $this->getUserFields());
@@ -118,7 +118,7 @@ class Finder extends \bxar\Finder
 		$rsElement = \CUser::GetList(
 			$order,
 			($a = null),
-			$filter, 
+			$filter,
 			$params
 		);
 		while ($ob = $rsElement->Fetch()) {
