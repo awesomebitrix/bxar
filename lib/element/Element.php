@@ -46,6 +46,7 @@ class Element extends \bxar\ActiveRecord
 			'DETAIL_TEXT',
 			'DETAIL_TEXT_TYPE',
 			'DATE_CREATE',
+			'TIMESTAMP_X',
 			'CREATED_BY',
 			'MODIFIED_BY',
 			'TAGS',
@@ -285,6 +286,7 @@ class Element extends \bxar\ActiveRecord
 			$settings['code'] === 'date_active_from'
 			|| $settings['code'] === 'date_active_to'
 			|| $settings['code'] === 'date_create'
+			|| $settings['code'] === 'timestamp_x'
 			|| (isset($settings['params']['USER_TYPE']) && $settings['params']['USER_TYPE'] == 'DateTime')
 		){
 			$settings['type'] = 'date';
