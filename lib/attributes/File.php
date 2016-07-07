@@ -68,12 +68,12 @@ class File extends Attribute
 		$fileArray = $this->getFileArray();
 		if ($fileArray) {
 			$return = \CFile::ResizeImageGet(
-				$fileArray, 
+				$fileArray,
 				array('width' => $width, 'height' => $height),
 				$type,
-				$bInitSizes, 
-				$arFilters, 
-				$bImmediate, 
+				$bInitSizes,
+				$arFilters,
+				$bImmediate,
 				$jpgQuality
 			);
 		}
@@ -87,10 +87,10 @@ class File extends Attribute
 	public function getValueToDb()
 	{
 		$val = $this->getValue();
-		if (!empty($val['error'])) return null;
+		if (!empty($val['error']) && !is_numeric($val)) return null;
 		$return = null;
 		if (is_numeric($val)) {
-			$return = null;
+			$return['VALUE'] = \CFile::MakeFileArray(\CFile::GetPath($val));
 		} elseif (is_array($val) && isset($val['tmp_name'])) {
 			$ext = pathinfo($val['tmp_name'], PATHINFO_EXTENSION);
 			if ($ext === '' && !empty($val['name'])) {
@@ -103,7 +103,7 @@ class File extends Attribute
 			if ($this->getParam('ID') !== null) {
 				$val = ['VALUE' => $val];
 			} else {
-				$val['del'] = 'Y';				
+				$val['del'] = 'Y';
 			}
 			$return = $val;
 		} elseif (file_exists($val)) {
