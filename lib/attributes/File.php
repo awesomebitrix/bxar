@@ -87,10 +87,13 @@ class File extends Attribute
 	public function getValueToDb()
 	{
 		$val = $this->getValue();
-		if (!empty($val['error']) && !is_numeric($val)) return null;
+		if (!empty($val['error'])) return null;
 		$return = null;
 		if (is_numeric($val)) {
-			$return['VALUE'] = \CFile::MakeFileArray(\CFile::GetPath($val));
+			if ($this->getParam('FROM_MULTIPLE'))
+				$return['VALUE'] = \CFile::MakeFileArray(\CFile::GetPath($val));
+			else
+				$return = null;
 		} elseif (is_array($val) && isset($val['tmp_name'])) {
 			$ext = pathinfo($val['tmp_name'], PATHINFO_EXTENSION);
 			if ($ext === '' && !empty($val['name'])) {

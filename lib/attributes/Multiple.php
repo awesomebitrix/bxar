@@ -73,6 +73,7 @@ class Multiple extends Attribute
 		$model = $this->getModel();
 		$params = $this->getParams();
 		$params['MULTIPLE'] = 'N';
+		$params['FROM_MULTIPLE'] = 'Y';
 		$init = array(
 			'model' => $model,
 			'code' => $code,
