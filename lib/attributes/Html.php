@@ -25,7 +25,7 @@ class Html extends Attribute
 	{
         $val = [];
         if (isset($value['TEXT'])) {
-            $val['TEXT'] = $value['TEXT'];
+            $val['TEXT'] = htmlspecialchars_decode($value['TEXT']);
         } elseif (!is_array($value)) {
             $val['TEXT'] = $value;
         } else {
