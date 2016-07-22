@@ -22,6 +22,15 @@ class Multiple extends Attribute
 	}
 
 	/**
+	 * Возвращает массив с объектами
+	 * @return array
+	 */
+	public function getObjects()
+	{
+		return parent::getValue();
+	}
+
+	/**
 	 * Задает значение атрибута
 	 * @param mixed $value
 	 */
