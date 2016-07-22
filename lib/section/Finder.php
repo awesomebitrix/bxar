@@ -143,6 +143,9 @@ class Finder extends \bxar\Finder
 
 		//поля для выборки
 		$select = Section::getBuiltFields();
+		//пользовательские поля раздела
+		$uf = \bxar\helpers\Uf::getListFor('IBLOCK_' . $filter['IBLOCK_ID'] . '_SECTION');
+		foreach ($uf as $field) $select[] = $field['FIELD_NAME'];
 
 		//запрос
 		$rsElement = \CIBlockSection::GetList(

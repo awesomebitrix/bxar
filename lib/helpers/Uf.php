@@ -31,4 +31,30 @@ class Uf
 		}
 		return self::$_entities[$entity];
 	}
+
+
+	/**
+	 * @param array
+	 */
+	protected static $_uf_enum = array();
+
+
+	/**
+	 * Возвращает список значений поля типа список
+	 * @return array
+	 */
+	public static function getUserFieldEnum($entity)
+	{
+		if (!isset(self::$_uf_enum[$entity])) {
+			self::$_uf_enum[$entity] = array();
+			$array = array();
+			$rsData = \CUserFieldEnum::GetList(array(), [
+				'USER_FIELD_ID' => $entity,
+			]);
+			while ($ob = $rsData->Fetch()) {
+				self::$_uf_enum[$entity][] = $ob;
+			}
+		}
+		return self::$_uf_enum[$entity];
+	}
 }

@@ -228,7 +228,16 @@ class Section extends \bxar\ActiveRecord
 	 */
 	public function createAttributeFromSettings(array $settings)
 	{
+		if ($settings['code'] !== 'iblock_id') {
+			$uf = $this->getUserFieldsDescription();
+		}
 		if (
+			isset($uf[$settings['code']])
+			&& $uf[$settings['code']]['USER_TYPE_ID'] === 'enumeration'
+		){
+			$settings['type'] = $uf[$settings['code']]['USER_TYPE_ID'];
+			$settings['params'] = $uf[$settings['code']];
+		} elseif (
 			$settings['code'] == 'id'
 			|| $settings['code'] == 'iblock_id'
 			|| $settings['code'] == 'sort'
@@ -296,6 +305,11 @@ class Section extends \bxar\ActiveRecord
 	 */
 	protected function getUserFieldsDescription()
 	{
-		return \bxar\helpers\Uf::getListFor('IBLOCK_' . $this->iblock_id->value . '_SECTION');
+		$uf = \bxar\helpers\Uf::getListFor('IBLOCK_' . $this->iblock_id->value . '_SECTION');
+		$return = [];
+		foreach ($uf as $f) {
+			$return[$this->prepareAttributeName($f['FIELD_NAME'])] = $f;
+		}
+		return $return;
 	}
 }

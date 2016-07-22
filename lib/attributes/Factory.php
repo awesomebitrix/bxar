@@ -22,6 +22,7 @@ class Factory
 		'multiple' => '\bxar\attributes\Multiple',
 		'bitrixSection' => '\bxar\attributes\BitrixSection',
 		'html' => '\bxar\attributes\Html',
+		'enumeration' => '\bxar\attributes\Enumeration',
 	);
 
 
