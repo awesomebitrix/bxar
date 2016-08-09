@@ -96,6 +96,21 @@ abstract class Finder implements \bxar\IFinder
 	}
 
 	/**
+	 * @param array $value
+	 * @return \bxar\IFinder
+	 */
+	public function andFilter(array $value)
+	{
+		$current = $this->getFilter();
+		$this->_filter = [
+			'LOGIC' => 'AND',
+			$current,
+			$value
+		];
+		return $this;
+	}
+
+	/**
 	 * @return array
 	 */
 	public function getFilter()
@@ -178,7 +193,7 @@ abstract class Finder implements \bxar\IFinder
 	{
 		return $this->_index;
 	}
-	
+
 
 	/**
 	 * Инициирует модель ar
