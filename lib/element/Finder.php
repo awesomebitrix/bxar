@@ -141,6 +141,18 @@ class Finder extends \bxar\Finder
 
 		//поля для выборки
 		$select = Element::getBuiltFields();
+		//если есть ограничение по выборке полей,
+		//то достаем только те поля, которые есть в ограничении
+		$arSelect = $this->getSelect();
+		if (!empty($arSelect)) {
+			$tmp = [];
+			foreach ($select as $field) {
+				if (!in_array($field, $arSelect)) continue;
+				$tmp[] = $field;
+			}
+			$select = $tmp;
+			$select[] = 'IBLOCK_ID';
+		}
 
 		//собираем идентификаторы элементов и инфоблоков, чтобы запросить сразу все свойства
 		$arIblocksAndElements = array();
@@ -172,9 +184,16 @@ class Finder extends \bxar\Finder
 				$select = array('ID');
 				$arProperties = array();
 				foreach ($iblockDescription['PROPERTIES'] as $property) {
+					if (
+						!empty($arSelect)
+						&& !in_array('PROPERTY_' . $property['CODE'], $arSelect)
+					){
+						continue;
+					}
 					$arProperties[$property['ID']] = $property;
 					$select[] = 'PROPERTY_' . $property['ID'];
 				}
+				if (empty($arProperties)) continue;
 				$rsElement = \CIBlockElement::GetList($order,
 					$filter,
 					false,

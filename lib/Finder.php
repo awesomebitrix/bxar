@@ -8,6 +8,10 @@ namespace bxar;
 abstract class Finder implements \bxar\IFinder
 {
 	/**
+	 * @var array поля для выборки
+	 */
+	protected $_select = array();
+	/**
 	 * @var array сортиовка
 	 */
 	protected $_order = array();
@@ -53,6 +57,25 @@ abstract class Finder implements \bxar\IFinder
 	public function getArClass()
 	{
 		return $this->_arClass;
+	}
+
+
+	/**
+	 * @param array $value
+	 * @return \bxar\IFinder
+	 */
+	public function setSelect(array $value)
+	{
+		$this->_select = $value;
+		return $this;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getSelect()
+	{
+		return $this->_select;
 	}
 
 
