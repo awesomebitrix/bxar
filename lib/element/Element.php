@@ -177,18 +177,16 @@ class Element extends \bxar\ActiveRecord
 		//записываем поля элемента
 		if (!$this->isNew()) {
 			$id = $this->getAttribute('id')->getValue();
-			/* fix at 30/08/2016, try without second save */
-			if (!empty($arProperties)) $arFields['PROPERTY_VALUES'] = $arProperties;
 			//при обновлении элемента сначала записываем базовые поля
 			$res = $ib->Update($id, $arFields);
 			if (!$res) {
 				throw new Exception($ib->LAST_ERROR);
 			}
 			//отдельно обновляем пользовательские свойства, чтобы не перезаписывать те, которы не были обновлены
-			// if (!empty($arProperties)) {
-				// \CIBlockElement::SetPropertyValuesEx($id, $this->getAttribute('iblock_id')->getValue(), $arProperties);
-			// }
-			/* fix at 30/08/2016 end */
+			//если обновлять свойства вместе с основными параметрами, будут возникать дубли, поэтому свойства сохраняем отдельно
+			if (!empty($arProperties)) {
+				\CIBlockElement::SetPropertyValuesEx($id, $this->getAttribute('iblock_id')->getValue(), $arProperties);
+			}
 			$this->riseEvent('afterSave');
 		} else {
 			//при вставке нового элемента записываем сразу все пользовательские свойства
