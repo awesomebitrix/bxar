@@ -117,7 +117,7 @@ class Element extends \bxar\ActiveRecord
 			if ($attr->getParam('is_required') === 'Y' || (isset($iblockFields[$key]) && $iblockFields[$key]['IS_REQUIRED'] === 'Y')) {
 				$required[] = $key;
 			}
-			if ($attr->getParam('default_value') !== '' && $attr->getParam('default_value') !== null) {
+			if ($attr->getParam('default_value') !== '' && $attr->getParam('default_value') !== null && $attr->getParam('default_value') !== false) {
 				$default[0][] = $key;
 				$default['defaultArray'][$key] = $attr->getParam('default_value');
 			}
