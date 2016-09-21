@@ -13,6 +13,11 @@ class ListProperty extends Attribute
 	 */
 	public function setValue($value)
 	{
+		/* fix at multiply property */
+		if (is_array($value) && isset($value['VALUE'])) {
+			$value = $value['VALUE'];
+		}
+		/* fix end */
 		$toSet = null;
 		if ($value !== null && $value !== '') {
 			$list = $this->getListItems();
@@ -73,6 +78,12 @@ class ListProperty extends Attribute
 	{
 		$return = null;
 		$value = $this->getValue();
+		/* fix at multiply property */
+		if (is_array($value) && isset($value['VALUE'])) {
+			$value = $value['VALUE'];
+		}
+		/* fix end */
+
 		if ($value) {
 			$list = $this->getListItems();
 			foreach ($list as $item) {

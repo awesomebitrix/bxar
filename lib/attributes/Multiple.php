@@ -15,6 +15,7 @@ class Multiple extends Attribute
 	{
 		$return = array();
 		$values = parent::getValue();
+		$var = $this->getParams();
 		foreach ($values as $key => $element) {
 			$return[$key] = $element->getValue();
 		}
@@ -89,5 +90,19 @@ class Multiple extends Attribute
 			'params' => $params,
 		);
 		return $model->createAttributeFromSettings($init);
+	}
+
+	/**
+	 * Возвращает читаемое значение для значения
+	 * @return string
+	 */
+	public function getReadable()
+	{
+		$return = null;
+		$objects = parent::getValue();
+		foreach ($objects as $key => $value) {
+			$return[$key] = $value->getReadable();
+		}
+		return $return;
 	}
 }
