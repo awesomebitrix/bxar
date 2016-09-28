@@ -13,6 +13,13 @@ class Date extends Attribute
 	 */
 	public function setValue($value)
 	{
+		
+		/* fix add array condition at 28.09.2016 */
+		if (!empty($value) && is_array($value)) {
+    	$value = reset($value);
+    }
+		/* fix end */
+
 		if (!empty($value) && ($time = strtotime($value)) !== false) {
 			$value = ConvertTimeStamp($time, 'FULL');
 		} else {
