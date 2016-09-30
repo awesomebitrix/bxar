@@ -177,15 +177,17 @@ class Element extends \bxar\ActiveRecord
 		//записываем поля элемента
 		if (!$this->isNew()) {
 			$id = $this->getAttribute('id')->getValue();
-			//при обновлении элемента сначала записываем базовые поля
-			$res = $ib->Update($id, $arFields);
-			if (!$res) {
-				throw new Exception($ib->LAST_ERROR);
-			}
+
+			/* меняем местами обновление свойств инфоблока и стандартных полей, для правильного срабатывания событий, fix at 30/09/2016 */
 			//отдельно обновляем пользовательские свойства, чтобы не перезаписывать те, которы не были обновлены
 			//если обновлять свойства вместе с основными параметрами, будут возникать дубли, поэтому свойства сохраняем отдельно
 			if (!empty($arProperties)) {
 				\CIBlockElement::SetPropertyValuesEx($id, $this->getAttribute('iblock_id')->getValue(), $arProperties);
+			}
+			//при обновлении элемента сначала записываем базовые поля
+			$res = $ib->Update($id, $arFields);
+			if (!$res) {
+				throw new Exception($ib->LAST_ERROR);
 			}
 			$this->riseEvent('afterSave');
 		} else {
