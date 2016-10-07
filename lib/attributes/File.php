@@ -61,7 +61,7 @@ class File extends Attribute
 	 * Возвращает массив с данными о картинке, пережатой до нужных размеров
 	 * @return array
 	 */
-	public function getResized($width, $height, $type = null, $bInitSizes = false, array $arFilters = null, $bImmediate = false, $jpgQuality = false)
+	public function getResized($width, $height, $type = null, $bInitSizes = false, array $arFilters = null, $bImmediate = false, $jpgQuality = false, $bFullArray = false)
 	{
 		$return = null;
 		$type = $type === null ? BX_RESIZE_IMAGE_PROPORTIONAL : $type;
@@ -77,7 +77,12 @@ class File extends Attribute
 				$jpgQuality
 			);
 		}
-		return !empty($return['src']) ? $return['src'] : null;
+		/* fix when we needed full file array, fix at 07.10.2016 */
+    return !empty($return['src'])
+		 ? $bFullArray
+		  ? $return
+			: $return['src']
+		: null;
 	}
 
 	/**
