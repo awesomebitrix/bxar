@@ -123,7 +123,7 @@ interface TModel
      * @param string $name
      * @param mixed $value
      *
-     * @return \bxar\Field
+     * @return \bxar\IField
      */
     public function getField($name)
     {
