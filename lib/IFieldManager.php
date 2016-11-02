@@ -13,7 +13,7 @@ interface IFieldManager
      *
      * @return array
      */
-    public function getFields();
+    public function getFieldsDescription();
 
     /**
      * Возвращает объект, который представляет собой
@@ -24,4 +24,23 @@ interface IFieldManager
      * @return \bxar\IField
      */
     public function getField($name);
+
+    /**
+     * Создает объект обработчика для поля модели по описанию из массива.
+     *
+     * @param array $description
+     *
+     * @return \bxar\IField
+     */
+    public function createField(array $description);
+
+    /**
+     * Обрабатывает название поля для того,
+     * чтобы привести все названия к единообразю.
+     *
+     * @param string $name
+     *
+     * @return string
+     */
+    public function escapeFieldName($name);
 }

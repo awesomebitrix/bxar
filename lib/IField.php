@@ -30,4 +30,11 @@ interface IField
      * @return mixed
      */
     public function getFieldValueFromModelToRepo();
+
+    /**
+     * Сбрасывает все настройки данного поля
+     *
+     * @return \bxar\IField
+     */
+    public function clearField();
 }

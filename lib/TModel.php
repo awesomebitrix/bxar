@@ -146,7 +146,7 @@ interface TModel
     {
         $fieldManager = $this->getFieldManager();
 
-        return $fieldManager->getFields();
+        return $fieldManager->getFieldsDescription();
     }
 
     /**
