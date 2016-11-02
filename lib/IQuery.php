@@ -3,12 +3,13 @@
 namespace bxar;
 
 /**
- * Интерфейс, который описывает класс для поиска данных в хранилище
+ * Интерфейс, который описывает класс для поиска данных в хранилище.
  */
 interface IQuery
 {
     /**
      * @param array $value
+     *
      * @return \bxar\IQuery
      */
     public function setSelect(array $value);
@@ -20,6 +21,7 @@ interface IQuery
 
     /**
      * @param array $value
+     *
      * @return \bxar\IQuery
      */
     public function setOrder(array $value);
@@ -31,18 +33,21 @@ interface IQuery
 
     /**
      * @param array $value
+     *
      * @return \bxar\IQuery
      */
     public function setFilter(array $value);
 
     /**
      * @param array $value
+     *
      * @return \bxar\IQuery
      */
     public function andFilter(array $value);
 
     /**
      * @param array $value
+     *
      * @return \bxar\IQuery
      */
     public function orFilter(array $value);
@@ -54,6 +59,7 @@ interface IQuery
 
     /**
      * @param int $value
+     *
      * @return \bxar\IQuery
      */
     public function setLimit($value);
@@ -65,6 +71,7 @@ interface IQuery
 
     /**
      * @param int $value
+     *
      * @return \bxar\IQuery
      */
     public function setOffset($value);
@@ -76,6 +83,7 @@ interface IQuery
 
     /**
      * @param string $value
+     *
      * @return \bxar\IQuery
      */
     public function setIndex($value);

@@ -14,11 +14,13 @@ interface TQuery
 
     /**
      * @param array $value
+     *
      * @return \bxar\IQuery
      */
     public function setSelect(array $value)
     {
         $this->_select = $value;
+
         return $this;
     }
 
@@ -37,6 +39,7 @@ interface TQuery
 
     /**
      * @param array $value
+     *
      * @return \bxar\IQuery
      */
     public function setOrder(array $value)
@@ -48,6 +51,7 @@ interface TQuery
             $toSet[trim($key)] = $sort;
         }
         $this->_order = $toSet;
+
         return $this;
     }
 
@@ -66,31 +70,37 @@ interface TQuery
 
     /**
      * @param array $value
+     *
      * @return \bxar\IQuery
      */
     public function setFilter(array $value)
     {
         $this->_filter = $value;
+
         return $this;
     }
 
     /**
      * @param array $value
+     *
      * @return \bxar\IQuery
      */
     public function andFilter(array $value)
     {
         $this->_filter = array_merge($this->_filter, $value);
+
         return $this;
     }
 
     /**
      * @param array $value
+     *
      * @return \bxar\IQuery
      */
     public function orFilter(array $value)
     {
         $this->_filter = array_merge($this->_filter, $value);
+
         return $this;
     }
 
@@ -109,11 +119,13 @@ interface TQuery
 
     /**
      * @param int $value
+     *
      * @return \bxar\IQuery
      */
     public function setLimit($value)
     {
         $this->_limit = (int) $value;
+
         return $this;
     }
 
@@ -132,11 +144,13 @@ interface TQuery
 
     /**
      * @param int $value
+     *
      * @return \bxar\IQuery
      */
     public function setOffset($value)
     {
         $this->_offset = (int) $value;
+
         return $this;
     }
 
@@ -155,11 +169,13 @@ interface TQuery
 
     /**
      * @param string $value
+     *
      * @return \bxar\IQuery
      */
     public function setIndex($value)
     {
         $this->_index = trim($value);
+
         return $this;
     }
 
