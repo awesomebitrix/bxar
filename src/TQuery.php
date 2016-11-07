@@ -5,7 +5,7 @@ namespace bxar;
 /**
  * Трэйт, который реализует базовые функции IQuery
  */
-interface TQuery
+trait TQuery
 {
     /**
      * @var array

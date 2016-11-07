@@ -72,6 +72,42 @@ class Repo implements IRepo
      */
     public function delete(IModel $model)
     {
-        
+
+    }
+
+    /**
+     * Возвращает массив с описанием полей модели для данного хранилища
+     * ключами служат названия полей, а значениями - описания.
+     *
+     * @return array
+     */
+    public function getFieldsDescription()
+    {
+
+    }
+
+    /**
+     * Возвращает объект, который представляет собой
+     * обработчик для конкретного поля.
+     *
+     * @param string $name
+     *
+     * @return \bxar\IField
+     */
+    public function getField($name)
+    {
+
+    }
+
+    /**
+     * Создает объект обработчика для поля модели по описанию из массива.
+     *
+     * @param array $description
+     *
+     * @return \bxar\IField
+     */
+    protected function createField(array $description)
+    {
+
     }
 }

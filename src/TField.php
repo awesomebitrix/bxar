@@ -5,7 +5,7 @@ namespace bxar;
 /**
  * Трэйт, который реализует базовые функции IField
  */
-interface TField
+trait TField
 {
     /**
      * @var mixed

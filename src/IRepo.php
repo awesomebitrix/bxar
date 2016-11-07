@@ -61,22 +61,6 @@ interface IRepo
     public function delete(IModel $model);
 
     /**
-     * Задает менеджер полей для данного хранилища.
-     *
-     * @param \bxar\IFieldManager $manager
-     *
-     * @return \bxar\IRepo
-     */
-    public function setFieldManager(IFieldManager $manager);
-
-    /**
-     * Возвращает менеджер полей для данного хранилища.
-     *
-     * @return \bxar\IFieldManager
-     */
-    public function getFieldManager();
-
-    /**
      * Задает класс моделей, которые будет создавать хранилище.
      *
      * @param string $modelClass
@@ -91,4 +75,32 @@ interface IRepo
      * @return string
      */
     public function getModelClass();
+
+    /**
+     * Возвращает массив с описанием полей модели для данного хранилища
+     * ключами служат названия полей, а значениями - описания.
+     *
+     * @return array
+     */
+    public function getFieldsDescription();
+
+    /**
+     * Возвращает объект, который представляет собой
+     * обработчик для конкретного поля.
+     *
+     * @param string $name
+     *
+     * @return \bxar\IField
+     */
+    public function getField($name);
+
+    /**
+     * Обрабатывает название поля для того,
+     * чтобы привести все названия к единообразю.
+     *
+     * @param string $name
+     *
+     * @return string
+     */
+    public function escapeFieldName($name);
 }

@@ -8,7 +8,7 @@ use InvalidArgumentException;
 /**
  * Трэйт, который реализует базовые функции IModel
  */
-interface TModel
+trait TModel
 {
     /**
      * @var array
@@ -127,7 +127,7 @@ interface TModel
      */
     public function getField($name)
     {
-        $field = $this->getFieldManager()->getField($name);
+        $field = $this->getRepo()->getField($name);
         $field->setFieldValueFromModel(
             isset($this->_fieldsValues[$field->getName()])
                 ? $this->_fieldsValues[$field->getName()]
@@ -144,30 +144,7 @@ interface TModel
      */
     public function getFieldsDescription()
     {
-        $fieldManager = $this->getFieldManager();
-
-        return $fieldManager->getFieldsDescription();
-    }
-
-    /**
-     * Возвращает объект менеджера полей
-     *
-     * @return \bxar\IFieldManager
-     *
-     * @throws \UnexpectedValueException
-     */
-    protected function getFieldManager()
-    {
-        $repo = $this->getRepo();
-        if (empty($repo)) {
-            throw UnexpectedValueException('Repo can not be empty');
-        }
-        $fieldManager = $repo->getFieldManager();
-        if (empty($fieldManager)) {
-            throw UnexpectedValueException('Field manager can not be empty');
-        }
-
-        return $fieldManager;
+        return $this->getRepo()->getFieldsDescription();
     }
 
     /**
