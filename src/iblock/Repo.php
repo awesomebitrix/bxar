@@ -1,9 +1,9 @@
 <?php
 
-namespace bxar\iblock;
+namespace marvin255\bxar\iblock;
 
-use bxar\IRepo;
-use bxar\TRepo;
+use marvin255\bxar\IRepo;
+use marvin255\bxar\TRepo;
 
 /**
  * Класс для хранилища данных из определенного инфоблока

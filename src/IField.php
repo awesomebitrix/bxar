@@ -1,6 +1,6 @@
 <?php
 
-namespace bxar;
+namespace marvin255\bxar;
 
 /**
  * Интерфейс, который описывает класс,
@@ -13,7 +13,7 @@ interface IField
      *
      * @param mixed $value
      *
-     * @return \bxar\IField
+     * @return \marvin255\bxar\IField
      */
     public function setFieldValueFromModel($value);
 
@@ -34,7 +34,7 @@ interface IField
     /**
      * Сбрасывает все настройки данного поля
      *
-     * @return \bxar\IField
+     * @return \marvin255\bxar\IField
      */
     public function clearField();
 }

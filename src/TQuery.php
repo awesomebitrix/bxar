@@ -1,6 +1,6 @@
 <?php
 
-namespace bxar;
+namespace marvin255\bxar;
 
 /**
  * Трэйт, который реализует базовые функции IQuery
@@ -15,9 +15,9 @@ trait TQuery
     /**
      * @param array $value
      *
-     * @return \bxar\IQuery
+     * @return \marvin255\bxar\IQuery
      */
-    public function setSelect(array $value)
+    public function setSelect(array $value = array())
     {
         $this->_select = $value;
 
@@ -40,13 +40,18 @@ trait TQuery
     /**
      * @param array $value
      *
-     * @return \bxar\IQuery
+     * @return \marvin255\bxar\IQuery
      */
-    public function setOrder(array $value)
+    public function setOrder(array $value = array())
     {
         $toSet = [];
         foreach ($value as $key => $sort) {
-            $sort = strtolower($sort);
+            if (is_numeric($key)) {
+                $key = $sort;
+                $sort = 'asc';
+            } else {
+                $sort = strtolower($sort);
+            }
             if ($sort !== 'asc' && $sort !== 'desc') continue;
             $toSet[trim($key)] = $sort;
         }
@@ -71,9 +76,9 @@ trait TQuery
     /**
      * @param array $value
      *
-     * @return \bxar\IQuery
+     * @return \marvin255\bxar\IQuery
      */
-    public function setFilter(array $value)
+    public function setFilter(array $value = array())
     {
         $this->_filter = $value;
 
@@ -83,11 +88,14 @@ trait TQuery
     /**
      * @param array $value
      *
-     * @return \bxar\IQuery
+     * @return \marvin255\bxar\IQuery
      */
     public function andFilter(array $value)
     {
-        $this->_filter = array_merge($this->_filter, $value);
+        $this->_filter = array_merge(
+            $this->_filter ? $this->_filter : [],
+            $value
+        );
 
         return $this;
     }
@@ -95,11 +103,14 @@ trait TQuery
     /**
      * @param array $value
      *
-     * @return \bxar\IQuery
+     * @return \marvin255\bxar\IQuery
      */
     public function orFilter(array $value)
     {
-        $this->_filter = array_merge($this->_filter, $value);
+        $this->_filter = array_merge(
+            $this->_filter ? $this->_filter : [],
+            $value
+        );
 
         return $this;
     }
@@ -120,7 +131,7 @@ trait TQuery
     /**
      * @param int $value
      *
-     * @return \bxar\IQuery
+     * @return \marvin255\bxar\IQuery
      */
     public function setLimit($value)
     {
@@ -145,7 +156,7 @@ trait TQuery
     /**
      * @param int $value
      *
-     * @return \bxar\IQuery
+     * @return \marvin255\bxar\IQuery
      */
     public function setOffset($value)
     {
@@ -170,7 +181,7 @@ trait TQuery
     /**
      * @param string $value
      *
-     * @return \bxar\IQuery
+     * @return \marvin255\bxar\IQuery
      */
     public function setIndex($value)
     {
@@ -185,5 +196,77 @@ trait TQuery
     public function getIndex()
     {
         return $this->_index;
+    }
+
+    /**
+     * @var \marvin255\bxar\IRepo
+     */
+    protected $_repo = null;
+
+    /**
+     * @param \marvin255\bxar\IRepo $repo
+     *
+     * @return \marvin255\bxar\IQuery
+     */
+    public function setRepo(IRepo $repo)
+    {
+        $this->_repo = $repo;
+        return $this;
+    }
+
+    /**
+     * @return \marvin255\bxar\IRepo
+     */
+    public function getRepo()
+    {
+        return $this->_repo;
+    }
+
+    /**
+     * Возвращает одну запись из хранилища.
+     * Shortcut для соответствующего метода хранилища.
+     *
+     * @return \marvin255\bxar\IModel|null
+     */
+    public function search()
+    {
+        return $this->getRepo()->search($this);
+    }
+
+    /**
+     * Возвращает массив записей из хранилища
+     * Shortcut для соответствующего метода хранилища.
+     *
+     * @return array
+     */
+    public function searchAll()
+    {
+        return $this->getRepo()->searchAll($this);
+    }
+
+    /**
+     * Возвращает количество элементов в хранилище.
+     * Shortcut для соответствующего метода хранилища.
+     *
+     * @return int
+     */
+    public function count()
+    {
+        return $this->getRepo()->count($this);
+    }
+
+    /**
+     * @return \marvin255\bxar\IQuery
+     */
+    public function clear()
+    {
+        $this->_index = null;
+        $this->_offset = null;
+        $this->_limit = null;
+        $this->_filter = null;
+        $this->_order = null;
+        $this->_select = null;
+        $this->_repo = null;
+        return $this;
     }
 }

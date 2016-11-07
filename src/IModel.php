@@ -1,6 +1,6 @@
 <?php
 
-namespace bxar;
+namespace marvin255\bxar;
 
 /**
  * Интерфейс, который описывает класс модели, в которой будут храниться данные,
@@ -20,7 +20,7 @@ interface IModel
      *
      * @param array $values
      *
-     * @return \bxar\IModel
+     * @return \marvin255\bxar\IModel
      */
     public function setFieldsValues(array $values);
 
@@ -39,7 +39,7 @@ interface IModel
      * @param string $name
      * @param mixed  $value
      *
-     * @return \bxar\IModel
+     * @return \marvin255\bxar\IModel
      */
     public function setFieldValue($name, $value);
 
@@ -49,7 +49,7 @@ interface IModel
      * @param string $name
      * @param mixed  $value
      *
-     * @return \bxar\Field
+     * @return \marvin255\bxar\Field
      */
     public function getField($name);
 
@@ -63,16 +63,16 @@ interface IModel
     /**
      * Задает объект базового хранилища для данной модели.
      *
-     * @param \bxar\IRepo $repo
+     * @param \marvin255\bxar\IRepo $repo
      *
-     * @return \bxar\IModel
+     * @return \marvin255\bxar\IModel
      */
     public function setRepo(IRepo $repo);
 
     /**
      * Возвращает объект базового хранилища для данной модели.
      *
-     * @return \bxar\IRepo
+     * @return \marvin255\bxar\IRepo
      */
     public function getRepo();
 }

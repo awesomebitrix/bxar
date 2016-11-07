@@ -1,6 +1,6 @@
 <?php
 
-namespace bxar;
+namespace marvin255\bxar;
 
 /**
  * Интерфейс, который описывает класс для поиска данных в хранилище.
@@ -10,9 +10,9 @@ interface IQuery
     /**
      * @param array $value
      *
-     * @return \bxar\IQuery
+     * @return \marvin255\bxar\IQuery
      */
-    public function setSelect(array $value);
+    public function setSelect(array $value = array());
 
     /**
      * @return array
@@ -22,9 +22,9 @@ interface IQuery
     /**
      * @param array $value
      *
-     * @return \bxar\IQuery
+     * @return \marvin255\bxar\IQuery
      */
-    public function setOrder(array $value);
+    public function setOrder(array $value = array());
 
     /**
      * @return array
@@ -34,21 +34,21 @@ interface IQuery
     /**
      * @param array $value
      *
-     * @return \bxar\IQuery
+     * @return \marvin255\bxar\IQuery
      */
-    public function setFilter(array $value);
+    public function setFilter(array $value = array());
 
     /**
      * @param array $value
      *
-     * @return \bxar\IQuery
+     * @return \marvin255\bxar\IQuery
      */
     public function andFilter(array $value);
 
     /**
      * @param array $value
      *
-     * @return \bxar\IQuery
+     * @return \marvin255\bxar\IQuery
      */
     public function orFilter(array $value);
 
@@ -60,7 +60,7 @@ interface IQuery
     /**
      * @param int $value
      *
-     * @return \bxar\IQuery
+     * @return \marvin255\bxar\IQuery
      */
     public function setLimit($value);
 
@@ -72,7 +72,7 @@ interface IQuery
     /**
      * @param int $value
      *
-     * @return \bxar\IQuery
+     * @return \marvin255\bxar\IQuery
      */
     public function setOffset($value);
 
@@ -84,7 +84,7 @@ interface IQuery
     /**
      * @param string $value
      *
-     * @return \bxar\IQuery
+     * @return \marvin255\bxar\IQuery
      */
     public function setIndex($value);
 
@@ -92,4 +92,45 @@ interface IQuery
      * @return string
      */
     public function getIndex();
+
+    /**
+     * @param \marvin255\bxar\IRepo $repo
+     *
+     * @return \marvin255\bxar\IQuery
+     */
+    public function setRepo(IRepo $repo);
+
+    /**
+     * @return \marvin255\bxar\IRepo
+     */
+    public function getRepo();
+
+    /**
+     * Возвращает одну запись из хранилища.
+     * Shortcut для соответствующего метода хранилища.
+     *
+     * @return \marvin255\bxar\IModel|null
+     */
+    public function search();
+
+    /**
+     * Возвращает массив записей из хранилища
+     * Shortcut для соответствующего метода хранилища.
+     *
+     * @return array
+     */
+    public function searchAll();
+
+    /**
+     * Возвращает количество элементов в хранилище.
+     * Shortcut для соответствующего метода хранилища.
+     *
+     * @return int
+     */
+    public function count();
+
+    /**
+     * @return \marvin255\bxar\IQuery
+     */
+    public function clear();
 }

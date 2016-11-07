@@ -8,7 +8,7 @@
         "php": ">=5.4.0"
     },
     "autoload": {
-        "psr-4": { "marvin255\\bxar\\": "src/", "marvin255\\bxar\\tests\\": "tests/" }
+        "psr-4": { "marvin255\\bxar\\": "src/", "marvin255\\bxar\\tests\\": "tests/bxar" }
     },
     "require-dev": {
         "phpunit/phpunit": "*"

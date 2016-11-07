@@ -1,6 +1,6 @@
 <?php
 
-namespace bxar;
+namespace marvin255\bxar;
 
 /**
  * Интерфейс, который описывает класс хранилища данных.
@@ -15,9 +15,9 @@ interface IRepo
     /**
      * Возвращает одну запись из хранилища на основании данных параметра $query.
      *
-     * @param \bxar\IQuery $query
+     * @param \marvin255\bxar\IQuery $query
      *
-     * @return \bxar\IModel|null
+     * @return \marvin255\bxar\IModel|null
      */
     public function search(IQuery $query);
 
@@ -25,7 +25,7 @@ interface IRepo
      * Возвращает массив записей из хранилища
      * на основании данных параметра $query.
      *
-     * @param \bxar\IQuery $query
+     * @param \marvin255\bxar\IQuery $query
      *
      * @return array
      */
@@ -35,7 +35,7 @@ interface IRepo
      * Возвращает количество элементов в хранилище,
      * которые подходят под запрос из $query.
      *
-     * @param \bxar\IQuery $query
+     * @param \marvin255\bxar\IQuery $query
      *
      * @return int
      */
@@ -45,7 +45,7 @@ interface IRepo
      * Пробует добавить запись в хранилище, если ее еще нет, и обновить,
      * если такая уже существует
      *
-     * @param \bxar\IModel $model
+     * @param \marvin255\bxar\IModel $model
      *
      * @return bool
      */
@@ -54,18 +54,37 @@ interface IRepo
     /**
      * Пробует удалить запись из репозитория.
      *
-     * @param \bxar\IModel $model
+     * @param \marvin255\bxar\IModel $model
      *
      * @return bool
      */
     public function delete(IModel $model);
 
     /**
+     * Задает объект запроса для данного хранилища
+     * @param \marvin255\bxar\IQuery $query
+     * @return \marvin255\bxar\IRepo
+     */
+    public function setQuery(IQuery $query);
+
+    /**
+     * Возвращает объект запроса для данного хранилища
+     * @return \marvin255\bxar\IQuery
+     */
+    public function getQuery();
+
+    /**
+     * Подготавливает запрос к новому поиску
+     * @return \marvin255\bxar\IQuery
+     */
+    public function newQuery();
+
+    /**
      * Задает класс моделей, которые будет создавать хранилище.
      *
      * @param string $modelClass
      *
-     * @return \bxar\IRepo
+     * @return \marvin255\bxar\IRepo
      */
     public function setModelClass($modelClass);
 
@@ -90,7 +109,7 @@ interface IRepo
      *
      * @param string $name
      *
-     * @return \bxar\IField
+     * @return \marvin255\bxar\IField
      */
     public function getField($name);
 

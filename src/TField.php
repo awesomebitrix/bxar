@@ -1,6 +1,6 @@
 <?php
 
-namespace bxar;
+namespace marvin255\bxar;
 
 /**
  * Трэйт, который реализует базовые функции IField
@@ -17,7 +17,7 @@ trait TField
      *
      * @param mixed $value
      *
-     * @return \bxar\IField
+     * @return \marvin255\bxar\IField
      */
     public function setFieldValueFromModel($value)
     {
@@ -47,7 +47,7 @@ trait TField
     /**
      * Сбрасывает все настройки данного поля
      *
-     * @return \bxar\IField
+     * @return \marvin255\bxar\IField
      */
     public function clearField()
     {

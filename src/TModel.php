@@ -1,6 +1,6 @@
 <?php
 
-namespace bxar;
+namespace marvin255\bxar;
 
 use UnexpectedValueException;
 use InvalidArgumentException;
@@ -76,7 +76,7 @@ trait TModel
      *
      * @param array $values
      *
-     * @return \bxar\IModel
+     * @return \marvin255\bxar\IModel
      */
     public function setFieldsValues(array $values)
     {
@@ -107,7 +107,7 @@ trait TModel
      * @param string $name
      * @param mixed $value
      *
-     * @return \bxar\IModel
+     * @return \marvin255\bxar\IModel
      */
     public function setFieldValue($name, $value)
     {
@@ -123,7 +123,7 @@ trait TModel
      * @param string $name
      * @param mixed $value
      *
-     * @return \bxar\IField
+     * @return \marvin255\bxar\IField
      */
     public function getField($name)
     {
@@ -148,16 +148,16 @@ trait TModel
     }
 
     /**
-     * @var \bxar\IRepo
+     * @var \marvin255\bxar\IRepo
      */
     protected $_repo = null;
 
     /**
      * Задает объект базового хранилища для данной модели
      *
-     * @param \bxar\IRepo $repo
+     * @param \marvin255\bxar\IRepo $repo
      *
-     * @return \bxar\IModel
+     * @return \marvin255\bxar\IModel
      */
     public function setRepo(IRepo $repo)
     {
@@ -167,7 +167,7 @@ trait TModel
     /**
      * Возвращает объект базового хранилища для данной модели
      *
-     * @return \bxar\IRepo
+     * @return \marvin255\bxar\IRepo
      */
     public function getRepo()
     {
