@@ -3,7 +3,7 @@
 namespace marvin255\bxar;
 
 /**
- * Трэйт, который реализует базовые функции IQuery
+ * Трэйт, который реализует базовые функции IQuery.
  */
 trait TQuery
 {
@@ -52,7 +52,9 @@ trait TQuery
             } else {
                 $sort = strtolower($sort);
             }
-            if ($sort !== 'asc' && $sort !== 'desc') continue;
+            if ($sort !== 'asc' && $sort !== 'desc') {
+                continue;
+            }
             $toSet[trim($key)] = $sort;
         }
         $this->_order = $toSet;
@@ -211,6 +213,7 @@ trait TQuery
     public function setRepo(IRepo $repo)
     {
         $this->_repo = $repo;
+
         return $this;
     }
 
@@ -267,6 +270,7 @@ trait TQuery
         $this->_order = null;
         $this->_select = null;
         $this->_repo = null;
+
         return $this;
     }
 }

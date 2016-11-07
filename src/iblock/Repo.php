@@ -6,7 +6,7 @@ use marvin255\bxar\IRepo;
 use marvin255\bxar\TRepo;
 
 /**
- * Класс для хранилища данных из определенного инфоблока
+ * Класс для хранилища данных из определенного инфоблока.
  */
 class Repo implements IRepo
 {
@@ -21,7 +21,6 @@ class Repo implements IRepo
      */
     public function search(IQuery $query)
     {
-
     }
 
     /**
@@ -34,7 +33,6 @@ class Repo implements IRepo
      */
     public function searchAll(IQuery $query)
     {
-
     }
 
     /**
@@ -47,7 +45,6 @@ class Repo implements IRepo
      */
     public function count(IQuery $query)
     {
-
     }
 
     /**
@@ -60,7 +57,6 @@ class Repo implements IRepo
      */
     public function save(IModel $model)
     {
-
     }
 
     /**
@@ -72,7 +68,6 @@ class Repo implements IRepo
      */
     public function delete(IModel $model)
     {
-
     }
 
     /**
@@ -83,7 +78,6 @@ class Repo implements IRepo
      */
     public function getFieldsDescription()
     {
-
     }
 
     /**
@@ -96,7 +90,6 @@ class Repo implements IRepo
      */
     public function getField($name)
     {
-
     }
 
     /**
@@ -108,6 +101,5 @@ class Repo implements IRepo
      */
     protected function createField(array $description)
     {
-
     }
 }

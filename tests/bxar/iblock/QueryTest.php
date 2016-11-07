@@ -70,7 +70,7 @@ class QueryTest extends Query
                     ['NAME' => 'test'],
                     ['NAME' => 'test12'],
                 ],
-                ['ID' => 10]
+                ['ID' => 10],
             ],
             $query->orFilter(['NAME' => 'test'])
                 ->orFilter(['NAME' => 'test12'])
@@ -87,7 +87,7 @@ class QueryTest extends Query
                     ['NAME' => 'test'],
                     ['NAME' => 'test12'],
                 ],
-                ['ID' => 10]
+                ['ID' => 10],
             ],
             $query->andFilter(['NAME' => 'test'])
                 ->andFilter(['NAME' => 'test12'])
@@ -98,6 +98,6 @@ class QueryTest extends Query
 
     public function getObject()
     {
-        return new \marvin255\bxar\iblock\Query;
+        return new \marvin255\bxar\iblock\Query();
     }
 }

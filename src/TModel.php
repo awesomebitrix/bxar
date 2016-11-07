@@ -2,11 +2,8 @@
 
 namespace marvin255\bxar;
 
-use UnexpectedValueException;
-use InvalidArgumentException;
-
 /**
- * Трэйт, который реализует базовые функции IModel
+ * Трэйт, который реализует базовые функции IModel.
  */
 trait TModel
 {
@@ -16,7 +13,7 @@ trait TModel
     protected $_fieldsValues = [];
 
     /**
-     * Магия для быстрого доступа к полям модели
+     * Магия для быстрого доступа к полям модели.
      *
      * @param string $name
      *
@@ -28,12 +25,10 @@ trait TModel
     }
 
     /**
-     * Магия для быстрого доступа к полям модели
+     * Магия для быстрого доступа к полям модели.
      *
      * @param string $name
-     * @param mixed $value
-     *
-     * @return null
+     * @param mixed  $value
      */
     public function __set($name, $value)
     {
@@ -41,11 +36,11 @@ trait TModel
     }
 
     /**
-     * Магия для быстрого доступа к полям модели
+     * Магия для быстрого доступа к полям модели.
      *
      * @param string $name
-     * @return bool
      *
+     * @return bool
      */
     public function __isset($name)
     {
@@ -55,7 +50,7 @@ trait TModel
     }
 
     /**
-     * Возвращает массив всех значений полей модели
+     * Возвращает массив всех значений полей модели.
      *
      * @return array
      */
@@ -72,7 +67,7 @@ trait TModel
     }
 
     /**
-     * Задает массив со всеми значениями полей модели
+     * Задает массив со всеми значениями полей модели.
      *
      * @param array $values
      *
@@ -88,7 +83,7 @@ trait TModel
     }
 
     /**
-     * Получает значение поля модели
+     * Получает значение поля модели.
      *
      * @param string $name
      *
@@ -102,10 +97,10 @@ trait TModel
     }
 
     /**
-     * Задает значение поля модели
+     * Задает значение поля модели.
      *
      * @param string $name
-     * @param mixed $value
+     * @param mixed  $value
      *
      * @return \marvin255\bxar\IModel
      */
@@ -118,10 +113,10 @@ trait TModel
     }
 
     /**
-     * Возвращает объект для обработки данного типа поля
+     * Возвращает объект для обработки данного типа поля.
      *
      * @param string $name
-     * @param mixed $value
+     * @param mixed  $value
      *
      * @return \marvin255\bxar\IField
      */
@@ -138,7 +133,7 @@ trait TModel
     }
 
     /**
-     * Возвращает список полей с описаниями для данной модели
+     * Возвращает список полей с описаниями для данной модели.
      *
      * @return array
      */
@@ -153,7 +148,7 @@ trait TModel
     protected $_repo = null;
 
     /**
-     * Задает объект базового хранилища для данной модели
+     * Задает объект базового хранилища для данной модели.
      *
      * @param \marvin255\bxar\IRepo $repo
      *
@@ -165,7 +160,7 @@ trait TModel
     }
 
     /**
-     * Возвращает объект базового хранилища для данной модели
+     * Возвращает объект базового хранилища для данной модели.
      *
      * @return \marvin255\bxar\IRepo
      */

@@ -5,7 +5,7 @@ namespace marvin255\bxar;
 use InvalidArgumentException;
 
 /**
- * Трэйт, который реализует базовые функции IRepo
+ * Трэйт, который реализует базовые функции IRepo.
  */
 trait TRepo
 {
@@ -15,18 +15,22 @@ trait TRepo
     protected $_query = '';
 
     /**
-     * Задает объект запроса для данного хранилища
+     * Задает объект запроса для данного хранилища.
+     *
      * @param \marvin255\bxar\IQuery $query
+     *
      * @return \marvin255\bxar\IRepo
      */
     public function setQuery(IQuery $query)
     {
         $this->_query = $query;
+
         return $this;
     }
 
     /**
-     * Возвращает объект запроса для данного хранилища
+     * Возвращает объект запроса для данного хранилища.
+     *
      * @return \marvin255\bxar\IQuery
      */
     public function getQuery()
@@ -35,7 +39,8 @@ trait TRepo
     }
 
     /**
-     * Подготавливает запрос к новому поиску
+     * Подготавливает запрос к новому поиску.
+     *
      * @return \marvin255\bxar\IQuery
      */
     public function newQuery()

@@ -6,7 +6,7 @@ use marvin255\bxar\IQuery;
 use marvin255\bxar\TQuery;
 
 /**
- * Класс запроса данных из инфоблока инфоблока
+ * Класс запроса данных из инфоблока инфоблока.
  */
 class Query implements IQuery
 {
@@ -35,6 +35,7 @@ class Query implements IQuery
             $newFilter = $value;
         }
         $this->setFilter($newFilter);
+
         return $this;
     }
 
@@ -61,6 +62,7 @@ class Query implements IQuery
             $newFilter = $value;
         }
         $this->setFilter($newFilter);
+
         return $this;
     }
 }
