@@ -20,4 +20,13 @@ interface IIblockHelper
      * @return array
      */
     public function getIblockFields($id);
+
+    /**
+     * Создает объект обработчика для поля модели по описанию из массива.
+     *
+     * @param array $description
+     *
+     * @return \bxar\IField
+     */
+    public function createField(array $description);
 }

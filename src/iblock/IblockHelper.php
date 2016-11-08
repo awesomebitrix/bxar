@@ -92,4 +92,16 @@ class IblockHelper implements IIblockHelper
         }
         return $return;
     }
+
+    /**
+     * Создает объект обработчика для поля модели по описанию из массива.
+     *
+     * @param array $description
+     *
+     * @return \bxar\IField
+     */
+    public function createField(array $description)
+    {
+        
+    }
 }

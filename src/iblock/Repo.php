@@ -179,15 +179,4 @@ class Repo implements IRepo
     public function getField($name)
     {
     }
-
-    /**
-     * Создает объект обработчика для поля модели по описанию из массива.
-     *
-     * @param array $description
-     *
-     * @return \bxar\IField
-     */
-    protected function createField(array $description)
-    {
-    }
 }
