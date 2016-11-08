@@ -3,6 +3,8 @@
 namespace marvin255\bxar\iblock;
 
 use marvin255\bxar\IRepo;
+use marvin255\bxar\IQuery;
+use marvin255\bxar\IModel;
 use marvin255\bxar\TRepo;
 
 /**

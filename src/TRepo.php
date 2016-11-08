@@ -21,7 +21,7 @@ trait TRepo
      *
      * @return \marvin255\bxar\IRepo
      */
-    public function setQuery(IQuery $query)
+    public function setQuery(IQuery $query = null)
     {
         $this->_query = $query;
 
@@ -42,10 +42,18 @@ trait TRepo
      * Подготавливает запрос к новому поиску.
      *
      * @return \marvin255\bxar\IQuery
+     *
+     * @throws InvalidArgumentException
      */
     public function newQuery()
     {
-        return $this->getQuery()->clear()->setRepo($this);
+        $query = $this->getQuery();
+        if (!$query) {
+            throw new InvalidArgumentException('Query param can\'t be empty');
+        }
+        $query->clear();
+        $query->setRepo($this);
+        return $query;
     }
 
     /**
@@ -68,6 +76,7 @@ trait TRepo
             throw new InvalidArgumentException("Model class {$modelClass} must implements \marvin255\bxar\IModel");
         }
         $this->_modelClass = $modelClass;
+        return $this;
     }
 
     /**

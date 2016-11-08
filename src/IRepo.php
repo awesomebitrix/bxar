@@ -67,7 +67,7 @@ interface IRepo
      *
      * @return \marvin255\bxar\IRepo
      */
-    public function setQuery(IQuery $query);
+    public function setQuery(IQuery $query = null);
 
     /**
      * Возвращает объект запроса для данного хранилища.
