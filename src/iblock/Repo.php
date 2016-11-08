@@ -6,6 +6,8 @@ use marvin255\bxar\IRepo;
 use marvin255\bxar\IQuery;
 use marvin255\bxar\IModel;
 use marvin255\bxar\TRepo;
+use InvalidArgumentException;
+use UnexpectedValueException;
 
 /**
  * Класс для хранилища данных из определенного инфоблока.
@@ -73,6 +75,81 @@ class Repo implements IRepo
     }
 
     /**
+     * @var \marvin255\bxar\iblock\IIblockHelper
+     */
+    protected $_iblockHelper = null;
+
+    /**
+     * Задает объект отвечающий за связь с битриксом
+     * @param \marvin255\bxar\iblock\IIblockHelper $helper
+     * @return \marvin255\bxar\IRepo
+     */
+    public function setIblockHelper(IIblockHelper $helper)
+    {
+        $this->_iblockHelper = $helper;
+        return $this;
+    }
+
+    /**
+     * Возвращает объект отвечающий за связь с битриксом
+     * @return \marvin255\bxar\iblock\IIblockHelper
+     */
+    public function getIblockHelper()
+    {
+        if ($this->_iblockHelper === null) {
+            $this->_iblockHelper = new IblockHelper;
+        }
+        return $this->_iblockHelper;
+    }
+
+    /**
+     * @var int
+     */
+    protected $_iblock = null;
+
+    /**
+     * Задает идентификатор или символьный код инфоблока для данного объекта
+     * @param int|string $iblockId
+     * @return \marvin255\bxar\IRepo
+     * @throws InvalidArgumentException
+     */
+    public function setIblock($iblockId)
+    {
+        $iblockId = trim($iblockId);
+        if ($iblockId === '') {
+            throw new InvalidArgumentException('iblockId parameter can\'t be empty');
+        }
+        if (is_numeric($iblockId)) {
+            $iblockId = (int) $iblockId;
+            if ($iblockId <= 0) {
+                throw new InvalidArgumentException('Wrong iblockId parameter:'.$iblockId);
+            }
+        }
+        $this->_iblock = $iblockId;
+        return $this;
+    }
+
+    /**
+     * Возвращает идентификатор или символьный код инфоблока для данного объекта
+     * @return string|int
+     * @throws UnexpectedValueException
+     */
+    public function getIblock()
+    {
+        if ($this->_iblock === null) {
+            throw new UnexpectedValueException('iblockId parameter can\'t be empty');
+        } elseif (is_string($this->_iblock)) {
+            $this->_iblock = $this->getIblockHelper()->findIblockIdByCode($this->_iblock);
+        }
+        return $this->_iblock;
+    }
+
+    /**
+     * @var array
+     */
+    protected $_fieldsDescription = null;
+
+    /**
      * Возвращает массив с описанием полей модели для данного хранилища
      * ключами служат названия полей, а значениями - описания.
      *
@@ -80,6 +157,15 @@ class Repo implements IRepo
      */
     public function getFieldsDescription()
     {
+        if ($this->_fieldsDescription === null) {
+            $this->_fieldsDescription = [];
+            $description = $this->getIblockHelper()->getIblockFields($this->getIblock());
+            $description = is_array($description) ? $description : [];
+            foreach ($description as $key => $value) {
+                $this->_fieldsDescription[$this->escapeFieldName($key)] = $value;
+            }
+        }
+        return $this->_fieldsDescription;
     }
 
     /**
