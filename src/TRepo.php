@@ -53,6 +53,7 @@ trait TRepo
         }
         $query->clear();
         $query->setRepo($this);
+
         return $query;
     }
 
@@ -76,6 +77,7 @@ trait TRepo
             throw new InvalidArgumentException("Model class {$modelClass} must implements \marvin255\bxar\IModel");
         }
         $this->_modelClass = $modelClass;
+
         return $this;
     }
 

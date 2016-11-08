@@ -81,24 +81,29 @@ class Repo implements IRepo
 
     /**
      * Задает объект отвечающий за связь с битриксом
+     *
      * @param \marvin255\bxar\iblock\IIblockHelper $helper
+     *
      * @return \marvin255\bxar\IRepo
      */
     public function setIblockHelper(IIblockHelper $helper)
     {
         $this->_iblockHelper = $helper;
+
         return $this;
     }
 
     /**
      * Возвращает объект отвечающий за связь с битриксом
+     *
      * @return \marvin255\bxar\iblock\IIblockHelper
      */
     public function getIblockHelper()
     {
         if ($this->_iblockHelper === null) {
-            $this->_iblockHelper = new IblockHelper;
+            $this->_iblockHelper = new IblockHelper();
         }
+
         return $this->_iblockHelper;
     }
 
@@ -108,9 +113,12 @@ class Repo implements IRepo
     protected $_iblock = null;
 
     /**
-     * Задает идентификатор или символьный код инфоблока для данного объекта
+     * Задает идентификатор или символьный код инфоблока для данного объекта.
+     *
      * @param int|string $iblockId
+     *
      * @return \marvin255\bxar\IRepo
+     *
      * @throws InvalidArgumentException
      */
     public function setIblock($iblockId)
@@ -126,12 +134,15 @@ class Repo implements IRepo
             }
         }
         $this->_iblock = $iblockId;
+
         return $this;
     }
 
     /**
-     * Возвращает идентификатор или символьный код инфоблока для данного объекта
+     * Возвращает идентификатор или символьный код инфоблока для данного объекта.
+     *
      * @return string|int
+     *
      * @throws UnexpectedValueException
      */
     public function getIblock()
@@ -141,6 +152,7 @@ class Repo implements IRepo
         } elseif (is_string($this->_iblock)) {
             $this->_iblock = $this->getIblockHelper()->findIblockIdByCode($this->_iblock);
         }
+
         return $this->_iblock;
     }
 
@@ -165,6 +177,7 @@ class Repo implements IRepo
                 $this->_fieldsDescription[$this->escapeFieldName($key)] = $value;
             }
         }
+
         return $this->_fieldsDescription;
     }
 
@@ -180,6 +193,7 @@ class Repo implements IRepo
      * @param string $name
      *
      * @return \bxar\IField
+     *
      * @throws InvalidArgumentException
      */
     public function getField($name)
@@ -192,6 +206,7 @@ class Repo implements IRepo
             }
             $this->_fields[$name] = $this->getIblockHelper()->createField($descriptions[$name]);
         }
+
         return $this->_fields[$name];
     }
 }

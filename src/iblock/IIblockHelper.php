@@ -8,15 +8,19 @@ namespace marvin255\bxar\iblock;
 interface IIblockHelper
 {
     /**
-     * Возвращает уникальный идентификатор инфоблока по его символьному коду
+     * Возвращает уникальный идентификатор инфоблока по его символьному коду.
+     *
      * @param string $code
+     *
      * @return int
      */
     public function findIblockIdByCode($code);
 
     /**
-     * Возвращает описание полей инфоблока по его идентификатору
+     * Возвращает описание полей инфоблока по его идентификатору.
+     *
      * @param int $id
+     *
      * @return array
      */
     public function getIblockFields($id);

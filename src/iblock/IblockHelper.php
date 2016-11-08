@@ -10,7 +10,7 @@ use UnexpectedValueException;
 class IblockHelper implements IIblockHelper
 {
     /**
-     * В конструкторе класс подгружаем модуль инфоблоков битрикса
+     * В конструкторе класс подгружаем модуль инфоблоков битрикса.
      */
     public function __construct()
     {
@@ -20,9 +20,12 @@ class IblockHelper implements IIblockHelper
     }
 
     /**
-     * Возвращает уникальный идентификатор инфоблока по его символьному коду
+     * Возвращает уникальный идентификатор инфоблока по его символьному коду.
+     *
      * @param string $code
+     *
      * @return int
+     *
      * @throws UnexpectedValueException
      */
     public function findIblockIdByCode($code)
@@ -43,8 +46,10 @@ class IblockHelper implements IIblockHelper
     }
 
     /**
-     * Возвращает описание полей инфоблока по его идентификатору
+     * Возвращает описание полей инфоблока по его идентификатору.
+     *
      * @param int $id
+     *
      * @return array
      */
     public function getIblockFields($id)
@@ -90,6 +95,7 @@ class IblockHelper implements IIblockHelper
                 'params' => $ob,
             ];
         }
+
         return $return;
     }
 
@@ -102,6 +108,5 @@ class IblockHelper implements IIblockHelper
      */
     public function createField(array $description)
     {
-        
     }
 }
