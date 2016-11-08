@@ -169,14 +169,29 @@ class Repo implements IRepo
     }
 
     /**
+     * @var array
+     */
+    protected $_fields = [];
+
+    /**
      * Возвращает объект, который представляет собой
      * обработчик для конкретного поля.
      *
      * @param string $name
      *
      * @return \bxar\IField
+     * @throws InvalidArgumentException
      */
     public function getField($name)
     {
+        $name = $this->escapeFieldName($name);
+        if (empty($this->_fields[$name])) {
+            $descriptions = $this->getFieldsDescription();
+            if (!isset($descriptions[$name])) {
+                throw new InvalidArgumentException('Field not found: '.$name);
+            }
+            $this->_fields[$name] = $this->getIblockHelper()->createField($descriptions[$name]);
+        }
+        return $this->_fields[$name];
     }
 }

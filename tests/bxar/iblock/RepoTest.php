@@ -161,6 +161,47 @@ class RepoTest extends Repo
         );
     }
 
+    public function testGetField()
+    {
+        $repo = $this->getObject();
+        $field = $this->getMockBuilder('\marvin255\bxar\IField')->getMock();
+        $iblockHelper = $this->getMockBuilder('\marvin255\bxar\iblock\IIblockHelper')->getMock();
+        $iblockHelper->expects($this->once())
+            ->method('getIblockFields')
+            ->with($this->equalTo(789))
+            ->will($this->returnValue([
+                'CODE' => [
+                    'type' => 'string',
+                    'label' => 'code',
+                ],
+                'PROPERTY_TEST' => [
+                    'type' => 'string',
+                    'label' => 'test',
+                    'params' => [
+                        'test' => 1,
+                    ],
+                ],
+            ]));
+        $iblockHelper->expects($this->once())
+            ->method('createField')
+            ->with($this->equalTo([
+                'type' => 'string',
+                'label' => 'test',
+                'params' => [
+                    'test' => 1,
+                ],
+            ]))->will($this->returnValue($field));
+        $repo->setIblockHelper($iblockHelper);
+        $repo->setIblock(789);
+        $repo->getField('property_test');
+        $repo->getField('PROPERTY_TEST');
+
+        $this->assertSame(
+            $field,
+            $repo->getField('property_test')
+        );
+    }
+
     public function getObject()
     {
         return new \marvin255\bxar\iblock\Repo();
