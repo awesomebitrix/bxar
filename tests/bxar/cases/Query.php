@@ -30,7 +30,7 @@ abstract class Query extends \PHPUnit_Framework_TestCase
     public function testSetOrder()
     {
         $query = $this->getObject();
-        $order = ['ID' => 'asc', 'NAME' => 'DESC', 'EMPTY'];
+        $order = ['ID' => 'asc', 'NAME' => 'DESC', 'EMPTY', 'WRONG_ORDER' => 'dessC'];
 
         $this->assertSame(
             $query,
