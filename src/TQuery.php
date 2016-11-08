@@ -17,7 +17,7 @@ trait TQuery
      *
      * @return \marvin255\bxar\IQuery
      */
-    public function setSelect(array $value = array())
+    public function setSelect(array $value = null)
     {
         $this->_select = $value;
 
@@ -42,20 +42,24 @@ trait TQuery
      *
      * @return \marvin255\bxar\IQuery
      */
-    public function setOrder(array $value = array())
+    public function setOrder(array $value = null)
     {
-        $toSet = [];
-        foreach ($value as $key => $sort) {
-            if (is_numeric($key)) {
-                $key = $sort;
-                $sort = 'asc';
-            } else {
-                $sort = strtolower($sort);
+        if (is_array($value)) {
+            $toSet = [];
+            foreach ($value as $key => $sort) {
+                if (is_numeric($key)) {
+                    $key = $sort;
+                    $sort = 'asc';
+                } else {
+                    $sort = strtolower($sort);
+                }
+                if ($sort !== 'asc' && $sort !== 'desc') {
+                    continue;
+                }
+                $toSet[trim($key)] = $sort;
             }
-            if ($sort !== 'asc' && $sort !== 'desc') {
-                continue;
-            }
-            $toSet[trim($key)] = $sort;
+        } else {
+            $toSet = null;
         }
         $this->_order = $toSet;
 
@@ -80,7 +84,7 @@ trait TQuery
      *
      * @return \marvin255\bxar\IQuery
      */
-    public function setFilter(array $value = array())
+    public function setFilter(array $value = null)
     {
         $this->_filter = $value;
 
@@ -137,7 +141,7 @@ trait TQuery
      */
     public function setLimit($value)
     {
-        $this->_limit = (int) $value;
+        $this->_limit = $value === null ? null : (int) $value;
 
         return $this;
     }
@@ -162,7 +166,7 @@ trait TQuery
      */
     public function setOffset($value)
     {
-        $this->_offset = (int) $value;
+        $this->_offset = $value === null ? null : (int) $value;
 
         return $this;
     }
@@ -187,7 +191,7 @@ trait TQuery
      */
     public function setIndex($value)
     {
-        $this->_index = trim($value);
+        $this->_index = $value === null ? null : trim($value);
 
         return $this;
     }
@@ -210,7 +214,7 @@ trait TQuery
      *
      * @return \marvin255\bxar\IQuery
      */
-    public function setRepo(IRepo $repo)
+    public function setRepo(IRepo $repo = null)
     {
         $this->_repo = $repo;
 

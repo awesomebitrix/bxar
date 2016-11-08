@@ -22,7 +22,7 @@ abstract class Query extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertSame(
-            [],
+            null,
             $query->setSelect()->getSelect()
         );
     }
@@ -43,7 +43,7 @@ abstract class Query extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertSame(
-            [],
+            null,
             $query->setOrder()->getOrder()
         );
     }
@@ -64,7 +64,7 @@ abstract class Query extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertSame(
-            [],
+            null,
             $query->setFilter()->getFilter()
         );
     }
@@ -131,7 +131,7 @@ abstract class Query extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertSame(
-            0,
+            null,
             $query->setLimit(null)->getLimit()
         );
     }
@@ -156,7 +156,7 @@ abstract class Query extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertSame(
-            0,
+            null,
             $query->setOffset(null)->getOffset()
         );
     }
@@ -181,7 +181,7 @@ abstract class Query extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertSame(
-            '',
+            null,
             $query->setIndex(null)->getIndex()
         );
     }

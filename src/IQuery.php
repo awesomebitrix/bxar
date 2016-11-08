@@ -12,7 +12,7 @@ interface IQuery
      *
      * @return \marvin255\bxar\IQuery
      */
-    public function setSelect(array $value = array());
+    public function setSelect(array $value = null);
 
     /**
      * @return array
@@ -24,7 +24,7 @@ interface IQuery
      *
      * @return \marvin255\bxar\IQuery
      */
-    public function setOrder(array $value = array());
+    public function setOrder(array $value = null);
 
     /**
      * @return array
@@ -36,7 +36,7 @@ interface IQuery
      *
      * @return \marvin255\bxar\IQuery
      */
-    public function setFilter(array $value = array());
+    public function setFilter(array $value = null);
 
     /**
      * @param array $value
@@ -98,7 +98,7 @@ interface IQuery
      *
      * @return \marvin255\bxar\IQuery
      */
-    public function setRepo(IRepo $repo);
+    public function setRepo(IRepo $repo = null);
 
     /**
      * @return \marvin255\bxar\IRepo
