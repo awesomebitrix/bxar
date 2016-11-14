@@ -75,32 +75,4 @@ interface IRepo
      * @return string
      */
     public function getModelClass();
-
-    /**
-     * Возвращает массив с описанием полей модели для данного хранилища
-     * ключами служат названия полей, а значениями - описания.
-     *
-     * @return array
-     */
-    public function getFieldsDescription();
-
-    /**
-     * Возвращает объект, который представляет собой
-     * обработчик для конкретного поля.
-     *
-     * @param string $name
-     *
-     * @return \marvin255\bxar\IField
-     */
-    public function getField($name);
-
-    /**
-     * Обрабатывает название поля для того,
-     * чтобы привести все названия к единообразю.
-     *
-     * @param string $name
-     *
-     * @return string
-     */
-    public function escapeFieldName($name);
 }

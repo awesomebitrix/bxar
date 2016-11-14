@@ -42,17 +42,4 @@ trait TRepo
     {
         return $this->_modelClass;
     }
-
-    /**
-     * Обрабатывает название поля для того,
-     * чтобы привести все названия к единообразю.
-     *
-     * @param string $name
-     *
-     * @return string
-     */
-    public function escapeFieldName($name)
-    {
-        return strtolower(trim($name));
-    }
 }
