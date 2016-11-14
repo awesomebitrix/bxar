@@ -3,7 +3,7 @@
 namespace marvin255\bxar\iblock;
 
 use marvin255\bxar\IQuery;
-use marvin255\bxar\TQuery;
+use marvin255\bxar\traits\Query as TQuery;
 
 /**
  * Класс запроса данных из инфоблока инфоблока.

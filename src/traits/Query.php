@@ -1,11 +1,11 @@
 <?php
 
-namespace marvin255\bxar;
+namespace marvin255\bxar\traits;
 
 /**
  * Трэйт, который реализует базовые функции IQuery.
  */
-trait TQuery
+trait Query
 {
     /**
      * @var array
