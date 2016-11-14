@@ -205,64 +205,6 @@ trait TQuery
     }
 
     /**
-     * @var \marvin255\bxar\IRepo
-     */
-    protected $_repo = null;
-
-    /**
-     * @param \marvin255\bxar\IRepo $repo
-     *
-     * @return \marvin255\bxar\IQuery
-     */
-    public function setRepo(IRepo $repo = null)
-    {
-        $this->_repo = $repo;
-
-        return $this;
-    }
-
-    /**
-     * @return \marvin255\bxar\IRepo
-     */
-    public function getRepo()
-    {
-        return $this->_repo;
-    }
-
-    /**
-     * Возвращает одну запись из хранилища.
-     * Shortcut для соответствующего метода хранилища.
-     *
-     * @return \marvin255\bxar\IModel|null
-     */
-    public function search()
-    {
-        return $this->getRepo()->search($this);
-    }
-
-    /**
-     * Возвращает массив записей из хранилища
-     * Shortcut для соответствующего метода хранилища.
-     *
-     * @return array
-     */
-    public function searchAll()
-    {
-        return $this->getRepo()->searchAll($this);
-    }
-
-    /**
-     * Возвращает количество элементов в хранилище.
-     * Shortcut для соответствующего метода хранилища.
-     *
-     * @return int
-     */
-    public function count()
-    {
-        return $this->getRepo()->count($this);
-    }
-
-    /**
      * @return \marvin255\bxar\IQuery
      */
     public function clear()
@@ -273,7 +215,6 @@ trait TQuery
         $this->_filter = null;
         $this->_order = null;
         $this->_select = null;
-        $this->_repo = null;
 
         return $this;
     }

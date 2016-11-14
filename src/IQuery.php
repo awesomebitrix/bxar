@@ -94,42 +94,6 @@ interface IQuery
     public function getIndex();
 
     /**
-     * @param \marvin255\bxar\IRepo $repo
-     *
-     * @return \marvin255\bxar\IQuery
-     */
-    public function setRepo(IRepo $repo = null);
-
-    /**
-     * @return \marvin255\bxar\IRepo
-     */
-    public function getRepo();
-
-    /**
-     * Возвращает одну запись из хранилища.
-     * Shortcut для соответствующего метода хранилища.
-     *
-     * @return \marvin255\bxar\IModel|null
-     */
-    public function search();
-
-    /**
-     * Возвращает массив записей из хранилища
-     * Shortcut для соответствующего метода хранилища.
-     *
-     * @return array
-     */
-    public function searchAll();
-
-    /**
-     * Возвращает количество элементов в хранилище.
-     * Shortcut для соответствующего метода хранилища.
-     *
-     * @return int
-     */
-    public function count();
-
-    /**
      * @return \marvin255\bxar\IQuery
      */
     public function clear();

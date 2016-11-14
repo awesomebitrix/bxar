@@ -61,29 +61,6 @@ interface IRepo
     public function delete(IModel $model);
 
     /**
-     * Задает объект запроса для данного хранилища.
-     *
-     * @param \marvin255\bxar\IQuery $query
-     *
-     * @return \marvin255\bxar\IRepo
-     */
-    public function setQuery(IQuery $query = null);
-
-    /**
-     * Возвращает объект запроса для данного хранилища.
-     *
-     * @return \marvin255\bxar\IQuery
-     */
-    public function getQuery();
-
-    /**
-     * Подготавливает запрос к новому поиску.
-     *
-     * @return \marvin255\bxar\IQuery
-     */
-    public function newQuery();
-
-    /**
      * Задает класс моделей, которые будет создавать хранилище.
      *
      * @param string $modelClass

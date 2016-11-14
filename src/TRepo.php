@@ -10,54 +10,6 @@ use InvalidArgumentException;
 trait TRepo
 {
     /**
-     * @var \marvin255\bxar\IQuery
-     */
-    protected $_query = '';
-
-    /**
-     * Задает объект запроса для данного хранилища.
-     *
-     * @param \marvin255\bxar\IQuery $query
-     *
-     * @return \marvin255\bxar\IRepo
-     */
-    public function setQuery(IQuery $query = null)
-    {
-        $this->_query = $query;
-
-        return $this;
-    }
-
-    /**
-     * Возвращает объект запроса для данного хранилища.
-     *
-     * @return \marvin255\bxar\IQuery
-     */
-    public function getQuery()
-    {
-        return $this->_query;
-    }
-
-    /**
-     * Подготавливает запрос к новому поиску.
-     *
-     * @return \marvin255\bxar\IQuery
-     *
-     * @throws InvalidArgumentException
-     */
-    public function newQuery()
-    {
-        $query = $this->getQuery();
-        if (!$query) {
-            throw new InvalidArgumentException('Query param can\'t be empty');
-        }
-        $query->clear();
-        $query->setRepo($this);
-
-        return $query;
-    }
-
-    /**
      * @var string
      */
     protected $_modelClass = '';

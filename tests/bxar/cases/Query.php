@@ -186,63 +186,15 @@ abstract class Query extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testSetRepo()
-    {
-        $query = $this->getObject();
-        $repo = $this->getMockBuilder('\marvin255\bxar\IRepo')->getMock();
-
-        $this->assertSame(
-            $query,
-            $query->setRepo($repo)
-        );
-
-        $this->assertSame(
-            $repo,
-            $query->getRepo()
-        );
-    }
-
-    public function testSearch()
-    {
-        $query = $this->getObject();
-        $repo = $this->getMockBuilder('\marvin255\bxar\IRepo')->getMock();
-        $repo->expects($this->once())
-            ->method('search')
-            ->with($this->equalTo($query));
-        $query->setRepo($repo)->search();
-    }
-
-    public function testSearchAll()
-    {
-        $query = $this->getObject();
-        $repo = $this->getMockBuilder('\marvin255\bxar\IRepo')->getMock();
-        $repo->expects($this->once())
-            ->method('searchAll')
-            ->with($this->equalTo($query));
-        $query->setRepo($repo)->searchAll();
-    }
-
-    public function testCount()
-    {
-        $query = $this->getObject();
-        $repo = $this->getMockBuilder('\marvin255\bxar\IRepo')->getMock();
-        $repo->expects($this->once())
-            ->method('count')
-            ->with($this->equalTo($query));
-        $query->setRepo($repo)->count();
-    }
-
     public function testClear()
     {
         $query = $this->getObject();
-        $repo = $this->getMockBuilder('\marvin255\bxar\IRepo')->getMock();
         $query->setSelect(['ID'])
             ->setFilter(['NAME' => 'test'])
             ->setOrder(['NAME'])
             ->setLimit(10)
             ->setOffset(12)
-            ->setIndex('test')
-            ->setRepo($repo);
+            ->setIndex('test');
 
         $this->assertSame(
             $query,
@@ -277,11 +229,6 @@ abstract class Query extends \PHPUnit_Framework_TestCase
         $this->assertSame(
             null,
             $query->getIndex()
-        );
-
-        $this->assertSame(
-            null,
-            $query->getRepo()
         );
     }
 }
