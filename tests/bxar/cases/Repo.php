@@ -28,4 +28,17 @@ abstract class Repo extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('\InvalidArgumentException');
         $repo->setModelClass($class);
     }
+
+    public function testEncodeFieldName()
+    {
+        $repo = $this->getObject();
+        $this->assertSame(
+            'test',
+            $repo->encodeFieldName('    test ')
+        );
+        $this->assertSame(
+            'new_test',
+            $repo->encodeFieldName(' NEw_TeSt ')
+        );
+    }
 }
