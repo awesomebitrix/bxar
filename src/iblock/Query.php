@@ -6,7 +6,7 @@ use marvin255\bxar\IQuery;
 use marvin255\bxar\traits\Query as TQuery;
 
 /**
- * Класс запроса данных из инфоблока инфоблока.
+ * Класс запроса данных из инфоблока.
  */
 class Query implements IQuery
 {
