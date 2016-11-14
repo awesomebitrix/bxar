@@ -24,6 +24,8 @@ class Query implements IQuery
             if (!empty($filter['LOGIC']) && $filter['LOGIC'] === 'AND') {
                 $newFilter = $filter;
                 $newFilter[] = $value;
+            } elseif (!isset($filter['LOGIC']) && !isset($value['LOGIC'])) {
+                $newFilter = array_merge($filter, $value);
             } else {
                 $newFilter = [
                     'LOGIC' => 'AND',

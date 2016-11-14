@@ -22,13 +22,13 @@ class QueryTest extends Query
         );
 
         $this->assertSame(
-            ['LOGIC' => 'AND', ['ID' => 1], ['NAME' => 'test']],
+            ['ID' => 1, 'NAME' => 'test'],
             $query->andFilter(['NAME' => 'test'])->getFilter()
         );
 
         $this->assertSame(
-            ['LOGIC' => 'AND', ['ID' => 1], ['NAME' => 'test'], ['NAME' => 'test12']],
-            $query->andFilter(['NAME' => 'test12'])->getFilter()
+            ['ID' => 1, 'NAME' => 'test12', 'PROPERTY' => 'test21'],
+            $query->andFilter(['NAME' => 'test12'])->andFilter(['PROPERTY' => 'test21'])->getFilter()
         );
     }
 
@@ -83,14 +83,13 @@ class QueryTest extends Query
             [
                 'LOGIC' => 'OR',
                 [
-                    'LOGIC' => 'AND',
-                    ['NAME' => 'test'],
-                    ['NAME' => 'test12'],
+                    'NAME' => 'test',
+                    'PROPERTY' => 'test12',
                 ],
                 ['ID' => 10],
             ],
             $query->andFilter(['NAME' => 'test'])
-                ->andFilter(['NAME' => 'test12'])
+                ->andFilter(['PROPERTY' => 'test12'])
                 ->orFilter(['ID' => 10])
                 ->getFilter()
         );
