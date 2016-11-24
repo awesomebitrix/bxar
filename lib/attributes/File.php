@@ -103,10 +103,15 @@ class File extends Attribute
 			$ext = pathinfo($val['tmp_name'], PATHINFO_EXTENSION);
 			if ($ext === '' && !empty($val['name'])) {
 				$oldName = file_exists($val['tmp_name']) ? $val['tmp_name'] : $_SERVER['DOCUMENT_ROOT'] . $val['tmp_name'];
+                /* feature 24/11/2016, add exceptions if not exists file */
+                if (!file_exists($oldName)) {
+                    throw new \Exception('bxar: Doesn\'t exists file');
+                }
 				$newName = dirname($oldName) . '/f_' . time() . mt_rand() . $val['name'];
-				rename($oldName, $newName);
+                if (file_exists($newName) || !rename($oldName, $newName)) {
+                    throw new \Exception('bxar: Can\'t upload file');
+                }
 				$val['tmp_name'] = $newName;
-				unlink($oldName);
 			}
 			if ($this->getParam('ID') !== null) {
 				$val = ['VALUE' => $val];
