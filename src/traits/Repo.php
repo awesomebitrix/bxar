@@ -11,6 +11,69 @@ use LogicException;
 trait Repo
 {
     /**
+     * Ищет и возвращает все записи из хранилища, которые подходят под запрос.
+     *
+     * @param \marvin255\bxar\IQuery $query
+     *
+     * @return array
+     */
+    public function searchAll(\marvin255\bxar\IQuery $query)
+    {
+        return [];
+    }
+
+    /**
+     * Считает количество записей из хранилища, которые подходят под запрос.
+     *
+     * @param \marvin255\bxar\IQuery $query
+     *
+     * @return int
+     */
+    public function count(\marvin255\bxar\IQuery $query)
+    {
+        return 0;
+    }
+
+    /**
+     * Ищет и возвращает первую из подходящих записей из хранилища,
+     * которая подходит под запрос.
+     *
+     * @param \marvin255\bxar\IQuery $query
+     *
+     * @return \marvin255\bxar\IModel|null
+     */
+    public function search(\marvin255\bxar\IQuery $query)
+    {
+        $query->setLimit(1);
+        $res = $this->searchAll($query);
+        return !empty($res) ? reset($res) : null;
+    }
+
+    /**
+     * Создает новую запись в хранилище или обновляет старую.
+     *
+     * @param \marvin255\bxar\IModel $model
+     *
+     * @return bool
+     */
+    public function save(\marvin255\bxar\IModel $model)
+    {
+        return false;
+    }
+
+    /**
+     * Удаляет запись из хранилища.
+     *
+     * @param \marvin255\bxar\IModel $model
+     *
+     * @return bool
+     */
+    public function delete(\marvin255\bxar\IModel $model)
+    {
+        return false;
+    }
+
+    /**
      * @var array
      */
     protected $fieldsHandlers = [];
