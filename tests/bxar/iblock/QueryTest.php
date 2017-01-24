@@ -1,6 +1,6 @@
 <?php
 
-namespace marvin255\bxar\tests\iblock;
+namespace marvin255\bxar\tests\bxar\iblock;
 
 use marvin255\bxar\tests\cases\Query;
 
