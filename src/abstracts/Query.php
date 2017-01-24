@@ -98,10 +98,9 @@ abstract class Query
      */
     public function andFilter(array $value)
     {
-        $this->_filter = array_merge(
-            $this->_filter ? $this->_filter : [],
-            $value
-        );
+        $filter = $this->getFilter();
+        $filter = is_array($filter) ? $filter : [];
+        $this->setFilter(array_merge($filter, $value));
 
         return $this;
     }
@@ -113,10 +112,9 @@ abstract class Query
      */
     public function orFilter(array $value)
     {
-        $this->_filter = array_merge(
-            $this->_filter ? $this->_filter : [],
-            $value
-        );
+        $filter = $this->getFilter();
+        $filter = is_array($filter) ? $filter : [];
+        $this->setFilter(array_merge($filter, $value));
 
         return $this;
     }
