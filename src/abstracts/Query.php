@@ -10,7 +10,7 @@ abstract class Query
     /**
      * @var array
      */
-    protected $_select = null;
+    protected $select = null;
 
     /**
      * @param array $value
@@ -19,7 +19,7 @@ abstract class Query
      */
     public function setSelect(array $value = null)
     {
-        $this->_select = $value;
+        $this->select = $value;
 
         return $this;
     }
@@ -29,13 +29,13 @@ abstract class Query
      */
     public function getSelect()
     {
-        return $this->_select;
+        return $this->select;
     }
 
     /**
      * @var array
      */
-    protected $_order = null;
+    protected $order = null;
 
     /**
      * @param array $value
@@ -61,7 +61,7 @@ abstract class Query
         } else {
             $toSet = null;
         }
-        $this->_order = $toSet;
+        $this->order = $toSet;
 
         return $this;
     }
@@ -71,13 +71,13 @@ abstract class Query
      */
     public function getOrder()
     {
-        return $this->_order;
+        return $this->order;
     }
 
     /**
      * @var array
      */
-    protected $_filter = null;
+    protected $filter = null;
 
     /**
      * @param array $value
@@ -86,7 +86,7 @@ abstract class Query
      */
     public function setFilter(array $value = null)
     {
-        $this->_filter = $value;
+        $this->filter = $value;
 
         return $this;
     }
@@ -124,13 +124,13 @@ abstract class Query
      */
     public function getFilter()
     {
-        return $this->_filter;
+        return $this->filter;
     }
 
     /**
      * @var int
      */
-    protected $_limit = null;
+    protected $limit = null;
 
     /**
      * @param int $value
@@ -139,7 +139,7 @@ abstract class Query
      */
     public function setLimit($value)
     {
-        $this->_limit = $value === null ? null : (int) $value;
+        $this->limit = $value === null ? null : (int) $value;
 
         return $this;
     }
@@ -149,13 +149,13 @@ abstract class Query
      */
     public function getLimit()
     {
-        return $this->_limit;
+        return $this->limit;
     }
 
     /**
      * @var int
      */
-    protected $_offset = null;
+    protected $offset = null;
 
     /**
      * @param int $value
@@ -164,7 +164,7 @@ abstract class Query
      */
     public function setOffset($value)
     {
-        $this->_offset = $value === null ? null : (int) $value;
+        $this->offset = $value === null ? null : (int) $value;
 
         return $this;
     }
@@ -174,13 +174,13 @@ abstract class Query
      */
     public function getOffset()
     {
-        return $this->_offset;
+        return $this->offset;
     }
 
     /**
      * @var string
      */
-    protected $_index = null;
+    protected $index = null;
 
     /**
      * @param string $value
@@ -189,7 +189,7 @@ abstract class Query
      */
     public function setIndex($value)
     {
-        $this->_index = $value === null ? null : trim($value);
+        $this->index = $value === null ? null : trim($value);
 
         return $this;
     }
@@ -199,7 +199,7 @@ abstract class Query
      */
     public function getIndex()
     {
-        return $this->_index;
+        return $this->index;
     }
 
     /**
@@ -207,12 +207,12 @@ abstract class Query
      */
     public function clear()
     {
-        $this->_index = null;
-        $this->_offset = null;
-        $this->_limit = null;
-        $this->_filter = null;
-        $this->_order = null;
-        $this->_select = null;
+        $this->index = null;
+        $this->offset = null;
+        $this->limit = null;
+        $this->filter = null;
+        $this->order = null;
+        $this->select = null;
 
         return $this;
     }
