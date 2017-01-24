@@ -1,11 +1,11 @@
 <?php
 
-namespace marvin255\bxar\traits;
+namespace marvin255\bxar\abstracts;
 
 /**
- * Трэйт, который реализует базовые функции IQuery.
+ * Абстрактный класс, который реализует базовые функции IQuery.
  */
-trait Query
+abstract class Query
 {
     /**
      * @var array
