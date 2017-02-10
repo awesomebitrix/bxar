@@ -11,7 +11,7 @@
         "psr-4": { "marvin255\\bxar\\": "src/", "marvin255\\bxar\\tests\\": "tests/" }
     },
     "require-dev": {
-        "phpunit/phpunit": "*",
+        "phpunit/phpunit": "<=5.0",
         "friendsofphp/php-cs-fixer": "*",
         "sebastian/phpcpd": "*",
         "phpmetrics/phpmetrics": "*"
