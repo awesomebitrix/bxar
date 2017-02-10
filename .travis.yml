@@ -14,3 +14,6 @@ script:
   - vendor/bin/phpunit -c phpunit.xml.dist
   - vendor/bin/phpcpd src
   - vendor/bin/phpmetrics src
+os:
+  - linux
+  - windows
