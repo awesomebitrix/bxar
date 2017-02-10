@@ -1,0 +1,115 @@
+<?php
+
+namespace marvin255\bxar\query;
+
+/**
+ * Интерфейс для класса, который позволяет составить запрос к хранилищу.
+ * Все запросы к хранилищу, должны быть оформлены с помощью объекта, реализующего
+ * данный интерфейс.
+ */
+interface QueryInterface
+{
+    /**
+     * Задает атрибуты, которые необходимо вернуть в каждой модели выборки.
+     *
+     * @param array $value
+     *
+     * @return \marvin255\bxar\query\QueryInterface
+     */
+    public function setSelect(array $value = null);
+
+    /**
+     * Возвращает атрибуты, которые необходимо вернуть в каждой модели выборки.
+     *
+     * @return array
+     */
+    public function getSelect();
+
+    /**
+     * Задает порядок сортировки для моделей в выборке. Ключи массива - название атрибутов,
+     * значения - порядок сортировки.
+     *
+     * @param array $value
+     *
+     * @return \marvin255\bxar\query\QueryInterface
+     */
+    public function setOrder(array $value = null);
+
+    /**
+     * Возвращает порядок сортировки для моделей в выборке.
+     *
+     * @return array
+     */
+    public function getOrder();
+
+    /**
+     * Задает фильтр для выборки.
+     *
+     * @param array $value
+     *
+     * @return \marvin255\bxar\query\QueryInterface
+     */
+    public function setFilter(array $value = null);
+
+    /**
+     * Возвращает фильтр для выборки.
+     *
+     * @return array
+     */
+    public function getFilter();
+
+    /**
+     * Задает ограничение по количеству загружаемых моделей в выборке.
+     *
+     * @param int $value
+     *
+     * @return \marvin255\bxar\query\QueryInterface
+     */
+    public function setLimit($value);
+
+    /**
+     * Возвращает ограничение по количеству загружаемых моделей в выборке.
+     *
+     * @return int
+     */
+    public function getLimit();
+
+    /**
+     * Задает смещение для выборки.
+     *
+     * @param int $value
+     *
+     * @return \marvin255\bxar\query\QueryInterface
+     */
+    public function setOffset($value);
+
+    /**
+     * Возвращает смещение для выборки.
+     *
+     * @return int
+     */
+    public function getOffset();
+
+    /**
+     * Задает название атрибута, значения которого будут ключами в массиве выборки.
+     *
+     * @param string $value
+     *
+     * @return \marvin255\bxar\query\QueryInterface
+     */
+    public function setIndex($value);
+
+    /**
+     * Возвращает название атрибута, значения которого будут ключами в массиве выборки.
+     *
+     * @return string
+     */
+    public function getIndex();
+
+    /**
+     * Очищает все параметры запроса.
+     *
+     * @return \marvin255\bxar\query\QueryInterface
+     */
+    public function clear();
+}

@@ -1,26 +1,26 @@
 <?php
 
-namespace marvin255\bxar\tests\cases;
+namespace marvin255\bxar\tests\bxar\model;
 
-abstract class Query extends \PHPUnit_Framework_TestCase
+class QueryTest extends \PHPUnit_Framework_TestCase
 {
-    abstract public function getObject();
+    protected function getObject()
+    {
+        return new \marvin255\bxar\query\Query();
+    }
 
     public function testSetSelect()
     {
         $query = $this->getObject();
         $select = ['ID', 'NAME', 'PROPERTY_TEST'];
-
         $this->assertSame(
             $query,
             $query->setSelect($select)
         );
-
         $this->assertSame(
             $select,
             $query->getSelect()
         );
-
         $this->assertSame(
             null,
             $query->setSelect()->getSelect()
@@ -31,17 +31,14 @@ abstract class Query extends \PHPUnit_Framework_TestCase
     {
         $query = $this->getObject();
         $order = ['ID' => 'asc', 'NAME' => 'DESC', 'EMPTY', 'WRONG_ORDER' => 'dessC'];
-
         $this->assertSame(
             $query,
             $query->setOrder($order)
         );
-
         $this->assertSame(
-            ['ID' => 'asc', 'NAME' => 'desc', 'EMPTY' => 'asc'],
+            $order,
             $query->getOrder()
         );
-
         $this->assertSame(
             null,
             $query->setOrder()->getOrder()
@@ -52,84 +49,31 @@ abstract class Query extends \PHPUnit_Framework_TestCase
     {
         $query = $this->getObject();
         $filter = ['ID' => 1, 'NAME' => 'test', 'EMPTY'];
-
         $this->assertSame(
             $query,
             $query->setFilter($filter)
         );
-
         $this->assertSame(
             $filter,
             $query->getFilter()
         );
-
         $this->assertSame(
             null,
             $query->setFilter()->getFilter()
         );
     }
 
-    public function testAndFilter()
-    {
-        $query = $this->getObject();
-        $filter = ['ID' => 1];
-
-        $this->assertSame(
-            $query,
-            $query->andFilter($filter)
-        );
-
-        $this->assertSame(
-            $filter,
-            $query->getFilter()
-        );
-
-        $this->assertSame(
-            ['ID' => 1, 'NAME' => 'test'],
-            $query->andFilter(['NAME' => 'test'])->getFilter()
-        );
-    }
-
-    public function testOrFilter()
-    {
-        $query = $this->getObject();
-        $filter = ['ID' => 1];
-
-        $this->assertSame(
-            $query,
-            $query->orFilter($filter)
-        );
-
-        $this->assertSame(
-            $filter,
-            $query->getFilter()
-        );
-
-        $this->assertSame(
-            ['ID' => 1, 'NAME' => 'test'],
-            $query->orFilter(['NAME' => 'test'])->getFilter()
-        );
-    }
-
     public function testSetLimit()
     {
         $query = $this->getObject();
-
         $this->assertSame(
             $query,
             $query->setLimit(10)
         );
-
         $this->assertSame(
             10,
             $query->getLimit()
         );
-
-        $this->assertSame(
-            5,
-            $query->setLimit('5')->getLimit()
-        );
-
         $this->assertSame(
             null,
             $query->setLimit(null)->getLimit()
@@ -139,22 +83,14 @@ abstract class Query extends \PHPUnit_Framework_TestCase
     public function testSetOffset()
     {
         $query = $this->getObject();
-
         $this->assertSame(
             $query,
             $query->setOffset(10)
         );
-
         $this->assertSame(
             10,
             $query->getOffset()
         );
-
-        $this->assertSame(
-            5,
-            $query->setOffset('5')->getOffset()
-        );
-
         $this->assertSame(
             null,
             $query->setOffset(null)->getOffset()
@@ -164,22 +100,14 @@ abstract class Query extends \PHPUnit_Framework_TestCase
     public function testSetIndex()
     {
         $query = $this->getObject();
-
         $this->assertSame(
             $query,
             $query->setIndex('test')
         );
-
         $this->assertSame(
             'test',
             $query->getIndex()
         );
-
-        $this->assertSame(
-            'test',
-            $query->setIndex('  test  ')->getIndex()
-        );
-
         $this->assertSame(
             null,
             $query->setIndex(null)->getIndex()
@@ -195,37 +123,30 @@ abstract class Query extends \PHPUnit_Framework_TestCase
             ->setLimit(10)
             ->setOffset(12)
             ->setIndex('test');
-
         $this->assertSame(
             $query,
             $query->clear()
         );
-
         $this->assertSame(
             null,
             $query->getSelect()
         );
-
         $this->assertSame(
             null,
             $query->getFilter()
         );
-
         $this->assertSame(
             null,
             $query->getOrder()
         );
-
         $this->assertSame(
             null,
             $query->getLimit()
         );
-
         $this->assertSame(
             null,
             $query->getOffset()
         );
-
         $this->assertSame(
             null,
             $query->getIndex()
