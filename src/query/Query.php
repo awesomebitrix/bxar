@@ -173,4 +173,47 @@ class Query implements QueryInterface
 
         return $this;
     }
+
+    /**
+     * @var \marvin255\bxar\repo\RepoInterface
+     */
+    protected $repo = null;
+
+    /**
+     * @param \marvin255\bxar\repo\RepoInterface $repo
+     */
+    public function setRepo(\marvin255\bxar\repo\RepoInterface $repo)
+    {
+        $this->repo = $repo;
+    }
+
+    /**
+     * Шорткат для функции all хранилища.
+     *
+     * @return array
+     */
+    public function all()
+    {
+        return $this->repo->all($this);
+    }
+
+    /**
+     * Шорткат для функции one хранилища.
+     *
+     * @return null|\marvin255\bxar\model\ModelInterface
+     */
+    public function one()
+    {
+        return $this->repo->one($this);
+    }
+
+    /**
+     * Шорткат для функции count хранилища.
+     *
+     * @return int
+     */
+    public function count()
+    {
+        return $this->repo->count($this);
+    }
 }
