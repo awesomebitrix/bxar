@@ -7,7 +7,7 @@ use InvalidArgumentException;
 /**
  * Класс-диспетчер, в котором можно объявить несколько разных контекстов,
  * а затем получать контекст по его псевдониму.
- * Например, \marvin255\bxar\Dr::get('news')->find()->setFilter(['ID' => 10])->one();
+ * Например, \marvin255\bxar\Dr::get('news')->find()->setFilter(['ID' => 10])->one();.
  */
 class Dr
 {
@@ -19,7 +19,7 @@ class Dr
     /**
      * Функция, с помощью которой можно задать псевдоним для контекста.
      *
-     * @param string $alias
+     * @param string                                    $alias
      * @param \marvin255\bxar\repo\RepoContextInterface $context
      */
     public static function set($alias, \marvin255\bxar\repo\RepoContextInterface $context)
@@ -56,6 +56,7 @@ class Dr
         if (!isset(self::$contexts[$alias])) {
             throw new InvalidArgumentException('Wrong alias name: '.$alias);
         }
+
         return self::$contexts[$alias];
     }
 }

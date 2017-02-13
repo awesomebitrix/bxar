@@ -13,9 +13,9 @@ interface RepoContextInterface
      * данного контекста. Классы менять в процессе работы нельзя - следует создавать отдельный контекст.
      *
      * @param \marvin255\bxar\repo\ProviderInterface $provider
-     * @param string $query
-     * @param string $model
-     * @param \marvin255\bxar\repo\RepoInterface $repo
+     * @param string                                 $query
+     * @param string                                 $model
+     * @param \marvin255\bxar\repo\RepoInterface     $repo
      */
     public function __construct(
         $provider,

@@ -22,16 +22,16 @@ class RepoContext implements RepoContextInterface
 
     /**
      * @param \marvin255\bxar\repo\ProviderInterface $provider
-     * @param string $query
-     * @param string $model
-     * @param \marvin255\bxar\repo\RepoInterface $repo
+     * @param string                                 $query
+     * @param string                                 $model
+     * @param \marvin255\bxar\repo\RepoInterface     $repo
      */
     public function __construct(
         $provider,
         $queryClass = '\marvin255\bxar\query\Query',
         $modelClass = '\marvin255\bxar\model\Model',
         \marvin255\bxar\repo\RepoInterface $repo = null
-    ){
+    ) {
         //задаем класс для запросов к хранилищу
         if (is_subclass_of($queryClass, '\marvin255\bxar\query\QueryInterface')) {
             $this->queryClass = $queryClass;
@@ -47,10 +47,10 @@ class RepoContext implements RepoContextInterface
     }
 
     /**
-     * Магия, которая при попытке вызвать несуществующий метод, ссылается на хранилище
+     * Магия, которая при попытке вызвать несуществующий метод, ссылается на хранилище.
      *
      * @param string $name
-     * @param array $arguments
+     * @param array  $arguments
      *
      * @return mixed
      */
@@ -65,8 +65,9 @@ class RepoContext implements RepoContextInterface
     public function find()
     {
         $class = $this->queryClass;
-        $query = new $class;
+        $query = new $class();
         $query->setRepo($this->repo);
+
         return $query;
     }
 }
