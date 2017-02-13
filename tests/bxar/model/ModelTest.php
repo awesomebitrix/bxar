@@ -52,8 +52,6 @@ class ModelTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         $field->method('getValue')
             ->will($this->returnValue($data['test1']));
-        $field->method('setModel')
-            ->with($this->equalTo($model));
         $repo->expects($this->once())
             ->method('createFieldHandler')
             ->with($this->equalTo('test1'))
