@@ -18,13 +18,16 @@ interface ProviderInterface
     public function getFieldsDescription();
 
     /**
-     * Создает объект-обработчик поля хранилища с названием из $fieldName для модели.
+     * Создает объект-обработчик поля хранилища с названием из $name и свойствами
+     * из $fieldData для модели. Привязывает поле к хранилищу из $repo.
      *
-     * @param array $fieldData
+     * @param string                             $name
+     * @param array                              $fieldData
+     * @param \marvin255\bxar\repo\RepoInterface $repo
      *
      * @return \marvin255\bxar\model\FieldInterface
      */
-    public function createFieldHandler(array $fieldData);
+    public function createFieldHandler($name, array $fieldData, \marvin255\bxar\repo\RepoInterface $repo);
 
     /**
      * На основании объекта $query пробует найти соответствующие данные

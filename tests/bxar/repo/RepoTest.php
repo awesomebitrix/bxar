@@ -121,8 +121,11 @@ class RepoTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(['test' => ['fieldData']]));
         $provider->expects($this->once())
             ->method('createFieldHandler')
-            ->with($this->equalTo(['fieldData']))
-            ->will($this->returnValue($handler));
+            ->with(
+                $this->equalTo('test'),
+                $this->equalTo(['fieldData']),
+                $this->equalTo($repo)
+            )->will($this->returnValue($handler));
         $this->assertSame(
             $handler,
             $repo->createFieldHandler('    TeSt '),
@@ -173,17 +176,20 @@ class RepoTest extends \PHPUnit_Framework_TestCase
     {
         $provider = $this->getMockBuilder('\marvin255\bxar\repo\ProviderInterface')
             ->getMock();
+        $modelName = get_class(
+            $this->getMockBuilder('\marvin255\bxar\model\ModelInterface')->getMock()
+        );
+        $repo = new \marvin255\bxar\repo\Repo($provider, $modelName);
         $provider->expects($this->once())
             ->method('getFieldsDescription')
             ->will($this->returnValue(['test' => ['fieldData']]));
         $provider->expects($this->once())
             ->method('createFieldHandler')
-            ->with($this->equalTo(['fieldData']))
-            ->will($this->returnValue('test'));
-        $modelName = get_class(
-            $this->getMockBuilder('\marvin255\bxar\model\ModelInterface')->getMock()
-        );
-        $repo = new \marvin255\bxar\repo\Repo($provider, $modelName);
+            ->with(
+                $this->equalTo('test'),
+                $this->equalTo(['fieldData']),
+                $this->equalTo($repo)
+            )->will($this->returnValue('test'));
         $this->setExpectedException(
             '\marvin255\bxar\repo\Exception',
             'Error while creating field handler: provider returned wrong field object'

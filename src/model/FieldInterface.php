@@ -11,13 +11,14 @@ namespace marvin255\bxar\model;
 interface FieldInterface
 {
     /**
-     * Задает название для данного атрибута.
+     * В конструкторе задаем название поля и привязку к хранилищу, чтобы
+     * избежать возможных ошибок с изменением названия или привязки, разрешаем
+     * задавать их исключительно через конструктор.
      *
-     * @param mixed $name
-     *
-     * @return \marvin255\bxar\model\FieldInterface
+     * @param string                             $name
+     * @param \marvin255\bxar\repo\RepoInterface $repo
      */
-    public function setName($name);
+    public function __construct($name, \marvin255\bxar\repo\RepoInterface $repo);
 
     /**
      * Возвращает название для данного атрибута.
@@ -25,6 +26,13 @@ interface FieldInterface
      * @return string
      */
     public function getName();
+
+    /**
+     * Возвращает хранилище, к которому привязан данный атрибут.
+     *
+     * @return \marvin255\bxar\model\ModelInterface
+     */
+    public function getRepo();
 
     /**
      * Задает значение атрибута.
@@ -41,22 +49,6 @@ interface FieldInterface
      * @return mixed
      */
     public function getValue();
-
-    /**
-     * Задает модель, к которой привязан данный атрибут.
-     *
-     * @param \marvin255\bxar\model\ModelInterface $model
-     *
-     * @return \marvin255\bxar\model\FieldInterface
-     */
-    public function setModel(\marvin255\bxar\model\ModelInterface $model);
-
-    /**
-     * Возвращает модель, к которой привязан данный атрибут.
-     *
-     * @return \marvin255\bxar\model\ModelInterface
-     */
-    public function getModel();
 
     /**
      * Возвращает список параметров данного атрибута.

@@ -110,7 +110,11 @@ class Repo implements RepoInterface
             throw new InvalidArgumentException('Field description not found: '.$fieldName);
         }
         try {
-            $field = $this->getProvider()->createFieldHandler($fieldsDescription[$encodedFieldName]);
+            $field = $this->getProvider()->createFieldHandler(
+                $encodedFieldName,
+                $fieldsDescription[$encodedFieldName],
+                $this
+            );
         } catch (\Exception $e) {
             /*
             ловим все исключения в классе хранилища и
@@ -121,7 +125,6 @@ class Repo implements RepoInterface
         if (!($field instanceof \marvin255\bxar\model\FieldInterface)) {
             throw new Exception('Error while creating field handler: provider returned wrong field object');
         }
-        $field->setName($encodedFieldName);
 
         return $field;
     }

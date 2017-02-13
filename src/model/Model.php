@@ -55,7 +55,6 @@ class Model implements ModelInterface
         $name = $this->getRepo()->encode($name);
         if (!isset($this->attributes[$name])) {
             $field = $this->getRepo()->createFieldHandler($name);
-            $field->setModel($this);
             $this->attributes[$name] = $field;
         }
 

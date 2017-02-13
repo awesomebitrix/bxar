@@ -2,6 +2,8 @@
 
 namespace marvin255\bxar\model;
 
+use InvalidArgumentException;
+
 /**
  * Базовый класс для атрибута модели.
  *
@@ -10,20 +12,61 @@ namespace marvin255\bxar\model;
 class Field implements FieldInterface
 {
     /**
+     * Магия для быстрого доступа к свойствам.
+     *
+     * @param string $name
+     *
+     * @return mixed
+     */
+    public function __get($name)
+    {
+        if ($name === 'value') {
+            return $this->getValue();
+        } elseif ($name === 'name') {
+            return $this->getName();
+        } elseif ($name === 'errors') {
+            return $this->getErrors();
+        } else {
+            return $this->getParam($name);
+        }
+    }
+
+    /**
+     * Магия для быстрого доступа к свойствам.
+     *
+     * @param string $name
+     * @param mixed  $value
+     */
+    public function __set($name, $value)
+    {
+        if ($name === 'value') {
+            return $this->setValue($value);
+        } else {
+            return null;
+        }
+    }
+
+    /**
      * @var string
      */
     protected $name = null;
 
     /**
-     * @param mixed $name
-     *
-     * @return \marvin255\bxar\model\FieldInterface
+     * @var \marvin255\bxar\repo\RepoInterface
      */
-    public function setName($name)
-    {
-        $this->name = $name;
+    protected $repo = null;
 
-        return $this;
+    /**
+     * @param string                             $name
+     * @param \marvin255\bxar\repo\RepoInterface $repo
+     */
+    public function __construct($name, \marvin255\bxar\repo\RepoInterface $repo)
+    {
+        if (empty($name)) {
+            throw new InvalidArgumentException('Name can not be empty');
+        }
+        $this->name = $name;
+        $this->repo = $repo;
     }
 
     /**
@@ -32,6 +75,14 @@ class Field implements FieldInterface
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @return \marvin255\bxar\model\ModelInterface
+     */
+    public function getRepo()
+    {
+        return $this->repo;
     }
 
     /**
@@ -60,36 +111,11 @@ class Field implements FieldInterface
     }
 
     /**
-     * @var \marvin255\bxar\model\ModelInterface
-     */
-    protected $model = null;
-
-    /**
-     * @param \marvin255\bxar\model\ModelInterface $model
-     *
-     * @return \marvin255\bxar\model\FieldInterface
-     */
-    public function setModel(\marvin255\bxar\model\ModelInterface $model)
-    {
-        $this->model = $model;
-
-        return $this;
-    }
-
-    /**
-     * @return \marvin255\bxar\model\ModelInterface
-     */
-    public function getModel()
-    {
-        return $this->model;
-    }
-
-    /**
      * @return array
      */
     public function getParams()
     {
-        $params = $this->getModel()->getRepo()->getFieldsDescription();
+        $params = $this->getRepo()->getFieldsDescription();
         $name = $this->getName();
 
         return isset($params[$name]) ? $params[$name] : [];
