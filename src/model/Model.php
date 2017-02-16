@@ -2,6 +2,8 @@
 
 namespace marvin255\bxar\model;
 
+use InvalidArgumentException;
+
 /**
  * Базовый класс для модели.
  *
@@ -20,30 +22,23 @@ class Model implements ModelInterface
     }
 
     /**
-     * @var \marvin255\bxar\repo\RepoInterface
-     */
-    protected $repo = null;
-
-    /**
-     * @param \marvin255\bxar\repo\RepoInterface $repo
-     */
-    public function __construct(\marvin255\bxar\repo\RepoInterface $repo)
-    {
-        $this->repo = $repo;
-    }
-
-    /**
-     * @return \marvin255\bxar\repo\RepoInterface
-     */
-    public function getRepo()
-    {
-        return $this->repo;
-    }
-
-    /**
      * @var array
      */
     protected $attributes = [];
+
+    /**
+     * @param array $attributes
+     */
+    public function __construct(array $attributes)
+    {
+        foreach ($attributes as $key => $attr) {
+            if ($attr instanceof \marvin255\bxar\model\FieldInterface) {
+                continue;
+            }
+            throw new InvalidArgumentException($key.' attribute object must be an \marvin255\bxar\model\FieldInterface instance');
+        }
+        $this->attributes = $attributes;
+    }
 
     /**
      * @param string $name
@@ -52,13 +47,7 @@ class Model implements ModelInterface
      */
     public function getAttribute($name)
     {
-        $name = $this->getRepo()->encode($name);
-        if (!isset($this->attributes[$name])) {
-            $field = $this->getRepo()->createFieldHandler($name);
-            $this->attributes[$name] = $field;
-        }
-
-        return $this->attributes[$name];
+        return isset($this->attributes[$name]) ? $this->attributes[$name] : null;
     }
 
     /**
@@ -81,9 +70,8 @@ class Model implements ModelInterface
     public function getAttributesValues()
     {
         $return = [];
-        $description = $this->getRepo()->getFieldsDescription();
-        foreach ($description as $fieldName => $fieldDescription) {
-            $return[$fieldName] = $this->getAttribute($fieldName)->getValue();
+        foreach ($this->attributes as $fieldName => $field) {
+            $return[$fieldName] = $field->getValue();
         }
 
         return $return;
@@ -95,27 +83,10 @@ class Model implements ModelInterface
     public function getAttributesErrors()
     {
         $return = [];
-        $description = $this->getRepo()->getFieldsDescription();
-        foreach ($description as $fieldName => $fieldDescription) {
-            $return[$fieldName] = $this->getAttribute($fieldName)->getErrors();
+        foreach ($this->attributes as $fieldName => $field) {
+            $return[$fieldName] = $field->getErrors();
         }
 
         return $return;
-    }
-
-    /**
-     * @return bool
-     */
-    public function save()
-    {
-        return $this->getRepo()->save($this);
-    }
-
-    /**
-     * @return bool
-     */
-    public function delete()
-    {
-        return $this->getRepo()->delete($this);
     }
 }

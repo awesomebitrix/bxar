@@ -23,7 +23,7 @@ class Field implements FieldInterface
         if ($name === 'value') {
             return $this->getValue();
         } elseif ($name === 'name') {
-            return $this->getName();
+            return $this->name;
         } elseif ($name === 'errors') {
             return $this->getErrors();
         } else {
@@ -70,22 +70,6 @@ class Field implements FieldInterface
     }
 
     /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @return \marvin255\bxar\model\ModelInterface
-     */
-    public function getRepo()
-    {
-        return $this->repo;
-    }
-
-    /**
      * @var mixed
      */
     protected $value = null;
@@ -115,8 +99,8 @@ class Field implements FieldInterface
      */
     public function getParams()
     {
-        $params = $this->getRepo()->getFieldsDescription();
-        $name = $this->getName();
+        $params = $this->repo->getFieldsDescription();
+        $name = $this->name;
 
         return isset($params[$name]) ? $params[$name] : [];
     }

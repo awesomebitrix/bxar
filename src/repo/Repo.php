@@ -2,8 +2,6 @@
 
 namespace marvin255\bxar\repo;
 
-use InvalidArgumentException;
-
 /**
  * Базовый класс для хранилища данных.
  *
@@ -19,6 +17,14 @@ class Repo implements RepoInterface
      * @var string
      */
     protected $modelName = null;
+    /**
+     * @var array
+     */
+    protected $fieldsDescription = null;
+    /**
+     * @var array
+     */
+    protected $fieldsPrototypes = null;
 
     /**
      * @param \marvin255\bxar\repo\ProviderInterface $provider
@@ -26,107 +32,14 @@ class Repo implements RepoInterface
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct(\marvin255\bxar\repo\ProviderInterface $provider, $modelName)
+    public function __construct(\marvin255\bxar\repo\ProviderInterface $provider, $modelName = '\marvin255\bxar\model\Model')
     {
         $this->provider = $provider;
-        if (empty($modelName) || !is_subclass_of($modelName, '\marvin255\bxar\model\ModelInterface')) {
-            throw new InvalidArgumentException('Wrong model name: '.$modelName);
-        } else {
+        if (is_subclass_of($modelName, '\marvin255\bxar\model\ModelInterface')) {
             $this->modelName = $modelName;
+        } else {
+            throw new Exception('Wrong model name: '.$modelName);
         }
-    }
-
-    /**
-     * @return string
-     */
-    public function getModelName()
-    {
-        return $this->modelName;
-    }
-
-    /**
-     * @return \marvin255\bxar\repo\ProviderInterface
-     */
-    public function getProvider()
-    {
-        return $this->provider;
-    }
-
-    /**
-     * @var array
-     */
-    protected $fieldsDescription = null;
-
-    /**
-     * @return array
-     *
-     * @throws \marvin255\bxar\repo\Exception
-     */
-    public function getFieldsDescription()
-    {
-        /*
-        кэшируем в памяти описания полей, чтобы не запрашивать дважды
-        кэшируем именно в хранилище, чтобы в провайдерах просто использовать
-        метод для получения описаний
-        */
-        if ($this->fieldsDescription === null) {
-            try {
-                $res = $this->getProvider()->getFieldsDescription();
-            } catch (\Exception $e) {
-                /*
-                ловим все исключения в классе хранилища и
-                приводим их к единообразному виду
-                */
-                throw new Exception('Error while getting fields description: '.$e->getMessage());
-            }
-            if (is_array($res)) {
-                $this->fieldsDescription = [];
-                foreach ($res as $key => $value) {
-                    //приводим имена полей к общему виду
-                    $key = $this->encode($key);
-                    $this->fieldsDescription[$key] = $value;
-                }
-            } else {
-                throw new Exception('Field descriptions returned by provider must be an array instance');
-            }
-        }
-
-        return $this->fieldsDescription;
-    }
-
-    /**
-     * @param string $fieldName
-     *
-     * @return \marvin255\bxar\model\FieldInterface
-     *
-     * @throws \InvalidArgumentException
-     * @throws \marvin255\bxar\repo\Exception
-     */
-    public function createFieldHandler($fieldName)
-    {
-        $fieldsDescription = $this->getFieldsDescription();
-        $encodedFieldName = $this->encode($fieldName);
-        if (!isset($fieldsDescription[$encodedFieldName])) {
-            throw new InvalidArgumentException('Field description not found: '.$fieldName);
-        }
-        try {
-            $field = $this->getProvider()->createFieldHandler(
-                $encodedFieldName,
-                $fieldsDescription[$encodedFieldName],
-                $this
-            );
-        } catch (\Exception $e) {
-            /*
-            ловим все исключения в классе хранилища и
-            приводим их к единообразному виду
-            */
-            throw new Exception('Error while creating field handler: '.$e->getMessage());
-        }
-        if (!($field instanceof \marvin255\bxar\model\FieldInterface)) {
-            throw new Exception('Error while creating field handler: provider returned wrong field object');
-        }
-
-        return $field;
     }
 
     /**
@@ -154,23 +67,18 @@ class Repo implements RepoInterface
     public function all(\marvin255\bxar\query\QueryInterface $query)
     {
         try {
-            $res = $this->getProvider()->search($query);
+            $res = $this->provider->search(
+                $query,
+                //на всякий случай передаем массив с описаниями всех полей
+                //провайдер не должен хранить свое состояние, поэтому передаем
+                //все данные каждый раз в каждый метод
+                $this->getFieldsDescription()
+            );
         } catch (\Exception $e) {
-            /*
-            ловим все исключения в классе хранилища и
-            приводим их к единообразному виду
-            */
             throw new Exception('Error while searching: '.$e->getMessage());
         }
-        if (!is_array($res)) {
-            throw new Exception('Provider must return array from search');
-        }
-        $return = [];
-        foreach ($res as $key => $data) {
-            $return[$key] = $this->initModel($data);
-        }
 
-        return $return;
+        return $this->initList($res);
     }
 
     /**
@@ -183,16 +91,18 @@ class Repo implements RepoInterface
     public function count(\marvin255\bxar\query\QueryInterface $query)
     {
         try {
-            $res = $this->getProvider()->count($query);
+            $res = (int) $this->provider->count(
+                $query,
+                //на всякий случай передаем массив с описаниями всех полей
+                //провайдер не должен хранить свое состояние, поэтому передаем
+                //все данные каждый раз в каждый метод
+                $this->getFieldsDescription()
+            );
         } catch (\Exception $e) {
-            /*
-            ловим все исключения в классе хранилища и
-            приводим их к единообразному виду
-            */
             throw new Exception('Error while counting: '.$e->getMessage());
         }
 
-        return (int) $res;
+        return $res;
     }
 
     /**
@@ -205,16 +115,18 @@ class Repo implements RepoInterface
     public function save(\marvin255\bxar\model\ModelInterface $model)
     {
         try {
-            $res = $this->getProvider()->save($model);
+            $res = (bool) $this->provider->save(
+                $model,
+                //на всякий случай передаем массив с описаниями всех полей
+                //провайдер не должен хранить свое состояние, поэтому передаем
+                //все данные каждый раз в каждый метод
+                $this->getFieldsDescription()
+            );
         } catch (\Exception $e) {
-            /*
-            ловим все исключения в классе хранилища и
-            приводим их к единообразному виду
-            */
             throw new Exception('Error while saving: '.$e->getMessage());
         }
 
-        return (bool) $res;
+        return $res;
     }
 
     /**
@@ -227,41 +139,116 @@ class Repo implements RepoInterface
     public function delete(\marvin255\bxar\model\ModelInterface $model)
     {
         try {
-            $res = $this->getProvider()->delete($model);
+            $res = (bool) $this->provider->delete(
+                $model,
+                //на всякий случай передаем массив с описаниями всех полей
+                //провайдер не должен хранить свое состояние, поэтому передаем
+                //все данные каждый раз в каждый метод
+                $this->getFieldsDescription()
+            );
         } catch (\Exception $e) {
-            /*
-            ловим все исключения в классе хранилища и
-            приводим их к единообразному виду
-            */
             throw new Exception('Error while deleting: '.$e->getMessage());
         }
 
-        return (bool) $res;
+        return $res;
     }
 
     /**
-     * @param array $data
+     * @return array
+     *
+     * @throws \marvin255\bxar\repo\Exception
+     */
+    public function getFieldsDescription()
+    {
+        if ($this->fieldsDescription === null) {
+            try {
+                $res = $this->provider->getFieldsDescription();
+            } catch (\Exception $e) {
+                throw new Exception('Error while getting fields\' descriptions: '.$e->getMessage());
+            }
+            if (empty($res) || !is_array($res)) {
+                throw new Exception('Fields list must be an array instance');
+            }
+            foreach ($res as $key => $value) {
+                $key = preg_replace('/[^0-9a-z_]/', '_', strtolower(trim($key)));
+                $this->fieldsDescription[$key] = $value;
+            }
+        }
+
+        return $this->fieldsDescription;
+    }
+
+    /**
+     * @param array $attributes
      *
      * @return \marvin255\bxar\model\ModelInterface
      */
-    public function initModel(array $data = null)
+    public function init(array $attributes = null)
     {
-        $class = $this->getModelName();
-        $model = new $class($this);
-        if ($data !== null) {
-            $model->setAttributesValues($data);
+        $attributes = $this->createFields();
+        $class = $this->modelName;
+        $model = new $class($attributes);
+        if ($attributes) {
+            $model->setAttributesValues($attributes);
         }
 
         return $model;
     }
 
     /**
-     * @param string $encode
+     * Инициирует объекты для полей модели.
      *
-     * @return string
+     * @return array
      */
-    public function encode($encode)
+    protected function createFields()
     {
-        return str_replace(' ', '_', strtolower(trim($encode)));
+        if ($this->fieldsPrototypes === null) {
+            //получаем описания полей
+            $fieldsDescription = $this->getFieldsDescription();
+            foreach ($fieldsDescription as $key => $field) {
+                //создаем массив эталонных полей, которые будем клонировать в последствии
+                $this->fieldsPrototypes[$key] = $this->provider->createFieldHandler(
+                    //передаем имя поля
+                    $key,
+                    //передаем ссылку на репозиторий, чтобы поле могло запросить
+                    //свои параметры из репозитория и не создавать большое число копий
+                    //данных полей
+                    $this,
+                    //на всякий случай передаем массив с описаниями всех полей
+                    //провайдер не должен хранить свое состояние, поэтому передаем
+                    //все данные каждый раз в каждый метод
+                    $fieldsDescription
+                );
+                if (!($this->fieldsPrototypes[$key] instanceof \marvin255\bxar\model\FieldInterface)) {
+                    throw new Exception('Field must be an instance of \marvin255\bxar\model\FieldInterface: '.$key);
+                }
+            }
+        }
+        $return = [];
+        //клонируем поля из эталонов, чтобы передать клоны в модели
+        foreach ($this->fieldsPrototypes as $key => $proto) {
+            $return[$key] = clone $proto;
+        }
+
+        return $return;
+    }
+
+    /**
+     * Инициирует массив моделей из массива с атрибутами моделей.
+     *
+     * @param array $models
+     *
+     * @return array
+     *
+     * @throws \marvin255\bxar\repo\Exception
+     */
+    protected function initList(array $models)
+    {
+        $return = [];
+        foreach ($models as $key => $attributes) {
+            $return[$key] = $this->init($attributes);
+        }
+
+        return $return;
     }
 }

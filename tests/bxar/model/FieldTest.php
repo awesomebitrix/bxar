@@ -13,30 +13,6 @@ class FieldTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testGetName()
-    {
-        $field = new \marvin255\bxar\model\Field(
-            'test_name',
-            $this->getMockBuilder('\marvin255\bxar\repo\RepoInterface')->getMock()
-        );
-        $this->assertSame(
-            'test_name',
-            $field->getName(),
-            'Field getName method must return value that was set by constructor'
-        );
-    }
-
-    public function testGetRepo()
-    {
-        $repo = $this->getMockBuilder('\marvin255\bxar\repo\RepoInterface')->getMock();
-        $field = new \marvin255\bxar\model\Field('test_name', $repo);
-        $this->assertSame(
-            $repo,
-            $field->getRepo(),
-            'Field getRepo method must return value that was set by constructor'
-        );
-    }
-
     public function testSetValue()
     {
         $field = new \marvin255\bxar\model\Field(
@@ -65,8 +41,6 @@ class FieldTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         $repo->method('getFieldsDescription')
             ->will($this->returnValue($params));
-        $repo->method('encode')
-            ->will($this->returnArgument(0));
         $field = new \marvin255\bxar\model\Field('test1', $repo);
         $this->assertSame(
             $params['test1'],
@@ -85,8 +59,6 @@ class FieldTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         $repo->method('getFieldsDescription')
             ->will($this->returnValue($params));
-        $repo->method('encode')
-            ->will($this->returnArgument(0));
         $field = new \marvin255\bxar\model\Field('test2', $repo);
         $this->assertSame(
             $params['test2']['test'],
@@ -139,8 +111,6 @@ class FieldTest extends \PHPUnit_Framework_TestCase
         $repo = $this->getMockBuilder('\marvin255\bxar\repo\RepoInterface')->getMock();
         $repo->method('getFieldsDescription')
             ->will($this->returnValue(['test_name' => ['test_param' => 1]]));
-        $repo->method('encode')
-            ->will($this->returnArgument(0));
         $field = new \marvin255\bxar\model\Field('test_name', $repo);
         $field->setValue('test_value');
         $field->addError('test_error');

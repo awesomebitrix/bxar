@@ -4,122 +4,97 @@ namespace marvin255\bxar\tests\bxar\model;
 
 class ModelTest extends \PHPUnit_Framework_TestCase
 {
-    public function testSetMagic()
+    public function testGetMagic()
     {
-        $repo = $this->getMockBuilder('\marvin255\bxar\repo\RepoInterface')
-            ->getMock();
-        $repo->method('getFieldsDescription')
-            ->will($this->returnValue(['test1' => 11]));
-        $repo->method('encode')
-            ->will($this->returnArgument(0));
-        $model = new \marvin255\bxar\model\Model($repo);
-        $field = $this->getMockBuilder('\marvin255\bxar\model\FieldInterface')
-            ->getMock();
-        $repo->expects($this->once())
-            ->method('createFieldHandler')
-            ->with($this->equalTo('test1'))
-            ->will($this->returnValue($field));
+        $attributes = [
+            'test1' => $this->getMockBuilder('\marvin255\bxar\model\FieldInterface')->getMock(),
+            'test2' => $this->getMockBuilder('\marvin255\bxar\model\FieldInterface')->getMock(),
+        ];
+        $model = new \marvin255\bxar\model\Model($attributes);
         $this->assertSame(
-            $field,
-            $model->test1,
-            'Model must use php __get magic function for getting fields'
+            $attributes['test2'],
+            $model->test2,
+            'Model must use __get magic to return it\'s attributes'
         );
     }
 
-    public function testGetRepo()
+    public function testConstructWithWrongParam()
     {
-        $repo = $this->getMockBuilder('\marvin255\bxar\repo\RepoInterface')
-            ->getMock();
-        $model = new \marvin255\bxar\model\Model($repo);
+        $attributes = [
+            'test1' => $this->getMockBuilder('\marvin255\bxar\model\FieldInterface')->getMock(),
+            'test2' => 2,
+        ];
+        $this->setExpectedException(
+            'InvalidArgumentException',
+            'test2 attribute object must be an \marvin255\bxar\model\FieldInterface instance'
+        );
+        $model = new \marvin255\bxar\model\Model($attributes);
+    }
+
+    public function testGetAttribute()
+    {
+        $attributes = [
+            'test1' => $this->getMockBuilder('\marvin255\bxar\model\FieldInterface')->getMock(),
+            'test2' => $this->getMockBuilder('\marvin255\bxar\model\FieldInterface')->getMock(),
+        ];
+        $model = new \marvin255\bxar\model\Model($attributes);
         $this->assertSame(
-            $repo,
-            $model->getRepo(),
-            'Model must return same repo object that was set in first constructor param'
+            $attributes['test1'],
+            $model->getAttribute('test1'),
+            'Model must return attribute object by it\'s name'
         );
     }
 
-    public function testSetAttributes()
+    public function testSetAttributesValues()
     {
-        $data = ['test1' => 1];
-        $repo = $this->getMockBuilder('\marvin255\bxar\repo\RepoInterface')
+        $field1 = $this->getMockBuilder('\marvin255\bxar\model\FieldInterface')
             ->getMock();
-        $repo->method('getFieldsDescription')
-            ->will($this->returnValue(['test1' => 11]));
-        $repo->method('encode')
-            ->will($this->returnArgument(0));
-        $model = new \marvin255\bxar\model\Model($repo);
-        $field = $this->getMockBuilder('\marvin255\bxar\model\FieldInterface')
+        $field1->expects($this->once())
+            ->method('setValue')
+            ->with($this->equalTo('321'));
+        $field1->expects($this->once())
+            ->method('getValue')
+            ->will($this->returnValue('321'));
+        $field2 = $this->getMockBuilder('\marvin255\bxar\model\FieldInterface')
             ->getMock();
-        $field->method('getValue')
-            ->will($this->returnValue($data['test1']));
-        $repo->expects($this->once())
-            ->method('createFieldHandler')
-            ->with($this->equalTo('test1'))
-            ->will($this->returnValue($field));
+        $field2->expects($this->once())
+            ->method('setValue')
+            ->with($this->equalTo(123));
+        $field2->expects($this->once())
+            ->method('getValue')
+            ->will($this->returnValue(123));
+        $model = new \marvin255\bxar\model\Model([
+            'test1' => $field1,
+            'test2' => $field2,
+        ]);
+        $model->setAttributesValues(['test1' => '321', 'test2' => 123]);
         $this->assertSame(
-            $model,
-            $model->setAttributesValues($data),
-            'Model must return self instance from setAttributes'
-        );
-        $this->assertSame(
-            $data,
+            ['test1' => '321', 'test2' => 123],
             $model->getAttributesValues(),
-            'Model must return attributes values that was set by setAttributes'
+            'Model must return list of attributes\' values'
         );
     }
 
     public function testGetAttributesErrors()
     {
-        $errors = ['error 1', 'error 2'];
-        $repo = $this->getMockBuilder('\marvin255\bxar\repo\RepoInterface')
+        $field1 = $this->getMockBuilder('\marvin255\bxar\model\FieldInterface')
             ->getMock();
-        $repo->method('getFieldsDescription')
-            ->will($this->returnValue(['test1' => 11]));
-        $repo->method('encode')
-            ->will($this->returnArgument(0));
-        $model = new \marvin255\bxar\model\Model($repo);
-        $field = $this->getMockBuilder('\marvin255\bxar\model\FieldInterface')
+        $field1->expects($this->once())
+            ->method('getErrors')
+            ->will($this->returnValue(['321']));
+        $field2 = $this->getMockBuilder('\marvin255\bxar\model\FieldInterface')
             ->getMock();
-        $field->method('getErrors')
-            ->will($this->returnValue($errors));
-        $repo->expects($this->once())
-            ->method('createFieldHandler')
-            ->with($this->equalTo('test1'))
-            ->will($this->returnValue($field));
+        $field2->expects($this->once())
+            ->method('getErrors')
+            ->will($this->returnValue([123]));
+        $model = new \marvin255\bxar\model\Model([
+            'test1' => $field1,
+            'test2' => $field2,
+        ]);
         $this->assertSame(
-            ['test1' => $errors],
+            ['test1' => ['321'], 'test2' => [123]],
             $model->getAttributesErrors(),
-            'Model must return all errors from it\'s fields'
-        );
-    }
-
-    public function testSave()
-    {
-        $repo = $this->getMockBuilder('\marvin255\bxar\repo\RepoInterface')
-            ->getMock();
-        $model = new \marvin255\bxar\model\Model($repo);
-        $repo->method('save')
-            ->with($this->equalTo($model))
-            ->will($this->returnValue(false));
-        $this->assertSame(
-            false,
-            $model->save(),
-            'Model must pipe save to it\'s repo and return result from repo\'s save'
-        );
-    }
-
-    public function testDelete()
-    {
-        $repo = $this->getMockBuilder('\marvin255\bxar\repo\RepoInterface')
-            ->getMock();
-        $model = new \marvin255\bxar\model\Model($repo);
-        $repo->method('delete')
-            ->with($this->equalTo($model))
-            ->will($this->returnValue(true));
-        $this->assertSame(
-            true,
-            $model->delete(),
-            'Model must pipe delete to it\'s repo and return result from repo\'s delete'
+            'Model must return list of attributes\' errors'
         );
     }
 }

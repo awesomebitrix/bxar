@@ -27,43 +27,6 @@ interface RepoInterface
     public function __construct(\marvin255\bxar\repo\ProviderInterface $provider, $modelName);
 
     /**
-     * Возвращает название класса для моделей, которые будет создавать хранилище.
-     *
-     * @return string
-     */
-    public function getModelName();
-
-    /**
-     * Возвращает провайдер, который служит для общения с конкретной реализацией
-     * хранилища данных.
-     *
-     * @return \marvin255\bxar\repo\ProviderInterface
-     */
-    public function getProvider();
-
-    /**
-     * Возвращает массив с описаниями полей хранилища.
-     * Где ключ - название поля, а значение массив со свойствами поля.
-     *
-     * @return array
-     *
-     * @throws \marvin255\bxar\repo\Exception
-     */
-    public function getFieldsDescription();
-
-    /**
-     * Создает объект-обработчик поля хранилища с названием из $fieldName для модели.
-     *
-     * @param string $fieldName
-     *
-     * @return \marvin255\bxar\model\FieldInterface
-     *
-     * @throws \InvalidArgumentException
-     * @throws \marvin255\bxar\repo\Exception
-     */
-    public function createFieldHandler($fieldName);
-
-    /**
      * Псевдоним для функции all, который возвращает не массив моделей, а только
      * одну первую модель, либо null, если данные не найдены.
      *
@@ -126,23 +89,21 @@ interface RepoInterface
     public function delete(\marvin255\bxar\model\ModelInterface $model);
 
     /**
+     * Возвращает описание полей для модели.
+     *
+     * @return array
+     *
+     * @throws \marvin255\bxar\repo\Exception
+     */
+    public function getFieldsDescription();
+
+    /**
      * Привязывает модель к репозиторию и наполняет модель данными,
      * указанными в параметре $data. Создает новую из modelName хранилища.
      *
-     * @param array $data
+     * @param array $attributes
      *
      * @return \marvin255\bxar\model\ModelInterface
      */
-    public function initModel(array $data = null);
-
-    /**
-     * Приводит имена полей в единообразный вид. Используется для того,
-     * чтобы не возникало ошибок при использовании
-     * различных способов именований свойств: name и NAME, и т.д.
-     *
-     * @param string $encode
-     *
-     * @return string
-     */
-    public function encode($encode);
+    public function init(array $attributes = null);
 }

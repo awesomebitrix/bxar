@@ -21,20 +21,6 @@ interface FieldInterface
     public function __construct($name, \marvin255\bxar\repo\RepoInterface $repo);
 
     /**
-     * Возвращает название для данного атрибута.
-     *
-     * @return string
-     */
-    public function getName();
-
-    /**
-     * Возвращает хранилище, к которому привязан данный атрибут.
-     *
-     * @return \marvin255\bxar\model\ModelInterface
-     */
-    public function getRepo();
-
-    /**
      * Задает значение атрибута.
      *
      * @param mixed $value
