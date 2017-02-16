@@ -185,9 +185,9 @@ class Repo implements RepoInterface
      */
     public function init(array $attributes = null)
     {
-        $attributes = $this->createFields();
+        $fields = $this->createFields();
         $class = $this->modelName;
-        $model = new $class($attributes);
+        $model = new $class($fields);
         if ($attributes) {
             $model->setAttributesValues($attributes);
         }
