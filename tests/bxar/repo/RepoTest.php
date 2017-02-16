@@ -462,4 +462,47 @@ class RepoTest extends \PHPUnit_Framework_TestCase
             'Repo must create models with class that was set in constructor'
         );
     }
+
+    public function testInitWithAttributes()
+    {
+        $fields = [
+            'test' => [1, 2, 3],
+            'test2' => ['1', '3', '2'],
+        ];
+        $field = $this->getMockBuilder('\marvin255\bxar\model\FieldInterface')
+            ->getMock();
+        $field->expects($this->once())
+            ->method('setValue')
+            ->with($this->equalTo('123'));
+        $field->expects($this->once())
+            ->method('getValue')
+            ->will($this->returnValue('123'));
+        $field2 = $this->getMockBuilder('\marvin255\bxar\model\FieldInterface')
+            ->getMock();
+        $field2->expects($this->once())
+            ->method('setValue')
+            ->with($this->equalTo(321));
+        $field2->expects($this->once())
+            ->method('getValue')
+            ->will($this->returnValue(321));
+        $query = $this->getMockBuilder('\marvin255\bxar\query\QueryInterface')
+            ->getMock();
+        $provider = $this->getMockBuilder('\marvin255\bxar\repo\ProviderInterface')
+            ->getMock();
+        $provider->method('getFieldsDescription')
+            ->will($this->returnValue($fields));
+        $provider->expects($this->at(1))
+            ->method('createFieldHandler')
+            ->will($this->returnValue($field));
+        $provider->expects($this->at(2))
+            ->method('createFieldHandler')
+            ->will($this->returnValue($field2));
+        $repo = new \marvin255\bxar\repo\Repo($provider);
+        $res = $repo->init(['test' => '123', 'test2' => 321]);
+        $this->assertSame(
+            ['test' => '123', 'test2' => 321],
+            $res->getAttributesValues(),
+            'Repo must init model attributes with values if they are set in init function'
+        );
+    }
 }
