@@ -112,33 +112,4 @@ interface QueryInterface
      * @return \marvin255\bxar\query\QueryInterface
      */
     public function clear();
-
-    /**
-     * Задает привязку к хранилищу для вызова шорткатов, нужно специально для
-     * красивой и логичной цепочки $query->setFilter(['ACTIVE' => 'Y'])->setLimit(10)->all().
-     *
-     * @param \marvin255\bxar\repo\RepoInterface $repo
-     */
-    public function setRepo(\marvin255\bxar\repo\RepoInterface $repo);
-
-    /**
-     * Шорткат для функции all хранилища.
-     *
-     * @return array
-     */
-    public function all();
-
-    /**
-     * Шорткат для функции one хранилища.
-     *
-     * @return null|\marvin255\bxar\model\ModelInterface
-     */
-    public function one();
-
-    /**
-     * Шорткат для функции count хранилища.
-     *
-     * @return int
-     */
-    public function count();
 }

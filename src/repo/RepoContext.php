@@ -66,7 +66,6 @@ class RepoContext implements RepoContextInterface
     {
         $class = $this->queryClass;
         $query = new $class();
-        $query->setRepo($this->repo);
 
         return $query;
     }
