@@ -29,5 +29,5 @@ interface RepoContextInterface
      *
      * @return \marvin255\bxar\query\QueryInterface
      */
-    public function find();
+    public function createQuery();
 }

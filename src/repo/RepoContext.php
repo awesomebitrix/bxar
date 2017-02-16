@@ -62,7 +62,7 @@ class RepoContext implements RepoContextInterface
     /**
      * @return \marvin255\bxar\query\QueryInterface
      */
-    public function find()
+    public function createQuery()
     {
         $class = $this->queryClass;
         $query = new $class();

@@ -15,7 +15,7 @@ class RepoContextTest extends \PHPUnit_Framework_TestCase
         $context = new \marvin255\bxar\repo\RepoContext($provider, 123);
     }
 
-    public function testFind()
+    public function testCreateQuery()
     {
         $provider = $this->getMockBuilder('\marvin255\bxar\repo\ProviderInterface')
             ->getMock();
@@ -28,7 +28,7 @@ class RepoContextTest extends \PHPUnit_Framework_TestCase
         );
         $this->assertInstanceOf(
             $query,
-            $context->find(),
+            $context->createQuery(),
             'Find method must return an instance of class that was set in constructor'
         );
     }
