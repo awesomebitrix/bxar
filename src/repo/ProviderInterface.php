@@ -63,6 +63,16 @@ interface ProviderInterface
     public function save(\marvin255\bxar\model\ModelInterface $model, array $fields);
 
     /**
+     * Проверяет поля модели перед записью в хранилище.
+     *
+     * @param \marvin255\bxar\model\ModelInterface $model
+     * @param array                                $fields
+     *
+     * @return bool
+     */
+    public function validate(\marvin255\bxar\model\ModelInterface $model, array $fields);
+
+    /**
      * Пробует удалить запись в хранилище для данных, которые
      * содержатся в модели из параметра $model.
      *

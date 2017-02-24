@@ -115,13 +115,19 @@ class Repo implements RepoInterface
     public function save(\marvin255\bxar\model\ModelInterface $model)
     {
         try {
-            $res = (bool) $this->provider->save(
+            $res = $this->provider->validate(
                 $model,
-                //на всякий случай передаем массив с описаниями всех полей
-                //провайдер не должен хранить свое состояние, поэтому передаем
-                //все данные каждый раз в каждый метод
                 $this->getFieldsDescription()
             );
+            if ($res) {
+                $res = (bool) $this->provider->save(
+                    $model,
+                    //на всякий случай передаем массив с описаниями всех полей
+                    //провайдер не должен хранить свое состояние, поэтому передаем
+                    //все данные каждый раз в каждый метод
+                    $this->getFieldsDescription()
+                );
+            }  
         } catch (\Exception $e) {
             throw new Exception('Error while saving: '.$e->getMessage());
         }

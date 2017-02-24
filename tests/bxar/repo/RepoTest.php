@@ -264,6 +264,8 @@ class RepoTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         $provider->method('getFieldsDescription')
             ->will($this->returnValue($fields));
+        $provider->method('validate')
+            ->will($this->returnValue(true));
         $provider->expects($this->once())
             ->method('save')
             ->with($this->equalTo($model), $this->equalTo($fields))
@@ -276,6 +278,25 @@ class RepoTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testSaveWithInvalidModelData()
+    {
+        $fields = ['test' => [1, 2, 3]];
+        $model = $this->getMockBuilder('\marvin255\bxar\model\ModelInterface')
+            ->getMock();
+        $provider = $this->getMockBuilder('\marvin255\bxar\repo\ProviderInterface')
+            ->getMock();
+        $provider->method('getFieldsDescription')
+            ->will($this->returnValue($fields));
+        $provider->method('validate')
+            ->will($this->returnValue(false));
+        $repo = new \marvin255\bxar\repo\Repo($provider);
+        $this->assertSame(
+            false,
+            $repo->save($model),
+            'Repo must validate model before saving'
+        );
+    }
+
     public function testSaveWithExceptionInProvider()
     {
         $fields = ['test' => [1, 2, 3]];
@@ -283,6 +304,8 @@ class RepoTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         $provider = $this->getMockBuilder('\marvin255\bxar\repo\ProviderInterface')
             ->getMock();
+        $provider->method('validate')
+            ->will($this->returnValue(true));
         $provider->method('getFieldsDescription')
             ->will($this->returnValue($fields));
         $provider->method('save')
