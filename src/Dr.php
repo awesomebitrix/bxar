@@ -7,7 +7,7 @@ use InvalidArgumentException;
 /**
  * Класс-диспетчер, в котором можно объявить несколько разных контекстов,
  * а затем получать контекст по его псевдониму.
- * Например, \marvin255\bxar\Dr::get('news')->find()->setFilter(['ID' => 10])->one();.
+ * Например, $query = \marvin255\bxar\Dr::get('news')->createQuery()->setFilter(['ID' => 10]);.
  */
 class Dr
 {

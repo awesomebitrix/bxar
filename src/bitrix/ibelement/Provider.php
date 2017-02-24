@@ -53,11 +53,13 @@ class Provider implements \marvin255\bxar\repo\ProviderInterface
             }
             $return['property_'.$ob['CODE']] = $ob;
         }
+
         return $return;
     }
 
     /**
-     * Возвращает стандартные поля элемента инфоблока
+     * Возвращает стандартные поля элемента инфоблока.
+     *
      * @return array
      */
     protected function getIblockFields()
@@ -167,9 +169,9 @@ class Provider implements \marvin255\bxar\repo\ProviderInterface
                 'PROPERTY_TYPE' => 'S',
             ],
         ];
+
         return $return;
     }
-
 
     /**
      * @param string                             $name
@@ -182,12 +184,13 @@ class Provider implements \marvin255\bxar\repo\ProviderInterface
     {
         $class = '\marvin255\bxar\model\Field';
         $field = new $class($name, $repo);
+
         return $field;
     }
 
     /**
      * @param \marvin255\bxar\query\QueryInterface $query
-     * @param array $query
+     * @param array                                $query
      *
      * @return array
      */
@@ -248,6 +251,7 @@ class Provider implements \marvin255\bxar\repo\ProviderInterface
             }
             $return[] = $model;
         }
+
         return $return;
     }
 
@@ -266,6 +270,7 @@ class Provider implements \marvin255\bxar\repo\ProviderInterface
         }
         $filter['IBLOCK_ID'] = $iblock['ID'];
         $filter['CHECK_PERMISSIONS'] = 'N';
+
         return (int) \CIBlockElement::GetList([], $filter, [], false, ['ID']);
     }
 
@@ -276,7 +281,6 @@ class Provider implements \marvin255\bxar\repo\ProviderInterface
      */
     public function save(\marvin255\bxar\model\ModelInterface $model, array $fields)
     {
-        
     }
 
     /**
@@ -350,6 +354,7 @@ class Provider implements \marvin255\bxar\repo\ProviderInterface
             //получаем дополнительное описание инфоблока из админки
             $this->iblockData['FIELDS'] = \CIBlock::getFields($this->iblockData['ID']);
         }
+
         return $this->iblockData;
     }
 }

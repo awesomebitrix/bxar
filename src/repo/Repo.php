@@ -30,7 +30,7 @@ class Repo implements RepoInterface
      * @param \marvin255\bxar\repo\ProviderInterface $provider
      * @param string                                 $modelName
      *
-     * @throws \InvalidArgumentException
+     * @throws \marvin255\bxar\repo\Exception
      */
     public function __construct(\marvin255\bxar\repo\ProviderInterface $provider, $modelName = '\marvin255\bxar\model\Model')
     {
@@ -199,6 +199,8 @@ class Repo implements RepoInterface
      * Инициирует объекты для полей модели.
      *
      * @return array
+     *
+     * @throws \marvin255\bxar\repo\Exception
      */
     protected function createFields()
     {
@@ -239,8 +241,6 @@ class Repo implements RepoInterface
      * @param array $models
      *
      * @return array
-     *
-     * @throws \marvin255\bxar\repo\Exception
      */
     protected function initList(array $models)
     {

@@ -21,8 +21,6 @@ interface RepoInterface
      *
      * @param \marvin255\bxar\repo\ProviderInterface $provider
      * @param string                                 $modelName
-     *
-     * @throws \InvalidArgumentException
      */
     public function __construct(\marvin255\bxar\repo\ProviderInterface $provider, $modelName);
 
@@ -33,8 +31,6 @@ interface RepoInterface
      * @param \marvin255\bxar\query\QueryInterface $query
      *
      * @return \marvin255\bxar\model\ModelInterface|null
-     *
-     * @throws \marvin255\bxar\repo\Exception
      */
     public function one(\marvin255\bxar\query\QueryInterface $query);
 
@@ -47,8 +43,6 @@ interface RepoInterface
      * @param \marvin255\bxar\query\QueryInterface $query
      *
      * @return array
-     *
-     * @throws \marvin255\bxar\repo\Exception
      */
     public function all(\marvin255\bxar\query\QueryInterface $query);
 
@@ -59,8 +53,6 @@ interface RepoInterface
      * @param \marvin255\bxar\query\QueryInterface $query
      *
      * @return int
-     *
-     * @throws \marvin255\bxar\repo\Exception
      */
     public function count(\marvin255\bxar\query\QueryInterface $query);
 
@@ -71,8 +63,6 @@ interface RepoInterface
      * @param \marvin255\bxar\model\ModelInterface $model
      *
      * @return bool
-     *
-     * @throws \marvin255\bxar\repo\Exception
      */
     public function save(\marvin255\bxar\model\ModelInterface $model);
 
@@ -83,8 +73,6 @@ interface RepoInterface
      * @param \marvin255\bxar\model\ModelInterface $model
      *
      * @return bool
-     *
-     * @throws \marvin255\bxar\repo\Exception
      */
     public function delete(\marvin255\bxar\model\ModelInterface $model);
 
@@ -92,8 +80,6 @@ interface RepoInterface
      * Возвращает описание полей для модели.
      *
      * @return array
-     *
-     * @throws \marvin255\bxar\repo\Exception
      */
     public function getFieldsDescription();
 
