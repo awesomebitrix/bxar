@@ -315,10 +315,10 @@ class Provider implements \marvin255\bxar\repo\ProviderInterface
             //нужно создавать только одну тразакцию на всю цепочку событий
             global $DB;
             $DB->StartTransaction();
-        } elseif ($lockDepth >= 5) {
+        } elseif ($lockDepth >= 3) {
             //выбрасываем исключение, если сохраняется более трех вложенных элементов
             //в событиях
-            throw new \Exception('More than 5 elements recoursivly saving. Break on element with id = '.$modelId);
+            throw new \Exception('More than 3 elements nested saving. Break on element with id = '.$modelId);
         }
         try {
             if ($modelId) {
