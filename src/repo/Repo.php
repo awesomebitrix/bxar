@@ -127,7 +127,7 @@ class Repo implements RepoInterface
                     //все данные каждый раз в каждый метод
                     $this->getFieldsDescription()
                 );
-            }  
+            }
         } catch (\Exception $e) {
             throw new Exception('Error while saving: '.$e->getMessage());
         }

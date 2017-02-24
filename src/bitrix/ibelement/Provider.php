@@ -281,6 +281,213 @@ class Provider implements \marvin255\bxar\repo\ProviderInterface
      */
     public function save(\marvin255\bxar\model\ModelInterface $model, array $fields)
     {
+        $iblock = $this->getIBlockData();
+        //собираем значения модели для записи в базу
+        $arLoad = ['PROPERTY_VALUES' => []];
+        foreach ($fields as $key => $field) {
+            $value = $model->getAttribute($key)->getValue();
+            if (!empty($field['ID'])) {
+                //пользовательские поля инфоблока
+                if (is_array($value)) {
+                    //множественные
+                    foreach ($value as $valueItem) {
+                        $arLoad['PROPERTY_VALUES'][$field['ID']][] = [
+                            'VALUE' => $valueItem,
+                        ];
+                    }
+                } else {
+                    //обычные
+                    $arLoad['PROPERTY_VALUES'][$field['ID']] = [
+                        'VALUE' => $value,
+                    ];
+                }
+            } else {
+                //стандартные поля инфоблока
+                $arLoad[$field['CODE']] = $value;
+            }
+        }
+        $arLoad['IBLOCK_ID'] = $iblock['ID'];
+        //получаем идентификатор текущей модели
+        $modelId = $model->getAttribute('id')->getValue();
+        //получаем вложенность текущих сохранений в цепочке событий
+        $lockDepth = $this->getLockDepth();
+        if ($lockDepth === 0) {
+            //нужно создавать только одну тразакцию на всю цепочку событий
+            global $DB;
+            $DB->StartTransaction();
+        } elseif ($lockDepth >= 5) {
+            //выбрасываем исключение, если сохраняется более трех вложенных элементов
+            //в событиях
+            throw new \Exception('More than 5 elements recoursivly saving. Break on element with id = '.$modelId);
+        }
+        try {
+            if ($modelId) {
+                //если указан ID, то пробуем обновить элемент
+                $this->update($modelId, $arLoad);
+            } else {
+                //если не указан ID, то создаем новый элемент
+                $model->getAttribute('id')->setValue($this->insert($arLoad));
+            }
+            if ($lockDepth === 0) {
+                //применяем транзакцию, если она запущена и сохранение успешно
+                $DB->Commit();
+            }
+        } catch (\Exception $e) {
+            if ($lockDepth === 0) {
+                //откатываем транзакцию, если она запущена, но произошла ошибка
+                $DB->Rollback();
+            }
+            //пробрасываем исключение дальше
+            throw new \Exception($e->getMessage());
+        }
+
+        return true;
+    }
+
+    /**
+     * Создает новый элемент в базе данных.
+     *
+     * @param array $load
+     *
+     * @return int
+     *
+     * @throws \Exception
+     */
+    protected function insert(array $load)
+    {
+        $el = new \CIBlockElement();
+        //блокируем элемент на время сохранения с временным ID
+        $tmpId = time().'_'.mt_rand();
+        $this->lockElement($tmpId, $load['IBLOCK_ID']);
+        //пробуем создать новый элемент
+        $id = $el->Add($arLoad);
+        if (!$id) {
+            throw new \Exception($el->LAST_ERROR);
+        }
+        //разблокируем элемент после сохранения
+        $this->unlockElement($tmpId, $load['IBLOCK_ID']);
+
+        return $id;
+    }
+
+    /**
+     * Обновляет элемент в базе данных.
+     *
+     * @param int   $id
+     * @param array $load
+     *
+     * @return int
+     *
+     * @throws \Exception
+     */
+    protected function update($id, array $load)
+    {
+        $el = new \CIBlockElement();
+        if ($this->checkLockForElement($id, $load['IBLOCK_ID'])) {
+            //проверяем, чтобы не было рекурсивного сохранения элемента
+            throw new \Exception('Element with ID = '.$id.' already updating. Check recoursive updates in your events.');
+        } else {
+            //блокируем элемент на время сохранения
+            $this->lockElement($id, $load['IBLOCK_ID']);
+        }
+        if (!$el->Update($id, $load)) {
+            //если сохранить не удалось, то бросаем исключение с последней ошибкой
+            throw new \Exception($el->LAST_ERROR);
+        }
+        //разблокируем элемент после сохранения
+        $this->unlockElement($id, $load['IBLOCK_ID']);
+
+        return $id;
+    }
+
+    /**
+     * @var array
+     */
+    protected static $lockList = [];
+
+    /**
+     * Вносит элемент в список блокировок для контроля за событиями.
+     *
+     * @param int $elementId
+     * @param int $iblockId
+     */
+    protected function lockElement($elementId, $iblockId)
+    {
+        self::$lockList[$iblockId][] = $elementId;
+    }
+
+    /**
+     * Убирает элемент из списка блокировок для контроля за событиями.
+     *
+     * @param int $elementId
+     * @param int $iblockId
+     */
+    protected function unlockElement($elementId, $iblockId)
+    {
+        if (isset(self::$lockList[$iblockId])) {
+            foreach (self::$lockList[$iblockId] as $key => $value) {
+                if ($value !== $elementId) {
+                    continue;
+                }
+                unset(self::$lockList[$iblockId][$key]);
+                break;
+            }
+        }
+    }
+
+    /**
+     * Возвращает правду, если элемент уже сохраняется где-то в цепочке событий.
+     *
+     * @param int $elementId
+     * @param int $iblockId
+     *
+     * @return bool
+     */
+    protected function checkLockForElement($elementId, $iblockId)
+    {
+        $return = isset(self::$lockList[$iblockId]) && in_array($elementId, self::$lockList[$iblockId]);
+
+        return $return;
+    }
+
+    /**
+     * Возвращает количество элементов, которые затронуты в цепочке сохранений.
+     *
+     * @return int
+     */
+    protected function getLockDepth()
+    {
+        $total = 0;
+        foreach (self::$lockList as $value) {
+            $total += count($value);
+        }
+
+        return $total;
+    }
+
+    /**
+     * Проверяет поля модели перед записью в хранилище.
+     *
+     * @param \marvin255\bxar\model\ModelInterface $model
+     * @param array                                $fields
+     *
+     * @return bool
+     */
+    public function validate(\marvin255\bxar\model\ModelInterface $model, array $fields)
+    {
+        $return = true;
+        foreach ($fields as $key => $field) {
+            if (!isset($field['IS_REQUIRED']) || $field['IS_REQUIRED'] !== 'Y') {
+                continue;
+            }
+            $value = $model->getAttribute($key)->getValue();
+            if ($value === null || $value === '' || $value === []) {
+                $model->getAttribute($key)->addError('Поле должно быть заполнено');
+                $return = false;
+            }
+        }
+
+        return $return;
     }
 
     /**
