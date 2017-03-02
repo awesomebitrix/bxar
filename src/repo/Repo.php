@@ -67,13 +67,7 @@ class Repo implements RepoInterface
     public function all(\marvin255\bxar\query\QueryInterface $query)
     {
         try {
-            $res = $this->provider->search(
-                $query,
-                //на всякий случай передаем массив с описаниями всех полей
-                //провайдер не должен хранить свое состояние, поэтому передаем
-                //все данные каждый раз в каждый метод
-                $this->getFieldsDescription()
-            );
+            $res = $this->provider->search($query, $this->getFieldsDescription());
         } catch (\Exception $e) {
             throw new Exception('Error while searching: '.$e->getMessage());
         }
@@ -91,13 +85,7 @@ class Repo implements RepoInterface
     public function count(\marvin255\bxar\query\QueryInterface $query)
     {
         try {
-            $res = (int) $this->provider->count(
-                $query,
-                //на всякий случай передаем массив с описаниями всех полей
-                //провайдер не должен хранить свое состояние, поэтому передаем
-                //все данные каждый раз в каждый метод
-                $this->getFieldsDescription()
-            );
+            $res = (int) $this->provider->count($query, $this->getFieldsDescription());
         } catch (\Exception $e) {
             throw new Exception('Error while counting: '.$e->getMessage());
         }
@@ -115,18 +103,9 @@ class Repo implements RepoInterface
     public function save(\marvin255\bxar\model\ModelInterface $model)
     {
         try {
-            $res = $this->provider->validate(
-                $model,
-                $this->getFieldsDescription()
-            );
+            $res = $this->provider->validate($model, $this->getFieldsDescription());
             if ($res) {
-                $res = (bool) $this->provider->save(
-                    $model,
-                    //на всякий случай передаем массив с описаниями всех полей
-                    //провайдер не должен хранить свое состояние, поэтому передаем
-                    //все данные каждый раз в каждый метод
-                    $this->getFieldsDescription()
-                );
+                $res = (bool) $this->provider->save($model, $this->getFieldsDescription());
             }
         } catch (\Exception $e) {
             throw new Exception('Error while saving: '.$e->getMessage());
@@ -145,13 +124,7 @@ class Repo implements RepoInterface
     public function delete(\marvin255\bxar\model\ModelInterface $model)
     {
         try {
-            $res = (bool) $this->provider->delete(
-                $model,
-                //на всякий случай передаем массив с описаниями всех полей
-                //провайдер не должен хранить свое состояние, поэтому передаем
-                //все данные каждый раз в каждый метод
-                $this->getFieldsDescription()
-            );
+            $res = (bool) $this->provider->delete($model, $this->getFieldsDescription());
         } catch (\Exception $e) {
             throw new Exception('Error while deleting: '.$e->getMessage());
         }
@@ -203,6 +176,8 @@ class Repo implements RepoInterface
 
     /**
      * Инициирует объекты для полей модели.
+     * При первом обращении создает эталонный массив полей, которые нужно передать в модель.
+     * Затем клонирует эталонные записи и возвращает клоны.
      *
      * @return array
      *
@@ -211,20 +186,11 @@ class Repo implements RepoInterface
     protected function createFields()
     {
         if ($this->fieldsPrototypes === null) {
-            //получаем описания полей
             $fieldsDescription = $this->getFieldsDescription();
             foreach ($fieldsDescription as $key => $field) {
-                //создаем массив эталонных полей, которые будем клонировать в последствии
                 $this->fieldsPrototypes[$key] = $this->provider->createFieldHandler(
-                    //передаем имя поля
                     $key,
-                    //передаем ссылку на репозиторий, чтобы поле могло запросить
-                    //свои параметры из репозитория и не создавать большое число копий
-                    //данных полей
                     $this,
-                    //на всякий случай передаем массив с описаниями всех полей
-                    //провайдер не должен хранить свое состояние, поэтому передаем
-                    //все данные каждый раз в каждый метод
                     $fieldsDescription
                 );
                 if (!($this->fieldsPrototypes[$key] instanceof \marvin255\bxar\model\FieldInterface)) {
@@ -233,7 +199,6 @@ class Repo implements RepoInterface
             }
         }
         $return = [];
-        //клонируем поля из эталонов, чтобы передать клоны в модели
         foreach ($this->fieldsPrototypes as $key => $proto) {
             $return[$key] = clone $proto;
         }
